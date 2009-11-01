@@ -1,0 +1,832 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BarTender</name>
+    </assembly>
+    <members>
+        <member name="T:BarTender.GroupPaneEventHandler">
+            <summary>
+            Delegate for the events with <see cref="T:BarTender.GroupPaneEventArgs"/>:
+            </summary>
+        </member>
+        <member name="T:BarTender.GroupPaneEventArgs">
+            <summary>
+            Class with event data holding a <see cref="P:BarTender.GroupPaneEventArgs.GroupPane"/>.
+            </summary>
+        </member>
+        <member name="M:BarTender.GroupPaneEventArgs.#ctor(BarTender.GroupPane)">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="groupPane"><see cref="P:BarTender.GroupPaneEventArgs.GroupPane"/> associated with this event.</param>
+        </member>
+        <member name="P:BarTender.GroupPaneEventArgs.GroupPane">
+            <summary>
+            <see cref="P:BarTender.GroupPaneEventArgs.GroupPane"/> associated with this event.
+            </summary>
+        </member>
+        <member name="T:BarTender.GroupPane">
+            <summary>
+            Control representing one group within a <see cref="T:BarTender.GroupPaneBar"/>.
+            It renders borders, a expand/collapse button, a text and an image and
+            positions on inner control within the inner area of the group.
+            The properties needed for this are fetched from the associated <see cref="T:BarTender.GroupPaneBar"/>.
+            Cannot be used as a standalone control.
+            </summary>
+        </member>
+        <member name="M:BarTender.GroupPane.#ctor(BarTender.GroupPaneBar)">
+            <summary>
+            Creates a new instance		
+            </summary>
+            <param name="parent">Parent control.</param>
+        </member>
+        <member name="M:BarTender.GroupPane.Expand">
+            <summary>
+            Expands the group.
+            If the group is already expanded nothing happens.
+            If the associated <see cref="T:BarTender.GroupPaneBar"/> has animation enabled
+            then setting this property will also result in an animation effect.
+            </summary>
+        </member>
+        <member name="M:BarTender.GroupPane.Expand(System.Boolean)">
+            <summary>
+            Expands the group.
+            If the group is already expanded nothing happens.
+            </summary>
+            <param name="animate">Indicates whether the expand should be animated or not.</param>
+        </member>
+        <member name="M:BarTender.GroupPane.Collapse">
+            <summary>
+            Collapes the group.
+            If the group is already collapsed nothing happens.
+            If the associated <see cref="T:BarTender.GroupPaneBar"/> has animation enabled
+            then setting this property will also result in an animation effect.
+            </summary>
+        </member>
+        <member name="M:BarTender.GroupPane.Collapse(System.Boolean)">
+            <summary>
+            Collapes the group.
+            If the group is already collapsed nothing happens.
+            </summary>
+            <param name="animate">Indicates whether the collapse should be animated or not.</param>
+        </member>
+        <member name="M:BarTender.GroupPane.OnImageChanged(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPane.ImageChanged"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPane.OnTextChanged(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPane.TextChanged"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPane.OnControlChanged(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPane.ControlChanged"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPane.OnExpandedHeightChanged(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPane.ExpandedHeightChanged"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPane.OnPaneExpanding(System.ComponentModel.CancelEventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPane.PaneExpanding"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPane.OnPaneExpanded(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPane.PaneExpanded"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPane.OnPaneCollapsing(System.ComponentModel.CancelEventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPane.PaneCollapsing"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPane.OnPaneCollapsed(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPane.PaneCollapsed"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPane.OnMouseMove(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            Raises the <see cref="E:System.Windows.Forms.Control.MouseMove"/> event.
+            It also changes the highlighting of the button, when the mouse is moved over it
+            and shows the appropriate resize cursor.
+            </summary>
+            <param name="e">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPane.OnMouseLeave(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:System.Windows.Forms.Control.MouseLeave"/> event.
+            It also resets the button in case it is showing a resize cursor.
+            </summary>
+            <param name="e">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPane.OnMouseUp(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            Raises the <see cref="E:System.Windows.Forms.Control.MouseUp"/> event.
+            It also stops the resize operation.
+            </summary>
+            <param name="e">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPane.OnMouseDown(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            Raises the <see cref="E:System.Windows.Forms.Control.MouseDown"/> event.
+            It also toggles the expansion when the button is clicked
+            or starts the resize operation.
+            </summary>
+            <param name="e">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPane.OnPaint(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            Paints the control.
+            </summary>
+            <param name="e">Event data.</param>
+        </member>
+        <member name="E:BarTender.GroupPane.TextChanged">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPane.Text"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPane.ImageChanged">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPane.Image"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPane.ControlChanged">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPane.Control"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPane.ExpandedHeightChanged">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPane.ExpandedHeight"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPane.PaneCollapsing">
+            <summary>
+            Event which gets before the group is collapsed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPane.PaneCollapsed">
+            <summary>
+            Event which gets after the group has been collapsed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPane.PaneExpanding">
+            <summary>
+            Event which gets before the group is expanded.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPane.PaneExpanded">
+            <summary>
+            Event which gets after the group has been expanded.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPane.ParentBar">
+            <summary>
+            <see cref="T:BarTender.GroupPaneBar"/> which is associated with this instance.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPane.Text">
+            <summary>
+            Gets/sets the text which should be displayed in the header.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPane.Image">
+            <summary>
+            Gets/sets the image which should be displayed in the header.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPane.Expanded">
+            <summary>
+            Gets/sets whether the group should be expanded.
+            If the associated <see cref="T:BarTender.GroupPaneBar"/> has animation enabled
+            then setting this property will also result in an animation effect.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPane.ExpandedHeight">
+            <summary>
+            Gets/sets the height of the group when being expanded.
+            If the group is currently expanded it is immediatly set to the new height.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPane.Control">
+            <summary>
+            Gets/sets the control which should be shown in the inner area of the control.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPane.IsAnimationRunning">
+            <summary>
+            Gets whether the group is currently being animated.
+            </summary>
+        </member>
+        <member name="T:BarTender.GroupPaneCancelEventHandler">
+            <summary>
+            Delegate for the events with <see cref="T:BarTender.GroupPaneCancelEventArgs"/>:
+            </summary>
+        </member>
+        <member name="T:BarTender.GroupPaneCancelEventArgs">
+            <summary>
+            Class with event data holding a <see cref="T:BarTender.GroupPane"/> which can be cancelled.
+            </summary>
+        </member>
+        <member name="M:BarTender.GroupPaneCancelEventArgs.#ctor(BarTender.GroupPane)">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="groupPane"><see cref="T:BarTender.GroupPane"/> associated with this event.</param>
+        </member>
+        <member name="P:BarTender.GroupPaneCancelEventArgs.Cancel">
+            <summary>
+            Gets/sets whether the operation in process should be cancelled.
+            </summary>
+        </member>
+        <member name="T:BarTender.GroupPaneBar">
+            <summary>
+            Core class of the component.
+            It holds several <see cref="T:BarTender.GroupPane"/>s, manages their positioning
+            and holds all visual properties for unifying the look of all contained groups.
+            </summary>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.#ctor">
+            <summary>
+            Creates a new empty instance.
+            </summary>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.Add(System.Windows.Forms.Control,System.String,System.Drawing.Image)">
+            <summary>
+            Adds a new <see cref="T:BarTender.GroupPane"/> to the end of the list.
+            </summary>
+            <param name="control">Element which should initially beend placed in the new group.</param>
+            <param name="text">Initial text of the new group.</param>
+            <param name="image">Initial image of the new group.</param>
+            <returns>The newly created <see cref="T:BarTender.GroupPane"/>.</returns>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.Add(System.Windows.Forms.Control,System.String,System.Drawing.Image,System.Boolean)">
+            <summary>
+            Adds a new <see cref="T:BarTender.GroupPane"/> to the end of the list.
+            </summary>
+            <param name="control">Element which should initially beend placed in the new group.</param>
+            <param name="text">Initial text of the new group.</param>
+            <param name="image">Initial image of the new group.</param>
+            <param name="adjustGroupPaneHeightToControlheight">Sets whether the expanded height of 
+            the resulting group pane should match the height of the given control.</param>
+            <returns>The newly created <see cref="T:BarTender.GroupPane"/>.</returns>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.Add(BarTender.GroupPane)">
+            <summary>
+            Adds a <see cref="T:BarTender.GroupPane"/> to the end of the list.		
+            </summary>
+            <param name="groupPane">Group to be added.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.Remove(BarTender.GroupPane)">
+            <summary>
+            Removes a <see cref="T:BarTender.GroupPane"/> from the list.
+            </summary>
+            <param name="groupPane">Group to be removed.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.RemoveAt(System.Int32)">
+            <summary>
+            Removes the <see cref="T:BarTender.GroupPane"/> at the specified index. 
+            </summary>
+            <param name="index">Index of the group to be removed.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.Clear">
+            <summary>
+            Removes all groups.
+            </summary>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.InsertAt(System.Int32,BarTender.GroupPane)">
+            <summary>
+            Inserts a <see cref="T:BarTender.GroupPane"/> at a specified position.		
+            </summary>
+            <param name="index">Insertion index.</param>
+            <param name="groupPane">Group to be added.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.CreateGroupPane">
+            <summary>
+            Creates a new empty <see cref="T:BarTender.GroupPane"/> which is valid for being added
+            to this instance.
+            </summary>
+            <returns>Newly created <see cref="T:BarTender.GroupPane"/>.</returns>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.CreateGroupPane(System.Windows.Forms.Control,System.String,System.Drawing.Image)">
+            <summary>
+            Creates a new <see cref="T:BarTender.GroupPane"/> which is valid for being added
+            to this instance.
+            </summary>
+            <param name="control">Element which should initially beend placed in the new group.</param>
+            <param name="text">Initial text of the new group.</param>
+            <param name="image">Initial image of the new group.</param>
+            <returns>Newly created <see cref="T:BarTender.GroupPane"/>.</returns>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.CollapseAll">
+            <summary>
+            Collapses all contained groups immediatly.
+            </summary>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.CollapseAll(System.Boolean)">
+            <summary>
+            Collapses all contained groups.
+            </summary>
+            <param name="animate">Indicates whether the collapse should be animated.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.ExpandAll">
+            <summary>
+            Expands all contained groups immediatly.
+            </summary>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.ExpandAll(System.Boolean)">
+            <summary>
+            Expands all contained groups.
+            </summary>
+            <param name="animate">Indicates whether the expand should be animated.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.ShouldSerializeButtonArrowColor">
+            <summary>
+            Indicates the designer whether <see cref="P:BarTender.GroupPaneBar.ButtonArrowColor"/> needs
+            to be serialized.
+            </summary>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.ShouldSerializeButtonHighlightColor">
+            <summary>
+            Indicates the designer whether <see cref="P:BarTender.GroupPaneBar.ButtonHighlightColor"/> needs
+            to be serialized.
+            </summary>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.ShouldSerializeHeaderColor1">
+            <summary>
+            Indicates the designer whether <see cref="P:BarTender.GroupPaneBar.HeaderColor1"/> needs
+            to be serialized.
+            </summary>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.ShouldSerializeHeaderColor2">
+            <summary>
+            Indicates the designer whether <see cref="P:BarTender.GroupPaneBar.HeaderColor2"/> needs
+            to be serialized.
+            </summary>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.ShouldSerializeBorderColor">
+            <summary>
+            Indicates the designer whether <see cref="P:BarTender.GroupPaneBar.BorderColor"/> needs
+            to be serialized.
+            </summary>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnTextAlignChanged(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.TextAlignChanged"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnCanResizeChanged(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.CanResizeChanged"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnCanExpandCollapseChanged(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.CanExpandCollapseChanged"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnShowExpandCollapseButtonChanged(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.ShowExpandCollapseButtonChanged"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnImagesEnabledChanged(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.ImagesEnabledChanged"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnAnimationEnabledChanged(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.AnimationEnabledChanged"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnAnimationIntervallChanged(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.AnimationIntervallChanged"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnAnimationStepSizeChanged(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.AnimationStepSizeChanged"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnBorderColorChanged(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.BorderColorChanged"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnBorderWidthChanged(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.BorderWidthChanged"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnButtonArrowColorChanged(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.ButtonArrowColorChanged"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnButtonHighlightAlphaChanged(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.ButtonHighlightAlphaChanged"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnButtonHighlightColorChanged(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.ButtonHighlightColorChanged"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnHeaderColor1Changed(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.HeaderColor1Changed"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnHeaderColor2Changed(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.HeaderColor2Changed"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnHeaderGradientModeChanged(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.HeaderGradientModeChanged"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnHeaderHeightChanged(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.HeaderHeightChanged"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnMinimumExpandedHeightChanged(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.MinimumExpandedHeightChanged"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnBorderStyleChanged(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.BorderStyleChanged"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnGroupPaneAdded(BarTender.GroupPaneEventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.GroupPaneAdded"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnGroupPaneRemoved(BarTender.GroupPaneEventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.GroupPaneRemoved"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnGroupPaneCollapsing(BarTender.GroupPaneCancelEventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.GroupPaneCollapsing"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnGroupPaneCollapsed(BarTender.GroupPaneEventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.GroupPaneCollapsed"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnGroupPaneExpanding(BarTender.GroupPaneCancelEventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.GroupPaneExpanding"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnGroupPaneExpanded(BarTender.GroupPaneEventArgs)">
+            <summary>
+            Raises the <see cref="E:BarTender.GroupPaneBar.GroupPaneExpanded"/> event.
+            </summary>
+            <param name="eventArgs">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.OnRightToLeftChanged(System.EventArgs)">
+            <summary>
+            Reinitializes the internal string format of the text.
+            </summary>
+            <param name="e">Event data.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.AdjustFormScrollbars(System.Boolean)">
+            <summary>
+            Adjusts the scrollbars.
+            Disabled while an animation is running.
+            </summary>
+            <param name="displayScrollbars">Sets wether the scrollbars should be visible or not.</param>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.BeginInit">
+            <summary>
+            Signals the object the start of the initialization process.
+            </summary>
+        </member>
+        <member name="M:BarTender.GroupPaneBar.EndInit">
+            <summary>
+            Signals the object the end of the initialization process.
+            Adds some dummy groups at design time (just a visual gimmick).
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.TextAlignChanged">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPaneBar.TextAlign"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.ButtonArrowColorChanged">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPaneBar.ButtonArrowColor"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.ButtonHighlightAlphaChanged">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPaneBar.ButtonHighlightAlpha"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.ButtonHighlightColorChanged">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPaneBar.ButtonHighlightColor"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.HeaderColor1Changed">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPaneBar.HeaderColor1"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.HeaderColor2Changed">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPaneBar.HeaderColor2"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.BorderColorChanged">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPaneBar.BorderColor"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.HeaderGradientModeChanged">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPaneBar.HeaderGradientMode"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.HeaderHeightChanged">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPaneBar.HeaderHeight"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.BorderWidthChanged">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPaneBar.BorderWidth"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.CanResizeChanged">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPaneBar.CanResize"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.CanExpandCollapseChanged">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPaneBar.CanExpandCollapse"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.ShowExpandCollapseButtonChanged">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPaneBar.ShowExpandCollapseButton"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.ImagesEnabledChanged">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPaneBar.ImagesEnabled"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.AnimationEnabledChanged">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPaneBar.AnimationEnabled"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.AnimationIntervallChanged">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPaneBar.AnimationIntervall"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.AnimationStepSizeChanged">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPaneBar.AnimationStepSize"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.MinimumExpandedHeightChanged">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPaneBar.MinimumExpandedHeight"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.BorderStyleChanged">
+            <summary>
+            Event which gets fired when <see cref="P:BarTender.GroupPaneBar.BorderStyle"/> has changed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.GroupPaneAdded">
+            <summary>
+            Event which gets fired when a <see cref="T:BarTender.GroupPane"/> has been added.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.GroupPaneRemoved">
+            <summary>
+            Event which gets fired when a <see cref="T:BarTender.GroupPane"/> has been removed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.GroupPaneCollapsing">
+            <summary>
+            Event which gets fired before a <see cref="T:BarTender.GroupPane"/> is collapsed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.GroupPaneCollapsed">
+            <summary>
+            Event which gets fired after a <see cref="T:BarTender.GroupPane"/> has collapsed.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.GroupPaneExpanding">
+            <summary>
+            Event which gets fired before a <see cref="T:BarTender.GroupPane"/> is expanded.
+            </summary>
+        </member>
+        <member name="E:BarTender.GroupPaneBar.GroupPaneExpanded">
+            <summary>
+            Event which gets fired after a <see cref="T:BarTender.GroupPane"/> has expanded.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.Count">
+            <summary>
+            Number of contained groups.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.Item(System.Int32)">
+            <summary>
+            Gets the group at the specified position.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.BorderStyle">
+            <summary>
+            Gets or sets the type of border of the whole control.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.ButtonArrowColor">
+            <summary>
+            Gets/sets the color of the arrow on the expand/collapse button.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.ButtonHighlightAlpha">
+            <summary>
+            Gets/sets the alpha value of the color of the color highlighting of the expand/collapse button.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.ButtonHighlightColor">
+            <summary>
+            Gets/sets the color of the highlighting of the expand/collapse button.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.HeaderColor1">
+            <summary>
+            Gets/sets the first color of the background of the header.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.HeaderColor2">
+            <summary>
+            Gets/sets the second color of the background of the header.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.BorderColor">
+            <summary>
+            Gets/sets the color of the borders.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.HeaderGradientMode">
+            <summary>
+            Gets/sets how the gradient between the two header colors is painted.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.HeaderHeight">
+            <summary>
+            Gets/sets the height of the header.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.BorderWidth">
+            <summary>
+            Gets/sets the width of the borders.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.CanResize">
+            <summary>
+            Gets/sets whether users can resize groups or not.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.CanExpandCollapse">
+            <summary>
+            Gets/sets whether user can collpase/expand groups or not.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.ShowExpandCollapseButton">
+            <summary>
+            Gets/sets whether the collpase/expand button should be shown or not.
+            If this property is set to false but <see cref="P:BarTender.GroupPaneBar.CanExpandCollapse"/>
+            is set to true than the user can expand/collapse the group by
+            simply clicking into the header.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.ImagesEnabled">
+            <summary>
+            Gets/sets whether images are drawn or not.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.AnimationEnabled">
+            <summary>
+            Gets/sets whether expand/collapse animation is enabled or not.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.AnimationIntervall">
+            <summary>
+            Gets/sets the update intervall of expand/collapse animations.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.AnimationStepSize">
+            <summary>
+            Gets/sets the step size of expand/collapse animations.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.TextAlign">
+            <summary>
+            Gets or sets the alignment of the text.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.MinimumExpandedHeight">
+            <summary>
+            Gets or sets the minimum height the groups should have
+            when they are expanded.
+            Thus the user won't be able to resize it to less than this given value.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.IsAnimationRunning">
+            <summary>
+            Gets whether there is currently and expand/collapse animation running.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.DefaultHeaderColor1">
+            <summary>
+            Gets the default value of the <see cref="P:BarTender.GroupPaneBar.HeaderColor1"/> property.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.DefaultHeaderColor2">
+            <summary>
+            Gets the default value of the <see cref="P:BarTender.GroupPaneBar.HeaderColor2"/> property.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.DefaultBorderColor">
+            <summary>
+            Gets the default value of the <see cref="P:BarTender.GroupPaneBar.BorderColor"/> property.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.DefaultButtonHighlightColor">
+            <summary>
+            Gets the default value of the <see cref="P:BarTender.GroupPaneBar.ButtonHighlightColor"/> property.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.DefaultButtonArrowColor">
+            <summary>
+            Gets the default value of the <see cref="P:BarTender.GroupPaneBar.ButtonArrowColor"/> property.
+            </summary>
+        </member>
+        <member name="P:BarTender.GroupPaneBar.CreateParams">
+            <summary>
+            Gets the paramters for the control.
+            </summary>
+        </member>
+    </members>
+</doc>

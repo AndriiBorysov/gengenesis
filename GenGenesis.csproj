@@ -73,6 +73,12 @@
     <Compile Include="Controls\GenesUserControl.designer.cs">
       <DependentUpon>GenesUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\StackBarControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StackBarControl.designer.cs">
+      <DependentUpon>StackBarControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ImportForm\ImportingDataBaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,7 +90,6 @@
     </Compile>
     <Compile Include="directorysDataSet.cs">
       <DependentUpon>directorysDataSet.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="directorysDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -124,12 +129,6 @@
     <Compile Include="Forms\MainForm\MainFormTreeView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\StackViewControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\StackViewControl.Designer.cs">
-      <DependentUpon>StackViewControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\NewPatientForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -158,8 +157,8 @@
       <DependentUpon>GenesUserControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\StackViewControl.resx">
-      <DependentUpon>StackViewControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\StackBarControl.resx">
+      <DependentUpon>StackBarControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutBox.resx">
@@ -278,6 +277,14 @@
     <Content Include="DB\patients.mdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Solution dll\Animations.dll" />
+    <Content Include="Solution dll\Animations.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="BarTender\BarTender.csproj">
+      <Project>{503F0953-734F-4660-B4C6-FA67869F0863}</Project>
+      <Name>BarTender</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />

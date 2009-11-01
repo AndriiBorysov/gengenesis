@@ -5,6 +5,9 @@ namespace GenGenesis
     {
         // Часть, которая обеспечивает функциональность toolTips
         ToolTip mainToolTip;
+        /// <summary>
+        /// Инициализация подсказок
+        /// </summary>
         private void InitializeToolTips()
         {
             mainToolTip = new ToolTip();            
