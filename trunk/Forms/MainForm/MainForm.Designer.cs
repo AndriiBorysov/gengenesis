@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataBaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exportStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,6 +57,8 @@
             this.collapseButton = new System.Windows.Forms.Button();
             this.expandButton = new System.Windows.Forms.Button();
             this.patientTreeView = new System.Windows.Forms.TreeView();
+            this.currentTabControl = new System.Windows.Forms.TabControl();
+            this.classPaneBar = new BarTender.GroupPaneBar();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.newPatientButton = new System.Windows.Forms.ToolStripButton();
             this.loadPatientButton = new System.Windows.Forms.ToolStripButton();
@@ -69,49 +71,31 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.eventToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
-            this.signsPanel = new System.Windows.Forms.Panel();
-            this.signsTabControl = new System.Windows.Forms.TabControl();
-            this.illnessesPanel = new System.Windows.Forms.Panel();
-            this.diseasesTabControl = new System.Windows.Forms.TabControl();
-            this.tcxPanel = new System.Windows.Forms.Panel();
-            this.tcxTabControl = new System.Windows.Forms.TabControl();
-            this.genesPanel = new System.Windows.Forms.Panel();
-            this.genesTabControl = new System.Windows.Forms.TabControl();
-            this.scriningPanel = new System.Windows.Forms.Panel();
-            this.scriningTabControl = new System.Windows.Forms.TabControl();
-            this.biochemPanel = new System.Windows.Forms.Panel();
-            this.biochemTabControl = new System.Windows.Forms.TabControl();
-            this.classViewControl = new GenGenesis.Controls.StackViewControl();
             this.menuStrip.SuspendLayout();
             this.splitContainerMain.Panel1.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
             this.splitContainerMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.classPaneBar)).BeginInit();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
-            this.signsPanel.SuspendLayout();
-            this.illnessesPanel.SuspendLayout();
-            this.tcxPanel.SuspendLayout();
-            this.genesPanel.SuspendLayout();
-            this.scriningPanel.SuspendLayout();
-            this.biochemPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
+            this.dataBaseToolStripMenuItem,
             this.patientToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip.Size = new System.Drawing.Size(784, 24);
+            this.menuStrip.Size = new System.Drawing.Size(1020, 24);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "menuStrip";
             // 
-            // fileToolStripMenuItem
+            // dataBaseToolStripMenuItem
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dataBaseToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statStripMenuItem,
             this.toolStripSeparator1,
             this.exportStripMenuItem,
@@ -120,9 +104,9 @@
             this.editorToolStripMenuItem,
             this.toolStripSeparator3,
             this.exitToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.fileToolStripMenuItem.Text = "&Файл";
+            this.dataBaseToolStripMenuItem.Name = "dataBaseToolStripMenuItem";
+            this.dataBaseToolStripMenuItem.Size = new System.Drawing.Size(86, 20);
+            this.dataBaseToolStripMenuItem.Text = "&База данных";
             // 
             // statStripMenuItem
             // 
@@ -246,7 +230,7 @@
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.aboutToolStripMenuItem.Text = "О программе...";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.ShowAbouteBox);
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.ShowAboutBox);
             // 
             // buttonsImageList
             // 
@@ -277,23 +261,18 @@
             // splitContainerMain.Panel2
             // 
             this.splitContainerMain.Panel2.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.splitContainerMain.Panel2.Controls.Add(this.classViewControl);
+            this.splitContainerMain.Panel2.Controls.Add(this.currentTabControl);
+            this.splitContainerMain.Panel2.Controls.Add(this.classPaneBar);
             this.splitContainerMain.Panel2.Controls.Add(this.toolStrip);
             this.splitContainerMain.Panel2.Controls.Add(this.statusStrip);
-            this.splitContainerMain.Panel2.Controls.Add(this.signsPanel);
-            this.splitContainerMain.Panel2.Controls.Add(this.illnessesPanel);
-            this.splitContainerMain.Panel2.Controls.Add(this.tcxPanel);
-            this.splitContainerMain.Panel2.Controls.Add(this.genesPanel);
-            this.splitContainerMain.Panel2.Controls.Add(this.scriningPanel);
-            this.splitContainerMain.Panel2.Controls.Add(this.biochemPanel);
-            this.splitContainerMain.Size = new System.Drawing.Size(784, 540);
-            this.splitContainerMain.SplitterDistance = 238;
+            this.splitContainerMain.Size = new System.Drawing.Size(1020, 540);
+            this.splitContainerMain.SplitterDistance = 309;
             this.splitContainerMain.TabIndex = 1;
             // 
             // findButton
             // 
             this.findButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.findButton.Location = new System.Drawing.Point(169, 514);
+            this.findButton.Location = new System.Drawing.Point(240, 514);
             this.findButton.Name = "findButton";
             this.findButton.Size = new System.Drawing.Size(56, 23);
             this.findButton.TabIndex = 4;
@@ -307,7 +286,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.searchTextBox.Location = new System.Drawing.Point(3, 517);
             this.searchTextBox.Name = "searchTextBox";
-            this.searchTextBox.Size = new System.Drawing.Size(156, 20);
+            this.searchTextBox.Size = new System.Drawing.Size(227, 20);
             this.searchTextBox.TabIndex = 3;
             // 
             // collapseButton
@@ -340,8 +319,46 @@
             this.patientTreeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.patientTreeView.Location = new System.Drawing.Point(0, 0);
             this.patientTreeView.Name = "patientTreeView";
-            this.patientTreeView.Size = new System.Drawing.Size(236, 484);
+            this.patientTreeView.Size = new System.Drawing.Size(307, 319);
             this.patientTreeView.TabIndex = 0;
+            // 
+            // currentTabControl
+            // 
+            this.currentTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.currentTabControl.Appearance = System.Windows.Forms.TabAppearance.Buttons;
+            this.currentTabControl.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.currentTabControl.HotTrack = true;
+            this.currentTabControl.Location = new System.Drawing.Point(205, 0);
+            this.currentTabControl.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
+            this.currentTabControl.Multiline = true;
+            this.currentTabControl.Name = "currentTabControl";
+            this.currentTabControl.SelectedIndex = 0;
+            this.currentTabControl.Size = new System.Drawing.Size(452, 518);
+            this.currentTabControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
+            this.currentTabControl.TabIndex = 0;
+            // 
+            // classPaneBar
+            // 
+            this.classPaneBar.AutoScroll = true;
+            this.classPaneBar.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.classPaneBar.BorderWidth = 2;
+            this.classPaneBar.CanResize = false;
+            this.classPaneBar.Dock = System.Windows.Forms.DockStyle.Left;
+            this.classPaneBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.classPaneBar.HeaderColor1 = System.Drawing.Color.SkyBlue;
+            this.classPaneBar.HeaderGradientMode = System.Drawing.Drawing2D.LinearGradientMode.ForwardDiagonal;
+            this.classPaneBar.HeaderHeight = 22;
+            this.classPaneBar.ImagesEnabled = false;
+            this.classPaneBar.Location = new System.Drawing.Point(0, 0);
+            this.classPaneBar.MinimumExpandedHeight = 42;
+            this.classPaneBar.Name = "classPaneBar";
+            this.classPaneBar.Padding = new System.Windows.Forms.Padding(1);
+            this.classPaneBar.ShowExpandCollapseButton = false;
+            this.classPaneBar.Size = new System.Drawing.Size(202, 518);
+            this.classPaneBar.TabIndex = 13;
+            this.classPaneBar.GroupPaneExpanding += new BarTender.GroupPaneCancelEventHandler(this.classPaneBar_GroupPaneExpanding);
             // 
             // toolStrip
             // 
@@ -357,7 +374,7 @@
             this.toolStripSeparator6,
             this.addPropertyButton,
             this.cancelButton});
-            this.toolStrip.Location = new System.Drawing.Point(492, 0);
+            this.toolStrip.Location = new System.Drawing.Point(657, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(50, 518);
             this.toolStrip.TabIndex = 9;
@@ -445,7 +462,7 @@
             this.toolStripProgressBar});
             this.statusStrip.Location = new System.Drawing.Point(0, 518);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(542, 22);
+            this.statusStrip.Size = new System.Drawing.Size(707, 22);
             this.statusStrip.SizingGrip = false;
             this.statusStrip.TabIndex = 8;
             // 
@@ -463,188 +480,11 @@
             this.toolStripProgressBar.Name = "toolStripProgressBar";
             this.toolStripProgressBar.Size = new System.Drawing.Size(100, 16);
             // 
-            // signsPanel
-            // 
-            this.signsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.signsPanel.BackColor = System.Drawing.SystemColors.Info;
-            this.signsPanel.Controls.Add(this.signsTabControl);
-            this.signsPanel.Location = new System.Drawing.Point(201, 0);
-            this.signsPanel.Name = "signsPanel";
-            this.signsPanel.Size = new System.Drawing.Size(292, 518);
-            this.signsPanel.TabIndex = 10;
-            // 
-            // signsTabControl
-            // 
-            this.signsTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.signsTabControl.Appearance = System.Windows.Forms.TabAppearance.Buttons;
-            this.signsTabControl.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.signsTabControl.HotTrack = true;
-            this.signsTabControl.Location = new System.Drawing.Point(0, 0);
-            this.signsTabControl.Multiline = true;
-            this.signsTabControl.Name = "signsTabControl";
-            this.signsTabControl.SelectedIndex = 0;
-            this.signsTabControl.Size = new System.Drawing.Size(292, 518);
-            this.signsTabControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
-            this.signsTabControl.TabIndex = 0;
-            // 
-            // illnessesPanel
-            // 
-            this.illnessesPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.illnessesPanel.BackColor = System.Drawing.SystemColors.Info;
-            this.illnessesPanel.Controls.Add(this.diseasesTabControl);
-            this.illnessesPanel.Location = new System.Drawing.Point(201, 0);
-            this.illnessesPanel.Name = "illnessesPanel";
-            this.illnessesPanel.Size = new System.Drawing.Size(292, 518);
-            this.illnessesPanel.TabIndex = 11;
-            // 
-            // diseasesTabControl
-            // 
-            this.diseasesTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.diseasesTabControl.Appearance = System.Windows.Forms.TabAppearance.Buttons;
-            this.diseasesTabControl.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.diseasesTabControl.HotTrack = true;
-            this.diseasesTabControl.Location = new System.Drawing.Point(0, 0);
-            this.diseasesTabControl.Multiline = true;
-            this.diseasesTabControl.Name = "diseasesTabControl";
-            this.diseasesTabControl.SelectedIndex = 0;
-            this.diseasesTabControl.Size = new System.Drawing.Size(292, 518);
-            this.diseasesTabControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
-            this.diseasesTabControl.TabIndex = 0;
-            // 
-            // tcxPanel
-            // 
-            this.tcxPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.tcxPanel.BackColor = System.Drawing.SystemColors.Info;
-            this.tcxPanel.Controls.Add(this.tcxTabControl);
-            this.tcxPanel.Location = new System.Drawing.Point(201, 0);
-            this.tcxPanel.Name = "tcxPanel";
-            this.tcxPanel.Size = new System.Drawing.Size(292, 518);
-            this.tcxPanel.TabIndex = 11;
-            // 
-            // tcxTabControl
-            // 
-            this.tcxTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.tcxTabControl.Appearance = System.Windows.Forms.TabAppearance.Buttons;
-            this.tcxTabControl.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tcxTabControl.HotTrack = true;
-            this.tcxTabControl.Location = new System.Drawing.Point(0, 0);
-            this.tcxTabControl.Multiline = true;
-            this.tcxTabControl.Name = "tcxTabControl";
-            this.tcxTabControl.SelectedIndex = 0;
-            this.tcxTabControl.Size = new System.Drawing.Size(292, 518);
-            this.tcxTabControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
-            this.tcxTabControl.TabIndex = 0;
-            // 
-            // genesPanel
-            // 
-            this.genesPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.genesPanel.BackColor = System.Drawing.SystemColors.Info;
-            this.genesPanel.Controls.Add(this.genesTabControl);
-            this.genesPanel.Location = new System.Drawing.Point(201, 0);
-            this.genesPanel.Name = "genesPanel";
-            this.genesPanel.Size = new System.Drawing.Size(292, 518);
-            this.genesPanel.TabIndex = 11;
-            // 
-            // genesTabControl
-            // 
-            this.genesTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.genesTabControl.Appearance = System.Windows.Forms.TabAppearance.Buttons;
-            this.genesTabControl.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.genesTabControl.HotTrack = true;
-            this.genesTabControl.Location = new System.Drawing.Point(0, 0);
-            this.genesTabControl.Multiline = true;
-            this.genesTabControl.Name = "genesTabControl";
-            this.genesTabControl.SelectedIndex = 0;
-            this.genesTabControl.Size = new System.Drawing.Size(292, 518);
-            this.genesTabControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
-            this.genesTabControl.TabIndex = 0;
-            // 
-            // scriningPanel
-            // 
-            this.scriningPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.scriningPanel.BackColor = System.Drawing.SystemColors.Info;
-            this.scriningPanel.Controls.Add(this.scriningTabControl);
-            this.scriningPanel.Location = new System.Drawing.Point(201, 0);
-            this.scriningPanel.Name = "scriningPanel";
-            this.scriningPanel.Size = new System.Drawing.Size(292, 518);
-            this.scriningPanel.TabIndex = 11;
-            // 
-            // scriningTabControl
-            // 
-            this.scriningTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.scriningTabControl.Appearance = System.Windows.Forms.TabAppearance.Buttons;
-            this.scriningTabControl.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.scriningTabControl.HotTrack = true;
-            this.scriningTabControl.Location = new System.Drawing.Point(0, 0);
-            this.scriningTabControl.Multiline = true;
-            this.scriningTabControl.Name = "scriningTabControl";
-            this.scriningTabControl.SelectedIndex = 0;
-            this.scriningTabControl.Size = new System.Drawing.Size(292, 518);
-            this.scriningTabControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
-            this.scriningTabControl.TabIndex = 0;
-            // 
-            // biochemPanel
-            // 
-            this.biochemPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.biochemPanel.BackColor = System.Drawing.SystemColors.Info;
-            this.biochemPanel.Controls.Add(this.biochemTabControl);
-            this.biochemPanel.Location = new System.Drawing.Point(201, 0);
-            this.biochemPanel.Name = "biochemPanel";
-            this.biochemPanel.Size = new System.Drawing.Size(292, 518);
-            this.biochemPanel.TabIndex = 11;
-            // 
-            // biochemTabControl
-            // 
-            this.biochemTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.biochemTabControl.Appearance = System.Windows.Forms.TabAppearance.Buttons;
-            this.biochemTabControl.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.biochemTabControl.HotTrack = true;
-            this.biochemTabControl.Location = new System.Drawing.Point(0, 0);
-            this.biochemTabControl.Multiline = true;
-            this.biochemTabControl.Name = "biochemTabControl";
-            this.biochemTabControl.SelectedIndex = 0;
-            this.biochemTabControl.Size = new System.Drawing.Size(292, 518);
-            this.biochemTabControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
-            this.biochemTabControl.TabIndex = 0;
-            // 
-            // classViewControl
-            // 
-            this.classViewControl.AutoSize = true;
-            this.classViewControl.Location = new System.Drawing.Point(0, 0);
-            this.classViewControl.Name = "classViewControl";
-            this.classViewControl.Size = new System.Drawing.Size(200, 213);
-            this.classViewControl.TabIndex = 12;
-            this.classViewControl.CheckedChanget += new System.EventHandler<GenGenesis.Controls.StackViewControl.CheckedChangedEventArgs>(this.classViewControl_CheckedChanget);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 564);
+            this.ClientSize = new System.Drawing.Size(1020, 564);
             this.Controls.Add(this.splitContainerMain);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
@@ -661,16 +501,11 @@
             this.splitContainerMain.Panel2.ResumeLayout(false);
             this.splitContainerMain.Panel2.PerformLayout();
             this.splitContainerMain.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.classPaneBar)).EndInit();
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
-            this.signsPanel.ResumeLayout(false);
-            this.illnessesPanel.ResumeLayout(false);
-            this.tcxPanel.ResumeLayout(false);
-            this.genesPanel.ResumeLayout(false);
-            this.scriningPanel.ResumeLayout(false);
-            this.biochemPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -678,20 +513,14 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dataBaseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;      
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ImageList buttonsImageList;
         private System.Windows.Forms.SplitContainer splitContainerMain;
-        private System.Windows.Forms.TabControl signsTabControl;
         private System.Windows.Forms.TreeView patientTreeView;
-        private System.Windows.Forms.TabControl diseasesTabControl;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.TabControl tcxTabControl;
-        private System.Windows.Forms.TabControl genesTabControl;
-        private System.Windows.Forms.TabControl scriningTabControl;
-        private System.Windows.Forms.TabControl biochemTabControl;
         private System.Windows.Forms.ToolStripMenuItem patientToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changePatientToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newPatientToolStripMenuItem;
@@ -720,15 +549,10 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.TextBox searchTextBox;
         private System.Windows.Forms.Button findButton;
-        private System.Windows.Forms.Panel signsPanel;
-        private System.Windows.Forms.Panel scriningPanel;
-        private System.Windows.Forms.Panel biochemPanel;
-        private System.Windows.Forms.Panel genesPanel;
-        private System.Windows.Forms.Panel tcxPanel;
-        private System.Windows.Forms.Panel illnessesPanel;
-        private GenGenesis.Controls.StackViewControl classViewControl;
         private System.Windows.Forms.ToolStripStatusLabel eventToolStripStatusLabel;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;        
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
+        private BarTender.GroupPaneBar classPaneBar;
+        private System.Windows.Forms.TabControl currentTabControl;        
 
     }
 }

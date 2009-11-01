@@ -5,25 +5,28 @@ namespace GenGenesis
 {
     public partial class MainForm : Form
     {
-        private void FillTreeView() // Заполение дерева
+        /// <summary>
+        /// Заполение дерева
+        /// </summary>
+        private void FillTreeView()
         {
             Cursor.Current = Cursors.WaitCursor;
             patientTreeView.BeginUpdate(); // Блокировка перерисовки
             patientTreeView.Nodes.Clear(); // Очистка
             
             #region Основные записи
-            patientTreeView.Nodes.Add("# " + curentPatient.patient_id);
-            if (curentPatient.surname.Length != 0)
-                patientTreeView.Nodes.Add(curentPatient.surname);
-            if (curentPatient.name.Length != 0)
-                patientTreeView.Nodes.Add(curentPatient.name);
-            if (curentPatient.third_name.Length != 0)
-                patientTreeView.Nodes.Add(curentPatient.third_name);
-            patientTreeView.Nodes.Add(curentPatient.sex);
-            if (curentPatient.birthday != DateTime.MinValue)
-                patientTreeView.Nodes.Add(curentPatient.birthday.ToLongDateString() + "р.");
-            if (curentPatient.adress.Length != 0)
-                patientTreeView.Nodes.Add("Адрес: " + curentPatient.adress);
+            patientTreeView.Nodes.Add("# " + currentPatient.patient_id);
+            if (currentPatient.surname.Length != 0)
+                patientTreeView.Nodes.Add(currentPatient.surname);
+            if (currentPatient.name.Length != 0)
+                patientTreeView.Nodes.Add(currentPatient.name);
+            if (currentPatient.third_name.Length != 0)
+                patientTreeView.Nodes.Add(currentPatient.third_name);
+            patientTreeView.Nodes.Add(currentPatient.sex);
+            if (currentPatient.birthday != DateTime.MinValue)
+                patientTreeView.Nodes.Add(currentPatient.birthday.ToLongDateString() + "р.");
+            if (currentPatient.adress.Length != 0)
+                patientTreeView.Nodes.Add("Адрес: " + currentPatient.adress);
             #endregion
 
             TreeViewAddSigns();
@@ -38,13 +41,16 @@ namespace GenGenesis
             // Нормальный курсор
             Cursor.Current = Cursors.Default;                       
         }
+        /// <summary>
+        /// Добавление данных о генах
+        /// </summary>
         private void TreeViewAddGenes()
         {
             string genesString = "Состояние генов";
             // Добавим гены
             TreeNode GenNode = patientTreeView.Nodes.Add(genesString);
             GenNode.ForeColor = Color.FromKnownColor(KnownColor.HotTrack);
-            foreach (Gen oneGen in curentPatient.genes)
+            foreach (Gen oneGen in currentPatient.genes)
             {
                 TreeNode newNode = new TreeNode();
                 switch (oneGen.gen_stat)
@@ -66,13 +72,17 @@ namespace GenGenesis
                 }
             }
         }
+
+        /// <summary>
+        /// Добавление данных о ТСХ
+        /// </summary>
         private void TreeViewAddTCXs()
         {
             string TCXstring = "Пробы ТСХ";
             // Добавляем TCX
             TreeNode TCXNode = patientTreeView.Nodes.Add(TCXstring, TCXstring);
             TCXNode.ForeColor = Color.FromKnownColor(KnownColor.HotTrack);
-            foreach (TCX oneTCX in curentPatient.TCX)
+            foreach (TCX oneTCX in currentPatient.TCX)
             {
                 TreeNode newNode = new TreeNode();
                 // Ищем группу
@@ -105,13 +115,17 @@ namespace GenGenesis
                 }
             }
         }
+
+        /// <summary>
+        /// Добавление данных о заболеваниях
+        /// </summary>
         private void TreeViewAddIllnesses()
         {
             string illnessString = "Заболевания";
             // Добавляем болезни
             TreeNode illnessNode = patientTreeView.Nodes.Add(illnessString);
             illnessNode.ForeColor = Color.FromKnownColor(KnownColor.Sienna);
-            foreach (Illness oneIllness in curentPatient.bolezni)
+            foreach (Illness oneIllness in currentPatient.bolezni)
             {
                 TreeNode newNode = new TreeNode();
                 // Ищем группу
@@ -138,13 +152,17 @@ namespace GenGenesis
                 }
             }
         }
+
+        /// <summary>
+        /// Добавление данных о признаках
+        /// </summary>
         private void TreeViewAddSigns()
         {
             string signsString = "Признаки";
             // Добавляем признаки
             TreeNode signsNode = patientTreeView.Nodes.Add(signsString);
             signsNode.ForeColor = Color.FromKnownColor(KnownColor.HotTrack);
-            foreach (Sign oneSign in curentPatient.priznaki)
+            foreach (Sign oneSign in currentPatient.priznaki)
             {
                 TreeNode newNode = new TreeNode();
                 // Ищем группу
@@ -171,6 +189,10 @@ namespace GenGenesis
                 }
             }
         }
+
+        /// <summary>
+        /// Поиск в дереве
+        /// </summary>
         private void FindInTreeView() // Найти в дереве и развернуть
         {
 

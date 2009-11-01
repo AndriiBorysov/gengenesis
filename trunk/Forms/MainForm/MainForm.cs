@@ -3,12 +3,13 @@ using System.Windows.Forms;
 using System.Data;
 using System.Drawing;
 using System.Collections.Generic;
+using OutlookStyleControls;
 
 namespace GenGenesis
 {
     public partial class MainForm : Form
     {
-        private Patient curentPatient; // Текущий пациент        
+        private Patient currentPatient; // Текущий пациент        
 
         public MainForm() //Конструктор
         {
@@ -16,14 +17,17 @@ namespace GenGenesis
             InitializeComponent();
             InitializeDB();
             InitializeToolTips();
-            InitializeIcons();            
-            // Отображение формы 
-            Show();            
-            // Заполнение формы
-            //FillDataGridView(); // Заполняем таблицу
+            InitializeIcons();
+            InitializeClassPaneBar();
+            InitializeTabControls();
+            Show(); // Отображение формы 
             FillTabControls(); // Заполняем табконтролы            
         }
-        private void InitializeIcons() // Инициализация картинок для формы
+        
+        /// <summary>
+        /// Инициализация картинок для формы
+        /// </summary>
+        private void InitializeIcons()
         {
             newPatientButton.Image = buttonsImageList.Images["New"];
             loadPatientButton.Image = buttonsImageList.Images["Load"];
@@ -32,8 +36,61 @@ namespace GenGenesis
             deletePatientButton.Image = buttonsImageList.Images["Delete"];
             addPropertyButton.Image = buttonsImageList.Images["Add"];
             cancelButton.Image = buttonsImageList.Images["Cancel"];
-        }        
-        private void EnablePatientButtons(bool stat) // Меняем состояние кнопок управления пациентом
+        }
+
+        /// <summary>
+        /// Инициализация одного SBControle
+        /// </summary>
+        private StackBarControl InitializeStackBarControle()
+        {
+            StackBarControl newSTC = new StackBarControl();
+            newSTC.BackColor = System.Drawing.SystemColors.Highlight;
+            newSTC.ButtonHeight = 30;
+            newSTC.Cursor = System.Windows.Forms.Cursors.Hand;
+            newSTC.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            newSTC.GradientButtonHoverDark = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(192)))), ((int)(((byte)(91)))));
+            newSTC.GradientButtonHoverLight = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(220)))));
+            newSTC.GradientButtonNormalDark = System.Drawing.Color.FromArgb(((int)(((byte)(178)))), ((int)(((byte)(193)))), ((int)(((byte)(140)))));
+            newSTC.GradientButtonNormalLight = System.Drawing.Color.FromArgb(((int)(((byte)(234)))), ((int)(((byte)(240)))), ((int)(((byte)(207)))));
+            newSTC.GradientButtonSelectedDark = System.Drawing.Color.FromArgb(((int)(((byte)(126)))), ((int)(((byte)(166)))), ((int)(((byte)(225)))));
+            newSTC.GradientButtonSelectedLight = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(225)))), ((int)(((byte)(252)))));            
+            
+            newSTC.Location = new System.Drawing.Point(1,1);
+            newSTC.Name = "newSTC";
+            newSTC.SelectedButton = null;
+            newSTC.Dock = DockStyle.Fill;            
+            return newSTC;
+        }
+        /// <summary>
+        /// Инициализация списка групп
+        /// </summary>
+        private void InitializeClassPaneBar()
+        {            
+            classPaneBar.Add(null, "Признаки", null,false);
+
+            StackBarControl currentSTC = InitializeStackBarControle();
+            currentSTC.Buttons.Add("Родословные");
+            currentSTC.Buttons.Add("Первичный диагноз");
+            currentSTC.Buttons.Add("Вторичный диагноз");
+            currentSTC.SelectedButton = null;
+
+            classPaneBar.Add(currentSTC, "Заболевания", null);            
+            classPaneBar.Add(null, "ТСХ", null);
+            classPaneBar.Add(null, "Генные пробы", null);
+
+            currentSTC = InitializeStackBarControle();
+            currentSTC.Buttons.Add("1я проба");
+            currentSTC.Buttons.Add("2я проба");
+            classPaneBar.Add(currentSTC, "Анализы", null);            
+            // Свернём все вкладки
+            classPaneBar.CollapseAll();
+        }
+
+        /// <summary>
+        /// Меняем состояние кнопок управления пациентом
+        /// </summary>
+        /// <param name="stat">Задаёт новое состояние</param>
+        private void EnablePatientButtons(bool stat)
         {
             savePatientButton.Enabled = stat;
             savePatientToolStripMenuItem.Enabled = stat;
@@ -44,25 +101,44 @@ namespace GenGenesis
             addPropertyButton.Enabled = stat;
             cancelButton.Enabled = stat;
         }
-        private void EnableMainButtons(bool stat) // Меняем состояние кнопок открытия и создания папиента
+
+        /// <summary>
+        /// Меняем состояние кнопок открытия и создания папиента
+        /// </summary>
+        /// <param name="stat">Задаёт новое состояние</param>
+        private void EnableMainButtons(bool stat)
         {
             newPatientButton.Enabled = stat;
             newPatientToolStripMenuItem.Enabled = stat;
             loadPatientButton.Enabled = stat;
             openPatientToolStripMenuItem.Enabled = stat;           
         }
-        private void ShowToolBoxMassage(string msg) // Показывает сообщение в тоолСтрипе
+
+        /// <summary>
+        /// Показывает сообщение в statusStripe
+        /// </summary>
+        /// <param name="msg">Текст сообщения</param>
+        private void ShowToolBoxMassage(string msg)
         {
             eventToolStripStatusLabel.Text = msg;
         }
-        private void SetFormCaption(string text) // Установка заголовка формы
+
+        /// <summary>
+        /// Установка заголовка формы
+        /// </summary>
+        /// <param name="text">Текст заголовка</param>
+        private void SetFormCaption(string text)
         {
             if (text == string.Empty)
-                this.Text = "GenGenesis: " + curentPatient.surname + " " + curentPatient.name + " " + curentPatient.third_name;
+                this.Text = "GenGenesis: " + currentPatient.surname + " " + currentPatient.name + " " + currentPatient.third_name;
             else
                 this.Text = "GenGenesis: " + text;
         }
-        private void ShowStat() // Показать статистику
+
+        /// <summary>
+        /// Показать статистику
+        /// </summary>
+        private void ShowStat()
         {
             string outString;
             outString =
@@ -70,7 +146,11 @@ namespace GenGenesis
                 "....";
             MessageBox.Show(outString, "Статистика", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        private void ShowFindPatientDialog() // Показывает форму поиска нового пациента
+        
+        /// <summary>
+        /// Показывает форму поиска нового пациента
+        /// </summary>
+        private void ShowFindPatientDialog()
         {
             FindPatientForm FPForm = new FindPatientForm(patientsTableAdapterManager);
             FPForm.ShowDialog();
@@ -79,7 +159,7 @@ namespace GenGenesis
                 // Создадим нового пациента
                 Patient newPatient = new Patient();
                 newPatient.Load(FPForm.curPatient, this.directorysDataSet, patientsTableAdapterManager);
-                curentPatient = newPatient;
+                currentPatient = newPatient;
                 // Сделаем кнопки активными
                 EnablePatientButtons(true);
                 // Чистим галочки
@@ -91,11 +171,15 @@ namespace GenGenesis
                 SetFormCaption("");
             }
         }
-        private void ShowEditorForm() // Отображает форму редактора БД
+        
+        /// <summary>
+        /// Отображает форму редактора БД
+        /// </summary>
+        private void ShowEditorForm()
         {
-            if (curentPatient != null)
+            if (currentPatient != null)
             {
-                if (!curentPatient.isSaved)
+                if (!currentPatient.isSaved)
                     switch (MessageBox.Show("Текущий пациент будет закрыт! Сохранить?", "Внимание",
                         MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                     {
@@ -111,7 +195,7 @@ namespace GenGenesis
                 ResetAllTabControls();
                 EnablePatientButtons(false);
                 patientTreeView.Nodes.Clear();
-                curentPatient = null;
+                currentPatient = null;
                 Form DBEditor = new DataBaseEditorForm(directorysDataSet, directorysTableAdapterManager);
                 if (DBEditor.ShowDialog() == DialogResult.OK)
                 {
@@ -129,7 +213,11 @@ namespace GenGenesis
                 }
             }
         }
-        private void ExportingPatientDataBase() // Експортирование базы данных
+        
+        /// <summary>
+        /// Експортирование базы данных
+        /// </summary>
+        private void ExportingPatientDataBase()
         {
             // Получение имени пользователя
             string[] userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name.Split('\\');
@@ -144,23 +232,32 @@ namespace GenGenesis
                 System.IO.File.Copy(Application.StartupPath + "\\DB\\patients.mdb", saveFile.FileName);
             }
         }
-        private void ImportingPatientDataBase() // Импорт базы данных пациентов
+
+        /// <summary>
+        /// Импорт базы данных пациентов
+        /// </summary>
+        private void ImportingPatientDataBase()
         {
             ImportingDataBaseForm iDBForm = new ImportingDataBaseForm(patientsDataSet, directorysDataSet, patientsTableAdapterManager);
             iDBForm.ShowDialog();
         }
 
         #region Обработчики формы
-        private void MainForm_Load(object sender, EventArgs e)// Загрузка формы
+
+        private void MainForm_Load(object sender, EventArgs e)
         {
             EnablePatientButtons(false);
         }
-        private void doExit(object sender, FormClosingEventArgs e)// Выход c программы
+
+        /// <summary>
+        /// Выход c программы
+        /// </summary>        
+        private void doExit(object sender, FormClosingEventArgs e)
         {
             // Если форма существует
-            if (curentPatient != null)
+            if (currentPatient != null)
                 // Сохранены ли изменения
-                if (curentPatient.isSaved)
+                if (currentPatient.isSaved)
                 {
                     // Подтверждаем закрытие
                     e.Cancel = false;
@@ -188,31 +285,7 @@ namespace GenGenesis
                             break;
                     }
                 }
-        }
-        private void classViewControl_CheckedChanget(object sender, GenGenesis.Controls.StackViewControl.CheckedChangedEventArgs e)  // Смена отображаемой панели       
-        {
-            switch (e.currentPosition)
-            {
-                case " Признаки":
-                    this.signsPanel.BringToFront();
-                    break;
-                case " Болезни":
-                    this.illnessesPanel.BringToFront();
-                    break;
-                case " Пробы ТСХ":
-                    this.tcxPanel.BringToFront();
-                    break;
-                case " Состояния генов":
-                    this.genesPanel.BringToFront();
-                    break;
-                case " Скрининг тесты":
-                    this.scriningPanel.BringToFront();
-                    break;
-                case " Биохимия":
-                    this.biochemPanel.BringToFront();
-                    break;
-            }
-        }
+        }       
         
         #region Buttons
         private void newPatientButton_Click(object sender, EventArgs e)
@@ -298,12 +371,19 @@ namespace GenGenesis
         {
             DeleteCurentPatient();
         }
-        private void ShowAbouteBox(object sender, EventArgs e)
+        private void ShowAboutBox(object sender, EventArgs e)
         {
-            AboutBox Aboute = new AboutBox();
-            Aboute.ShowDialog();
+            AboutBox About = new AboutBox();
+            About.ShowDialog();
         }
         #endregion
+        /// <summary>
+        /// Реализуем,Чтоб остальные сворачивались
+        /// </summary>        
+        private void classPaneBar_GroupPaneExpanding(object sender, BarTender.GroupPaneCancelEventArgs eventArgs)
+        {
+            classPaneBar.CollapseAll(true);
+        }
         #endregion        
     }
 }

@@ -7,13 +7,17 @@ namespace GenGenesis
     public partial class MainForm
     {
         #region Функции обработки пациента
-        private void CreateNewPatient() // Создание нового пациента
+
+        /// <summary>
+        /// Создание нового пациента
+        /// </summary>
+        private void CreateNewPatient()
         {
             /// Проверим, проведены ли несохранённые изменения в текущем пациенте
             //
-            if (curentPatient != null)
+            if (currentPatient != null)
                 // Если изменения сохранены...            
-                if (curentPatient.isSaved)
+                if (currentPatient.isSaved)
                 {
                     ShowNewPatientDialog();
                 }
@@ -40,12 +44,16 @@ namespace GenGenesis
                 // Если нет указателя на пациента, создадим его
                 ShowNewPatientDialog();
         }
-        private void LoadPatient() // Октрыть пациента
+
+        /// <summary>
+        /// Загрузить данные о пациенте из базы данных
+        /// </summary>
+        private void LoadPatient()
         {
             // существует ли пациент
-            if (curentPatient != null)
+            if (currentPatient != null)
                 // Если изменения сохранены...            
-                if (curentPatient.isSaved)
+                if (currentPatient.isSaved)
                 {
                     ShowFindPatientDialog();
                 }
@@ -71,23 +79,31 @@ namespace GenGenesis
             else
                 ShowFindPatientDialog();
         }
-        private void SaveCurentPatient() // Сохраняем текущего пациента в базу данных
+
+        /// <summary>
+        /// Сохраняем текущего пациента в базу данных
+        /// </summary>
+        private void SaveCurentPatient()
         {
             // Сохраняем
-            curentPatient.Save(patientsTableAdapterManager);
+            currentPatient.Save(patientsTableAdapterManager);
             // Обновляем таблицу ID пациентов
             this.patientsIDListTableAdapter.Fill(this.patientsDataSet.PatientsIDList);
         }
-        private void ChangeCurentPatient()// Изменение полей пациента
+
+        /// <summary>
+        /// Изменение полей текущего пациента
+        /// </summary>
+        private void ChangeCurentPatient()
         {
-            if (curentPatient != null)
+            if (currentPatient != null)
             {
-                Patient newPatient = curentPatient;
+                Patient newPatient = currentPatient;
                 NewPatientForm newPatForm = new NewPatientForm(ref newPatient, true);
                 DialogResult res = newPatForm.ShowDialog();
                 if (res == DialogResult.OK)
                 {
-                    curentPatient = newPatient;
+                    currentPatient = newPatient;
                     FillTreeView();
                 }
             }
@@ -96,13 +112,17 @@ namespace GenGenesis
                 MessageBox.Show("Некого изменять! Для начала создайте или найдите в поиске!", "Ошибочка!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-        private void DeleteCurentPatient() // Удалить текущего пациента
+
+        /// <summary>
+        /// Удалить текущего пациента из базы данных
+        /// </summary>
+        private void DeleteCurentPatient() 
         {
             if (MessageBox.Show("Действительно удалить без возможности востановления?", "Внимание", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
                 == DialogResult.OK)
             {
                 // Удаляем
-                curentPatient.Delete(patientsTableAdapterManager);
+                currentPatient.Delete(patientsTableAdapterManager);
                 // Обновляем таблицу ID пациентов
                 this.patientsIDListTableAdapter.Fill(this.patientsDataSet.PatientsIDList);
                 // Сделай кнопки не активными
@@ -110,12 +130,16 @@ namespace GenGenesis
                 ResetAllTabControls();
                 // Чистим дерево
                 patientTreeView.Nodes.Clear();
-                curentPatient = new Patient();
-                curentPatient.isSaved = true;
+                currentPatient = new Patient();
+                currentPatient.isSaved = true;
                 SetFormCaption(" ");
             }
         }
-        private void ShowNewPatientDialog() // Показывает диалог создания нового пациента
+
+        /// <summary>
+        /// // Изменение полей текущего пациента
+        /// </summary>
+        private void ShowNewPatientDialog()
         {
             Patient newPatient = new Patient();
             NewPatientForm newPatForm = new NewPatientForm(ref newPatient);
@@ -130,7 +154,7 @@ namespace GenGenesis
                     MessageBox.Show("Такой номер карты уже встречается!\nИзмените номер карты!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     newPatForm.ShowDialog();
                 }
-                curentPatient = newPatient;
+                currentPatient = newPatient;
                 // Делаем Кноаки активными 
                 EnablePatientButtons(true);
                 ResetAllTabControls();
@@ -140,10 +164,15 @@ namespace GenGenesis
                 SaveCurentPatient();
             }
         }
+
         #endregion
 
         #region Добавление различных свойств к пациенту
-        private void AddPropertyToCurentPatient() // Добавление новых свойств в класс пациента
+
+        /// <summary>
+        /// Добавление новых свойств к текущему пациенту
+        /// </summary>
+        private void AddPropertyToCurentPatient()
         {
             // Для свойств
             List<Sign> signsList = new List<Sign>();
@@ -158,9 +187,13 @@ namespace GenGenesis
                     }
                 }
             }
-            curentPatient.priznaki = signsList;
+            currentPatient.priznaki = signsList;
         }
-        private void AddIllnessToCurentPatient() // Добавление новых заболеваний в класс пациента
+
+        /// <summary>
+        /// Добавление новых заболеваний к текущему пациенту
+        /// </summary>
+        private void AddIllnessToCurentPatient()
         {
             // Для заболеваний
             List<Illness> illnessList = new List<Illness>();
@@ -175,9 +208,13 @@ namespace GenGenesis
                     }
                 }
             }
-            curentPatient.bolezni = illnessList;
+            currentPatient.bolezni = illnessList;
         }
-        private void AddTCXToCurentPatient() // Добавление новых проб ТСХ в класс пациента
+
+        /// <summary>
+        /// Добавление новых проб ТСХ в класс пациента
+        /// </summary>
+        private void AddTCXToCurentPatient()
         {
             List<TCX> TCXList = new List<TCX>();
             // Для каждой страницы (Типа)
@@ -194,9 +231,13 @@ namespace GenGenesis
                     }
                 }
             }
-            curentPatient.TCX = TCXList;
+            currentPatient.TCX = TCXList;
         }
-        private void AddGenesToCurentPatient() // Добавление состояния генов
+
+        /// <summary>
+        /// Добавление состояния генов
+        /// </summary>
+        private void AddGenesToCurentPatient()
         {
             List<Gen> genList = new List<Gen>();
             // Для каждой таблицы контролов
@@ -213,8 +254,11 @@ namespace GenGenesis
                         genList.Add(gen);
                     }
                 }
-            curentPatient.genes = genList;
+            currentPatient.genes = genList;
         }
+        /// <summary>
+        /// Обновить данные с формы и добавить к текущему пациенту
+        /// </summary>
         private void AddAllPropertysToCurentPatient()
         {
             // Добавим изменения в класс
@@ -225,8 +269,7 @@ namespace GenGenesis
             ///////////////////////
             // Добавить остальные//
             ///////////////////////
-            curentPatient.isSaved = false;
-            //this.patientTreeView.
+            currentPatient.isSaved = false;            
             // Обновим дерево            
             FillTreeView();
         }

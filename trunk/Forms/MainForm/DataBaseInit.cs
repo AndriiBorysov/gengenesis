@@ -24,7 +24,10 @@ namespace GenGenesis
         patientsDataSetTableAdapters.priznaki_tempTableAdapter priznaki_tempTableAdapter;
         patientsDataSetTableAdapters.tcx_allTableAdapter tcx_allTableAdapter;        
 
-        // Инициализация классов для работы базы данных
+        
+        /// <summary>
+        /// Инициализация классов для работы базы данных 
+        /// </summary>
         private void InitializeDB()
         {
             directorysDataSet = new directorysDataSet();
@@ -76,7 +79,10 @@ namespace GenGenesis
             }
 
         }
-        // Заполняем менеджер адаптеровТаблиц справочника
+
+        /// <summary>
+        /// Заполняем менеджер адаптеровТаблиц справочника
+        /// </summary>
         private void FillDirectorysTableAdapterManager()
         {
             // Заполним менеджер адаптеров
@@ -89,7 +95,10 @@ namespace GenGenesis
             directorysTableAdapterManager.tcx_groupTableAdapter = this.tcx_groupTableAdapter;
             directorysTableAdapterManager.tcxTableAdapter = this.tcxTableAdapter;            
         }
-        // Заполняем менеджер адаптеровТаблиц пациента
+
+        /// <summary>
+        /// Заполняем менеджер адаптеровТаблиц пациента
+        /// </summary>
         private void FillPatientTableAdapterManager()
         {
             // Заполним менеджер адаптеров                  
