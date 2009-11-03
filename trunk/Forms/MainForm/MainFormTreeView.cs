@@ -15,7 +15,7 @@ namespace GenGenesis
             patientTreeView.Nodes.Clear(); // Очистка
             
             #region Основные записи
-            patientTreeView.Nodes.Add("# " + currentPatient.patient_id);
+            patientTreeView.Nodes.Add("# " + currentPatient.card_number);
             if (currentPatient.surname.Length != 0)
                 patientTreeView.Nodes.Add(currentPatient.surname);
             if (currentPatient.name.Length != 0)
@@ -30,47 +30,20 @@ namespace GenGenesis
             #endregion
 
             TreeViewAddSigns();
-            TreeViewAddIllnesses();
-            TreeViewAddTCXs();
-            TreeViewAddGenes();
-            ///////////////////////
-            // Добавить остальные//
-            ///////////////////////
+            //TreeViewAddIllnesses();
+            //TreeViewAddTCXs();
+            //TreeViewAddAnalysis();            
             // Конец изменения
             patientTreeView.EndUpdate();
             // Нормальный курсор
             Cursor.Current = Cursors.Default;                       
         }
         /// <summary>
-        /// Добавление данных о генах
+        /// Добавление данных о анализах
         /// </summary>
-        private void TreeViewAddGenes()
+        private void TreeViewAddAnalysis()
         {
-            string genesString = "Состояние генов";
-            // Добавим гены
-            TreeNode GenNode = patientTreeView.Nodes.Add(genesString);
-            GenNode.ForeColor = Color.FromKnownColor(KnownColor.HotTrack);
-            foreach (Gen oneGen in currentPatient.genes)
-            {
-                TreeNode newNode = new TreeNode();
-                switch (oneGen.gen_stat)
-                {
-                    case -1:
-                        newNode.ForeColor = Color.Red;
-                        newNode.Text = oneGen.gen_name + "  -";
-                        GenNode.Nodes.Add(newNode);
-                        break;
-                    case 0:
-                        newNode.Text = oneGen.gen_name + "  0";
-                        GenNode.Nodes.Add(newNode);
-                        break;
-                    case 1:
-                        newNode.ForeColor = Color.Green;
-                        newNode.Text = oneGen.gen_name + "  +";
-                        GenNode.Nodes.Add(newNode);
-                        break;
-                }
-            }
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -195,7 +168,7 @@ namespace GenGenesis
         /// </summary>
         private void FindInTreeView() // Найти в дереве и развернуть
         {
-
+            throw new NotImplementedException();
         }
     }
 }

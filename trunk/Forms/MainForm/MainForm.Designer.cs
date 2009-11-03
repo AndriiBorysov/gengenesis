@@ -35,7 +35,6 @@
             this.statStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exportStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.editorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -58,7 +57,8 @@
             this.expandButton = new System.Windows.Forms.Button();
             this.patientTreeView = new System.Windows.Forms.TreeView();
             this.currentTabControl = new System.Windows.Forms.TabControl();
-            this.classPaneBar = new BarTender.GroupPaneBar();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.newPatientButton = new System.Windows.Forms.ToolStripButton();
             this.loadPatientButton = new System.Windows.Forms.ToolStripButton();
@@ -71,13 +71,17 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.eventToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.tabControlPanel = new System.Windows.Forms.Panel();
+            this.classPaneBar = new BarTender.GroupPaneBar();
             this.menuStrip.SuspendLayout();
             this.splitContainerMain.Panel1.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
             this.splitContainerMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.classPaneBar)).BeginInit();
+            this.currentTabControl.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
+            this.tabControlPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.classPaneBar)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -99,7 +103,6 @@
             this.statStripMenuItem,
             this.toolStripSeparator1,
             this.exportStripMenuItem,
-            this.importStripMenuItem,
             this.toolStripSeparator2,
             this.editorToolStripMenuItem,
             this.toolStripSeparator3,
@@ -126,13 +129,6 @@
             this.exportStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.exportStripMenuItem.Text = "Экспортировать...";
             this.exportStripMenuItem.Click += new System.EventHandler(this.exportStripMenuItem_Click);
-            // 
-            // importStripMenuItem
-            // 
-            this.importStripMenuItem.Name = "importStripMenuItem";
-            this.importStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.importStripMenuItem.Text = "Импортировать...";
-            this.importStripMenuItem.Click += new System.EventHandler(this.importStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -261,7 +257,7 @@
             // splitContainerMain.Panel2
             // 
             this.splitContainerMain.Panel2.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.splitContainerMain.Panel2.Controls.Add(this.currentTabControl);
+            this.splitContainerMain.Panel2.Controls.Add(this.tabControlPanel);
             this.splitContainerMain.Panel2.Controls.Add(this.classPaneBar);
             this.splitContainerMain.Panel2.Controls.Add(this.toolStrip);
             this.splitContainerMain.Panel2.Controls.Add(this.statusStrip);
@@ -319,46 +315,43 @@
             this.patientTreeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.patientTreeView.Location = new System.Drawing.Point(0, 0);
             this.patientTreeView.Name = "patientTreeView";
-            this.patientTreeView.Size = new System.Drawing.Size(307, 319);
+            this.patientTreeView.Size = new System.Drawing.Size(307, 484);
             this.patientTreeView.TabIndex = 0;
             // 
             // currentTabControl
             // 
-            this.currentTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             this.currentTabControl.Appearance = System.Windows.Forms.TabAppearance.Buttons;
+            this.currentTabControl.Controls.Add(this.tabPage1);
+            this.currentTabControl.Controls.Add(this.tabPage2);
+            this.currentTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.currentTabControl.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.currentTabControl.HotTrack = true;
-            this.currentTabControl.Location = new System.Drawing.Point(205, 0);
+            this.currentTabControl.Location = new System.Drawing.Point(0, 0);
             this.currentTabControl.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.currentTabControl.Multiline = true;
             this.currentTabControl.Name = "currentTabControl";
             this.currentTabControl.SelectedIndex = 0;
-            this.currentTabControl.Size = new System.Drawing.Size(452, 518);
+            this.currentTabControl.Size = new System.Drawing.Size(451, 518);
             this.currentTabControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.currentTabControl.TabIndex = 0;
             // 
-            // classPaneBar
+            // tabPage1
             // 
-            this.classPaneBar.AutoScroll = true;
-            this.classPaneBar.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.classPaneBar.BorderWidth = 2;
-            this.classPaneBar.CanResize = false;
-            this.classPaneBar.Dock = System.Windows.Forms.DockStyle.Left;
-            this.classPaneBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.classPaneBar.HeaderColor1 = System.Drawing.Color.SkyBlue;
-            this.classPaneBar.HeaderGradientMode = System.Drawing.Drawing2D.LinearGradientMode.ForwardDiagonal;
-            this.classPaneBar.HeaderHeight = 22;
-            this.classPaneBar.ImagesEnabled = false;
-            this.classPaneBar.Location = new System.Drawing.Point(0, 0);
-            this.classPaneBar.MinimumExpandedHeight = 42;
-            this.classPaneBar.Name = "classPaneBar";
-            this.classPaneBar.Padding = new System.Windows.Forms.Padding(1);
-            this.classPaneBar.ShowExpandCollapseButton = false;
-            this.classPaneBar.Size = new System.Drawing.Size(202, 518);
-            this.classPaneBar.TabIndex = 13;
-            this.classPaneBar.GroupPaneExpanding += new BarTender.GroupPaneCancelEventHandler(this.classPaneBar_GroupPaneExpanding);
+            this.tabPage1.Location = new System.Drawing.Point(4, 28);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Size = new System.Drawing.Size(443, 486);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 28);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Size = new System.Drawing.Size(442, 486);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // toolStrip
             // 
@@ -476,9 +469,41 @@
             // 
             this.toolStripProgressBar.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripProgressBar.MarqueeAnimationSpeed = 10;
-            this.toolStripProgressBar.Maximum = 6;
+            this.toolStripProgressBar.Maximum = 4;
             this.toolStripProgressBar.Name = "toolStripProgressBar";
             this.toolStripProgressBar.Size = new System.Drawing.Size(100, 16);
+            // 
+            // tabControlPanel
+            // 
+            this.tabControlPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControlPanel.Controls.Add(this.currentTabControl);
+            this.tabControlPanel.Location = new System.Drawing.Point(204, 0);
+            this.tabControlPanel.Name = "tabControlPanel";
+            this.tabControlPanel.Size = new System.Drawing.Size(451, 518);
+            this.tabControlPanel.TabIndex = 14;
+            // 
+            // classPaneBar
+            // 
+            this.classPaneBar.AutoScroll = true;
+            this.classPaneBar.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.classPaneBar.BorderWidth = 2;
+            this.classPaneBar.CanResize = false;
+            this.classPaneBar.Dock = System.Windows.Forms.DockStyle.Left;
+            this.classPaneBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.classPaneBar.HeaderColor1 = System.Drawing.Color.SkyBlue;
+            this.classPaneBar.HeaderGradientMode = System.Drawing.Drawing2D.LinearGradientMode.ForwardDiagonal;
+            this.classPaneBar.HeaderHeight = 22;
+            this.classPaneBar.ImagesEnabled = false;
+            this.classPaneBar.Location = new System.Drawing.Point(0, 0);
+            this.classPaneBar.MinimumExpandedHeight = 42;
+            this.classPaneBar.Name = "classPaneBar";
+            this.classPaneBar.Padding = new System.Windows.Forms.Padding(1);
+            this.classPaneBar.ShowExpandCollapseButton = false;
+            this.classPaneBar.Size = new System.Drawing.Size(202, 518);
+            this.classPaneBar.TabIndex = 13;
+            this.classPaneBar.GroupPaneExpanding += new BarTender.GroupPaneCancelEventHandler(this.classPaneBar_GroupPaneExpanding);
             // 
             // MainForm
             // 
@@ -501,11 +526,13 @@
             this.splitContainerMain.Panel2.ResumeLayout(false);
             this.splitContainerMain.Panel2.PerformLayout();
             this.splitContainerMain.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.classPaneBar)).EndInit();
+            this.currentTabControl.ResumeLayout(false);
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            this.tabControlPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.classPaneBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -532,7 +559,6 @@
         private System.Windows.Forms.ToolStripMenuItem editorToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem exportStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem importStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem statStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
@@ -552,7 +578,10 @@
         private System.Windows.Forms.ToolStripStatusLabel eventToolStripStatusLabel;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
         private BarTender.GroupPaneBar classPaneBar;
-        private System.Windows.Forms.TabControl currentTabControl;        
+        private System.Windows.Forms.TabControl currentTabControl;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.Panel tabControlPanel;        
 
     }
 }

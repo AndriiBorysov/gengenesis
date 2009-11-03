@@ -65,25 +65,53 @@ namespace GenGenesis
         /// Инициализация списка групп
         /// </summary>
         private void InitializeClassPaneBar()
-        {            
-            classPaneBar.Add(null, "Признаки", null,false);
+        {
+            BarTender.GroupPane tmpPane = classPaneBar.Add(null, "Признаки", null);
+            tmpPane.Click += new EventHandler(ShowTabControl);
+            tmpPane.CanExpand = false;
 
             StackBarControl currentSTC = InitializeStackBarControle();
-            currentSTC.Buttons.Add("Родословные");
-            currentSTC.Buttons.Add("Первичный диагноз");
-            currentSTC.Buttons.Add("Вторичный диагноз");
-            currentSTC.SelectedButton = null;
+            foreach (directorysDataSet.bolezni_masksRow currentRow in directorysDataSet.bolezni_masks)
+                currentSTC.Buttons.Add(currentRow.name_bol);
+            classPaneBar.Add(currentSTC, "Заболевания", null).ExpandedHeight = currentSTC.Height;
 
-            classPaneBar.Add(currentSTC, "Заболевания", null);            
             classPaneBar.Add(null, "ТСХ", null);
-            classPaneBar.Add(null, "Генные пробы", null);
 
             currentSTC = InitializeStackBarControle();
-            currentSTC.Buttons.Add("1я проба");
-            currentSTC.Buttons.Add("2я проба");
-            classPaneBar.Add(currentSTC, "Анализы", null);            
+            foreach (directorysDataSet.analyzes_typesRow currentRow in directorysDataSet.analyzes_types)
+                currentSTC.Buttons.Add(currentRow.type_name);
+
+            classPaneBar.Add(currentSTC, "Анализы", null).ExpandedHeight = currentSTC.Height;
+
             // Свернём все вкладки
             classPaneBar.CollapseAll();
+        }
+
+        /// <summary>
+        /// Устанавливается как обработчик на нажатие, отображает нужный tabControle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void ShowTabControl(object sender, EventArgs e)
+        {
+            BarTender.GroupPane pane = sender as BarTender.GroupPane;
+            if (pane != null)
+            {
+                switch (pane.Text)
+                {
+                    case ("Признаки"):
+                        currentTabControl = signsTabControl;                                                
+                        tabControlPanel.Controls.Clear();
+                        tabControlPanel.Controls.Add(currentTabControl);
+                        break;                       
+                }
+                
+
+            }
+            else
+            {
+                MessageBox.Show("Вызов от неизвестного отправителя!");
+            }
         }
 
         /// <summary>
@@ -142,7 +170,7 @@ namespace GenGenesis
         {
             string outString;
             outString =
-                "Количество пациентов: " + patientsDataSet.PatientsIDList.Count + "\n" +
+                "Количество пациентов: " + patientsTableAdapter.GetAll().Count + "\n" +
                 "....";
             MessageBox.Show(outString, "Статистика", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -231,16 +259,7 @@ namespace GenGenesis
             {
                 System.IO.File.Copy(Application.StartupPath + "\\DB\\patients.mdb", saveFile.FileName);
             }
-        }
-
-        /// <summary>
-        /// Импорт базы данных пациентов
-        /// </summary>
-        private void ImportingPatientDataBase()
-        {
-            ImportingDataBaseForm iDBForm = new ImportingDataBaseForm(patientsDataSet, directorysDataSet, patientsTableAdapterManager);
-            iDBForm.ShowDialog();
-        }
+        }        
 
         #region Обработчики формы
 
@@ -339,10 +358,7 @@ namespace GenGenesis
         {
             ExportingPatientDataBase();
         }
-        private void importStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ImportingPatientDataBase();
-        }
+        
         private void editorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowEditorForm();

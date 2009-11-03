@@ -9,3 +9,10 @@
     }
 }
 
+
+namespace GenGenesis.patientsDataSetTableAdapters {
+    
+    
+    public partial class PatientTableAdapter {
+    }
+}

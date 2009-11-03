@@ -33,27 +33,29 @@ namespace GenGenesis
         }
         private void findButton_Click(object sender, EventArgs e)// Нажатие на кнопку поиска по БД
         {
-            GenGenesis.patientsDataSet.PatientDataTable tmpTable = patientsTableAdapters.PatientTableAdapter.GetDataByIDorSurname((int)patientNumericUpDown.Value, surNameTextBox.Text);
+            GenGenesis.patientsDataSet.patientsDataTable tmpTable = patientsTableAdapters.patientsTableAdapter.GetDataByIDorSurname((int)patientNumericUpDown.Value, surNameTextBox.Text);
             dataGridView.DataSource = tmpTable;
-            dataGridView.Columns[0].HeaderCell.Value = (object)"Номер карточки";
-            dataGridView.Columns[1].HeaderCell.Value = (object)"Фамилия";
-            dataGridView.Columns[2].HeaderCell.Value = (object)"Имя";
-            dataGridView.Columns[3].HeaderCell.Value = (object)"Отчество";
-            dataGridView.Columns[4].HeaderCell.Value = (object)"Пол";
-            dataGridView.Columns[5].HeaderCell.Value = (object)"Дата рождения";
-            dataGridView.Columns[6].HeaderCell.Value = (object)"Адрес";
+            dataGridView.Columns[0].Visible = false;
+            dataGridView.Columns[1].HeaderCell.Value = (object)"Номер карточки";
+            dataGridView.Columns[2].HeaderCell.Value = (object)"Фамилия";
+            dataGridView.Columns[3].HeaderCell.Value = (object)"Имя";
+            dataGridView.Columns[4].HeaderCell.Value = (object)"Отчество";
+            dataGridView.Columns[5].HeaderCell.Value = (object)"Пол";
+            dataGridView.Columns[6].HeaderCell.Value = (object)"Дата рождения";
+            dataGridView.Columns[7].HeaderCell.Value = (object)"Адрес";
         }
         private void findAllButton_Click(object sender, EventArgs e)// Вывод всех 
         {
-            GenGenesis.patientsDataSet.PatientDataTable tmpTable = patientsTableAdapters.PatientTableAdapter.GetAllData();
+            GenGenesis.patientsDataSet.patientsDataTable tmpTable = patientsTableAdapters.patientsTableAdapter.GetAll();
             dataGridView.DataSource = tmpTable;
-            dataGridView.Columns[0].HeaderCell.Value = (object)"Номер карточки";
-            dataGridView.Columns[1].HeaderCell.Value = (object)"Фамилия";
-            dataGridView.Columns[2].HeaderCell.Value = (object)"Имя";
-            dataGridView.Columns[3].HeaderCell.Value = (object)"Отчество";
-            dataGridView.Columns[4].HeaderCell.Value = (object)"Пол";
-            dataGridView.Columns[5].HeaderCell.Value = (object)"Дата рождения";
-            dataGridView.Columns[6].HeaderCell.Value = (object)"Адрес";
+            dataGridView.Columns[0].Visible = false;
+            dataGridView.Columns[1].HeaderCell.Value = (object)"Номер карточки";
+            dataGridView.Columns[2].HeaderCell.Value = (object)"Фамилия";
+            dataGridView.Columns[3].HeaderCell.Value = (object)"Имя";
+            dataGridView.Columns[4].HeaderCell.Value = (object)"Отчество";
+            dataGridView.Columns[5].HeaderCell.Value = (object)"Пол";
+            dataGridView.Columns[6].HeaderCell.Value = (object)"Дата рождения";
+            dataGridView.Columns[7].HeaderCell.Value = (object)"Адрес";
         }
         private void dataGridView_DoubleClick(object sender, EventArgs e)// Двойное нажатие на таблице
         {

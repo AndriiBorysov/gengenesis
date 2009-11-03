@@ -15,10 +15,9 @@ namespace GenGenesis
         public NewPatientForm(ref Patient cp, bool exist)
         {            
             InitializeComponent();
-            curPatient = cp;
-            this.idTextBox.Enabled = false;
+            curPatient = cp;            
             this.Text = "Изменение данных пациента";
-            this.idTextBox.Text = curPatient.patient_id.ToString();            
+            this.idTextBox.Text = curPatient.card_number.ToString();            
             this.surnameTextBox.Text = curPatient.surname;
             this.nameTextBox.Text= curPatient.name;
             this.sexComboBox.Text = curPatient.sex;
@@ -41,7 +40,7 @@ namespace GenGenesis
                 ShowErrMessage("Проверьте вводимый параметр!");
                 return;
             }
-            curPatient.patient_id = id;
+            curPatient.card_number= id;
             curPatient.surname = this.surnameTextBox.Text;
             curPatient.name = this.nameTextBox.Text;
             curPatient.third_name = this.third_nameTextBox.Text;

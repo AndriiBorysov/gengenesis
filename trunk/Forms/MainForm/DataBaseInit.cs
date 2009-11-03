@@ -6,24 +6,24 @@ namespace GenGenesis
         // Члены класса
         directorysDataSet directorysDataSet;
         directorysDataSetTableAdapters.TableAdapterManager directorysTableAdapterManager;
-        directorysDataSetTableAdapters.bolezni_groupTableAdapter bolezni_groupTableAdapter;
-        directorysDataSetTableAdapters.bolezni_typesTableAdapter bolezni_typesTableAdapter;
-        directorysDataSetTableAdapters.bolezniTableAdapter bolezniTableAdapter;
-        directorysDataSetTableAdapters.genes_allTableAdapter genes_allTableAdapter;
-        directorysDataSetTableAdapters.priznaki_groupTableAdapter priznaki_groupTableAdapter;
-        directorysDataSetTableAdapters.priznakiTableAdapter priznakiTableAdapter;
-        directorysDataSetTableAdapters.tcx_groupTableAdapter tcx_groupTableAdapter;
-        directorysDataSetTableAdapters.tcxTableAdapter tcxTableAdapter;
+        directorysDataSetTableAdapters.analyses_value_typesTableAdapter analyses_value_typesTableAdapter;
+        directorysDataSetTableAdapters.analyzes_groupsTableAdapter analyzes_groupsTableAdapter;
+        directorysDataSetTableAdapters.analyzes_typesTableAdapter analyzes_typesTableAdapter;
+        directorysDataSetTableAdapters.bolezni_masksTableAdapter bolezni_masksTableAdapter;
+        directorysDataSetTableAdapters.bolezni_allTableAdapter bolezni_allTableAdapter;        
+        directorysDataSetTableAdapters.bolezni_groupsTableAdapter bolezni_groupsTableAdapter;
+        directorysDataSetTableAdapters.priznaki_allTableAdapter priznaki_allTableAdapter;
+        directorysDataSetTableAdapters.priznaki_groupsTableAdapter priznaki_groupsTableAdapter;
+        directorysDataSetTableAdapters.tcx_allTableAdapter tcx_allTableAdapter;
+        directorysDataSetTableAdapters.tcx_groupsTableAdapter tcx_groupsTableAdapter;
 
-        patientsDataSet patientsDataSet;
+        patientsDataSet patientsDataSet;        
         patientsDataSetTableAdapters.TableAdapterManager patientsTableAdapterManager;
-        patientsDataSetTableAdapters.bolezni_tempTableAdapter bolezni_tempTableAdapter;
-        patientsDataSetTableAdapters.genesTableAdapter genesTableAdapter;
-        patientsDataSetTableAdapters.PatientsIDListTableAdapter patientsIDListTableAdapter;
-        patientsDataSetTableAdapters.PatientTableAdapter patientTableAdapter;
-        patientsDataSetTableAdapters.priznaki_tempTableAdapter priznaki_tempTableAdapter;
-        patientsDataSetTableAdapters.tcx_allTableAdapter tcx_allTableAdapter;        
-
+        patientsDataSetTableAdapters.analyses_linkTableAdapter analyses_linkTableAdapter;
+        patientsDataSetTableAdapters.bolezni_linkTableAdapter bolezni_linkTableAdapter;        
+        patientsDataSetTableAdapters.patientsTableAdapter patientsTableAdapter;
+        patientsDataSetTableAdapters.priznaki_linkTableAdapter priznaki_linkTableAdapter;
+        patientsDataSetTableAdapters.tcx_linkTableAdapter tcx_linkTableAdapter;       
         
         /// <summary>
         /// Инициализация классов для работы базы данных 
@@ -32,84 +32,81 @@ namespace GenGenesis
         {
             directorysDataSet = new directorysDataSet();
             directorysTableAdapterManager = new GenGenesis.directorysDataSetTableAdapters.TableAdapterManager();
-            bolezni_groupTableAdapter = new GenGenesis.directorysDataSetTableAdapters.bolezni_groupTableAdapter();
-            bolezni_typesTableAdapter = new GenGenesis.directorysDataSetTableAdapters.bolezni_typesTableAdapter();
-            bolezniTableAdapter = new GenGenesis.directorysDataSetTableAdapters.bolezniTableAdapter();
-            genes_allTableAdapter = new GenGenesis.directorysDataSetTableAdapters.genes_allTableAdapter();
-            priznaki_groupTableAdapter = new GenGenesis.directorysDataSetTableAdapters.priznaki_groupTableAdapter();
-            priznakiTableAdapter = new GenGenesis.directorysDataSetTableAdapters.priznakiTableAdapter();
-            tcx_groupTableAdapter = new GenGenesis.directorysDataSetTableAdapters.tcx_groupTableAdapter();
-            tcxTableAdapter = new GenGenesis.directorysDataSetTableAdapters.tcxTableAdapter();
+            analyses_value_typesTableAdapter = new GenGenesis.directorysDataSetTableAdapters.analyses_value_typesTableAdapter();
+            analyzes_groupsTableAdapter = new GenGenesis.directorysDataSetTableAdapters.analyzes_groupsTableAdapter();
+            analyzes_typesTableAdapter = new GenGenesis.directorysDataSetTableAdapters.analyzes_typesTableAdapter();
+            bolezni_masksTableAdapter = new GenGenesis.directorysDataSetTableAdapters.bolezni_masksTableAdapter();
+            bolezni_allTableAdapter = new GenGenesis.directorysDataSetTableAdapters.bolezni_allTableAdapter();
+            bolezni_groupsTableAdapter = new GenGenesis.directorysDataSetTableAdapters.bolezni_groupsTableAdapter();
+            priznaki_allTableAdapter = new GenGenesis.directorysDataSetTableAdapters.priznaki_allTableAdapter();
+            priznaki_groupsTableAdapter = new GenGenesis.directorysDataSetTableAdapters.priznaki_groupsTableAdapter();
+            tcx_allTableAdapter = new GenGenesis.directorysDataSetTableAdapters.tcx_allTableAdapter();
+            tcx_groupsTableAdapter = new GenGenesis.directorysDataSetTableAdapters.tcx_groupsTableAdapter();
 
-            patientsDataSet = new patientsDataSet();            
-            bolezni_tempTableAdapter = new GenGenesis.patientsDataSetTableAdapters.bolezni_tempTableAdapter();
-            genesTableAdapter = new GenGenesis.patientsDataSetTableAdapters.genesTableAdapter();
-            patientsIDListTableAdapter = new GenGenesis.patientsDataSetTableAdapters.PatientsIDListTableAdapter();
-            patientTableAdapter = new GenGenesis.patientsDataSetTableAdapters.PatientTableAdapter();
-            priznaki_tempTableAdapter = new GenGenesis.patientsDataSetTableAdapters.priznaki_tempTableAdapter();
-            tcx_allTableAdapter = new GenGenesis.patientsDataSetTableAdapters.tcx_allTableAdapter();
+            patientsDataSet = new patientsDataSet();
             patientsTableAdapterManager = new GenGenesis.patientsDataSetTableAdapters.TableAdapterManager();
+            analyses_linkTableAdapter = new GenGenesis.patientsDataSetTableAdapters.analyses_linkTableAdapter();
+            bolezni_linkTableAdapter = new GenGenesis.patientsDataSetTableAdapters.bolezni_linkTableAdapter();            
+            patientsTableAdapter = new GenGenesis.patientsDataSetTableAdapters.patientsTableAdapter();
+            priznaki_linkTableAdapter = new GenGenesis.patientsDataSetTableAdapters.priznaki_linkTableAdapter();
+            tcx_linkTableAdapter = new GenGenesis.patientsDataSetTableAdapters.tcx_linkTableAdapter();
             try
             {
                 // Заполняем таблицы справочника                
                 // Признаки
-                this.priznaki_groupTableAdapter.Fill(this.directorysDataSet.priznaki_group);                
-                this.priznakiTableAdapter.Fill(this.directorysDataSet.priznaki);                
+                this.priznaki_allTableAdapter.Fill(this.directorysDataSet.priznaki_all);
+                this.priznaki_groupsTableAdapter.Fill(this.directorysDataSet.priznaki_groups);                
                 // Болезни
-                this.bolezni_groupTableAdapter.Fill(this.directorysDataSet.bolezni_group);                
-                this.bolezniTableAdapter.Fill(this.directorysDataSet.bolezni);
+                this.bolezni_allTableAdapter.Fill(this.directorysDataSet.bolezni_all);                
+                this.bolezni_groupsTableAdapter.Fill(this.directorysDataSet.bolezni_groups);
+                this.bolezni_masksTableAdapter.Fill(this.directorysDataSet.bolezni_masks);
                 // ТСХ
-                this.tcx_groupTableAdapter.Fill(this.directorysDataSet.tcx_group);
-                this.tcxTableAdapter.Fill(this.directorysDataSet.tcx);
-                // Genes
-                this.genes_allTableAdapter.Fill(this.directorysDataSet.genes_all);
-                this.genesTableAdapter.Fill(this.patientsDataSet.genes);
-
-                // Список номеров пациентов
-                this.patientsIDListTableAdapter.Fill(this.patientsDataSet.PatientsIDList);
-
-                // Заполняем менеджеры таблиц
-                FillPatientTableAdapterManager();
-                FillDirectorysTableAdapterManager();
+                this.tcx_allTableAdapter.Fill(this.directorysDataSet.tcx_all);
+                this.tcx_groupsTableAdapter.Fill(this.directorysDataSet.tcx_groups);
+                // Анализы
+                this.analyses_value_typesTableAdapter.Fill(this.directorysDataSet.analyses_value_types);
+                this.analyzes_groupsTableAdapter.Fill(this.directorysDataSet.analyzes_groups);
+                this.analyzes_typesTableAdapter.Fill(this.directorysDataSet.analyzes_types);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                System.Windows.Forms.MessageBox.Show(e.Message.ToString(),"Невозможно загрузить таблицы справочника");                
+                System.Windows.Forms.MessageBox.Show(e.Message.ToString(), "Невозможно загрузить таблицы справочника");
                 this.Close();
-            }
-
+            }            
+            // Заполняем менеджеры таблиц
+            FillPatientTableAdapterManager();
+            FillDirectorysTableAdapterManager();
         }
 
         /// <summary>
-        /// Заполняем менеджер адаптеровТаблиц справочника
+        /// Заполняем менеджер адаптеров таблиц справочника
         /// </summary>
         private void FillDirectorysTableAdapterManager()
         {
             // Заполним менеджер адаптеров
-            directorysTableAdapterManager.bolezni_groupTableAdapter = this.bolezni_groupTableAdapter;            
-            directorysTableAdapterManager.bolezni_typesTableAdapter = this.bolezni_typesTableAdapter;
-            directorysTableAdapterManager.bolezniTableAdapter = this.bolezniTableAdapter;
-            directorysTableAdapterManager.genes_allTableAdapter = this.genes_allTableAdapter;
-            directorysTableAdapterManager.priznaki_groupTableAdapter = this.priznaki_groupTableAdapter;
-            directorysTableAdapterManager.priznakiTableAdapter = this.priznakiTableAdapter;
-            directorysTableAdapterManager.tcx_groupTableAdapter = this.tcx_groupTableAdapter;
-            directorysTableAdapterManager.tcxTableAdapter = this.tcxTableAdapter;            
+            directorysTableAdapterManager.analyses_value_typesTableAdapter = this.analyses_value_typesTableAdapter;            
+            directorysTableAdapterManager.analyzes_groupsTableAdapter = this.analyzes_groupsTableAdapter;
+            directorysTableAdapterManager.analyzes_typesTableAdapter = this.analyzes_typesTableAdapter;
+            directorysTableAdapterManager.bolezni_allTableAdapter = this.bolezni_allTableAdapter;
+            directorysTableAdapterManager.bolezni_groupsTableAdapter = this.bolezni_groupsTableAdapter;
+            directorysTableAdapterManager.bolezni_masksTableAdapter = this.bolezni_masksTableAdapter;
+            directorysTableAdapterManager.priznaki_allTableAdapter = this.priznaki_allTableAdapter;
+            directorysTableAdapterManager.priznaki_groupsTableAdapter = this.priznaki_groupsTableAdapter;
+            directorysTableAdapterManager.tcx_allTableAdapter = this.tcx_allTableAdapter;
+            directorysTableAdapterManager.tcx_groupsTableAdapter = this.tcx_groupsTableAdapter;            
         }
 
         /// <summary>
-        /// Заполняем менеджер адаптеровТаблиц пациента
+        /// Заполняем менеджер адаптеров таблиц пациента
         /// </summary>
         private void FillPatientTableAdapterManager()
         {
             // Заполним менеджер адаптеров                  
-            patientsTableAdapterManager.PatientTableAdapter = this.patientTableAdapter;            
-            patientsTableAdapterManager.priznaki_tempTableAdapter = this.priznaki_tempTableAdapter;
-            patientsTableAdapterManager.bolezni_tempTableAdapter = this.bolezni_tempTableAdapter;
-            patientsTableAdapterManager.tcx_allTableAdapter = this.tcx_allTableAdapter;
-            patientsTableAdapterManager.genesTableAdapter = this.genesTableAdapter;
-            ///////////////////////
-            // Добавить остальные//
-            ///////////////////////            
+            patientsTableAdapterManager.analyses_linkTableAdapter = this.analyses_linkTableAdapter;            
+            patientsTableAdapterManager.bolezni_linkTableAdapter = this.bolezni_linkTableAdapter;
+            patientsTableAdapterManager.patientsTableAdapter = this.patientsTableAdapter;
+            patientsTableAdapterManager.priznaki_linkTableAdapter = this.priznaki_linkTableAdapter;
+            patientsTableAdapterManager.tcx_linkTableAdapter = this.tcx_linkTableAdapter;                                    
         }
     }
 }

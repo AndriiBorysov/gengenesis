@@ -86,9 +86,7 @@ namespace GenGenesis
         private void SaveCurentPatient()
         {
             // Сохраняем
-            currentPatient.Save(patientsTableAdapterManager);
-            // Обновляем таблицу ID пациентов
-            this.patientsIDListTableAdapter.Fill(this.patientsDataSet.PatientsIDList);
+            currentPatient.Save(patientsTableAdapterManager);            
         }
 
         /// <summary>
@@ -122,9 +120,7 @@ namespace GenGenesis
                 == DialogResult.OK)
             {
                 // Удаляем
-                currentPatient.Delete(patientsTableAdapterManager);
-                // Обновляем таблицу ID пациентов
-                this.patientsIDListTableAdapter.Fill(this.patientsDataSet.PatientsIDList);
+                currentPatient.Delete(patientsTableAdapterManager);                
                 // Сделай кнопки не активными
                 EnablePatientButtons(false);
                 ResetAllTabControls();
@@ -145,15 +141,7 @@ namespace GenGenesis
             NewPatientForm newPatForm = new NewPatientForm(ref newPatient);
             DialogResult res = newPatForm.ShowDialog();
             if (res == DialogResult.OK)
-            {
-                // Проверяем, входит ли id_patient в базу данных, во избежание повторений                            
-                while (patientsDataSet.PatientsIDList.FindBypatient_id(newPatient.patient_id) != null)
-                {
-                    if (newPatForm.DialogResult != DialogResult.OK)
-                        return;
-                    MessageBox.Show("Такой номер карты уже встречается!\nИзмените номер карты!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    newPatForm.ShowDialog();
-                }
+            {                
                 currentPatient = newPatient;
                 // Делаем Кноаки активными 
                 EnablePatientButtons(true);
@@ -197,7 +185,7 @@ namespace GenGenesis
         {
             // Для заболеваний
             List<Illness> illnessList = new List<Illness>();
-            foreach (TabPage TPage in diseasesTabControl.TabPages)
+            foreach (TabPage TPage in IllnessesTabControl.TabPages)
             {
                 foreach (TableLayoutPanel CurTLPanel in TPage.Controls)
                 {
@@ -212,7 +200,7 @@ namespace GenGenesis
         }
 
         /// <summary>
-        /// Добавление новых проб ТСХ в класс пациента
+        /// Добавление новых проб ТСХ к текущему пациента
         /// </summary>
         private void AddTCXToCurentPatient()
         {
@@ -235,27 +223,13 @@ namespace GenGenesis
         }
 
         /// <summary>
-        /// Добавление состояния генов
+        /// Добавление анализов к текущему пациенту
         /// </summary>
-        private void AddGenesToCurentPatient()
+        private void AddAnalysisToCurentPatient()
         {
-            List<Gen> genList = new List<Gen>();
-            // Для каждой таблицы контролов
-            TableLayoutPanel CurTLPanel = (TableLayoutPanel)genesTabControl.TabPages[0].Controls[0];
-            // Для каждого контрола на таблице
-            foreach (Control CurControl in CurTLPanel.Controls)
-                if (CurControl is GenesUserControl)
-                {
-                    GenesUserControl CurGenesControl = (GenesUserControl)CurControl;
-                    if (CurGenesControl.Checked)
-                    {
-                        Gen gen = (Gen)CurGenesControl.Tag;
-                        gen.gen_stat = CurGenesControl.Value;
-                        genList.Add(gen);
-                    }
-                }
-            currentPatient.genes = genList;
+            throw new NotImplementedException();
         }
+
         /// <summary>
         /// Обновить данные с формы и добавить к текущему пациенту
         /// </summary>
@@ -263,12 +237,9 @@ namespace GenGenesis
         {
             // Добавим изменения в класс
             AddPropertyToCurentPatient();
-            AddIllnessToCurentPatient();
-            AddTCXToCurentPatient();
-            AddGenesToCurentPatient();
-            ///////////////////////
-            // Добавить остальные//
-            ///////////////////////
+            //AddIllnessToCurentPatient();
+            //AddTCXToCurentPatient();
+            //AddAnalysisToCurentPatient();            
             currentPatient.isSaved = false;            
             // Обновим дерево            
             FillTreeView();
