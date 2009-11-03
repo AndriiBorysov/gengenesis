@@ -79,6 +79,7 @@ namespace BarTender
 		private int _expandedHeight;
 		private bool _buttonHighlighted = false;
 		private Rectangle _buttonRect;
+        private bool _canExpand = true;
 
 		private ControlBoundsAnimator _heightAnimator;
 
@@ -152,6 +153,18 @@ namespace BarTender
 			}
 		}
 
+        /// <summary>
+        /// Может ли группа разворачиваться
+        /// </summary>
+        public bool CanExpand
+        {
+            get { return _canExpand; }
+            set
+            {
+                _canExpand = value;                
+            }
+        }
+        
 		/// <summary>
 		/// Gets/sets the image which should be displayed in the header.
 		/// </summary>
@@ -165,11 +178,11 @@ namespace BarTender
 			}
 		}
 
-		/// <summary>
-		/// Gets/sets whether the group should be expanded.
-		/// If the associated <see cref="GroupPaneBar"/> has animation enabled
-		/// then setting this property will also result in an animation effect.
-		/// </summary>
+        /// <summary>
+        /// Gets/sets whether the group should be expanded.
+        /// If the associated <see cref="GroupPaneBar"/> has animation enabled
+        ///  then setting this property will also result in an animation effect.
+        /// </summary>
 		public bool Expanded
 		{
 			get { return _expanded; }
@@ -203,7 +216,7 @@ namespace BarTender
 		/// <param name="animate">Indicates whether the expand should be animated or not.</param>
 		public void Expand(bool animate)
 		{
-			if (_expanded)
+			if (_expanded || !_canExpand)
 				return;
 
 			if (_heightAnimator.IsRunning)
@@ -738,6 +751,6 @@ namespace BarTender
 			}
 		}
 
-		#endregion
+		#endregion        
 	}
 }

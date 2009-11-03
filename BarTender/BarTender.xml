@@ -204,6 +204,11 @@
             Gets/sets the text which should be displayed in the header.
             </summary>
         </member>
+        <member name="P:BarTender.GroupPane.CanExpand">
+            <summary>
+            Может ли группа разворачиваться
+            </summary>
+        </member>
         <member name="P:BarTender.GroupPane.Image">
             <summary>
             Gets/sets the image which should be displayed in the header.
@@ -213,7 +218,7 @@
             <summary>
             Gets/sets whether the group should be expanded.
             If the associated <see cref="T:BarTender.GroupPaneBar"/> has animation enabled
-            then setting this property will also result in an animation effect.
+             then setting this property will also result in an animation effect.
             </summary>
         </member>
         <member name="P:BarTender.GroupPane.ExpandedHeight">
