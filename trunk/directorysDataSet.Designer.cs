@@ -5551,12 +5551,12 @@ namespace GenGenesis.directorysDataSetTableAdapters {
             this._commandCollection[0] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT illness_id, illness_name, illness_group_id, illness_oncology FROM bolezni_" +
-                "all";
+                "all ORDER BY illness_name";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT illness_id, illness_name, illness_group_id, illness_oncology FROM bolezni_" +
-                "all WHERE illness_group_id=?";
+            this._commandCollection[1].CommandText = "SELECT illness_group_id, illness_id, illness_name, illness_oncology FROM bolezni_" +
+                "all WHERE (illness_group_id = ?) ORDER BY illness_name";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("illness_group_id", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "illness_group_id", global::System.Data.DataRowVersion.Current, false, null));
         }
@@ -5874,7 +5874,8 @@ namespace GenGenesis.directorysDataSetTableAdapters {
             this._commandCollection = new global::System.Data.OleDb.OleDbCommand[1];
             this._commandCollection[0] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT illness_group_id, illness_group_name FROM bolezni_groups";
+            this._commandCollection[0].CommandText = "SELECT illness_group_id, illness_group_name FROM bolezni_groups ORDER BY illness_" +
+                "group_name";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -6500,12 +6501,12 @@ namespace GenGenesis.directorysDataSetTableAdapters {
             this._commandCollection = new global::System.Data.OleDb.OleDbCommand[2];
             this._commandCollection[0] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT sign_id, sign_group_id, sign_name FROM priznaki_all";
+            this._commandCollection[0].CommandText = "SELECT sign_id, sign_group_id, sign_name FROM priznaki_all ORDER BY sign_name";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[1].Connection = this.Connection;
             this._commandCollection[1].CommandText = "SELECT sign_group_id, sign_id, sign_name FROM priznaki_all WHERE (sign_group_id =" +
-                " ?)";
+                " ?) ORDER BY sign_name";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("sign_group_id", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "sign_group_id", global::System.Data.DataRowVersion.Current, false, null));
         }
@@ -6722,7 +6723,8 @@ namespace GenGenesis.directorysDataSetTableAdapters {
             this._commandCollection = new global::System.Data.OleDb.OleDbCommand[1];
             this._commandCollection[0] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT sign_group_id, sign_group_name FROM priznaki_groups";
+            this._commandCollection[0].CommandText = "SELECT sign_group_id, sign_group_name FROM priznaki_groups ORDER BY sign_group_na" +
+                "me";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -7017,7 +7019,7 @@ namespace GenGenesis.directorysDataSetTableAdapters {
             this._commandCollection = new global::System.Data.OleDb.OleDbCommand[1];
             this._commandCollection[0] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT tcx_id, tcx_name FROM tcx_all";
+            this._commandCollection[0].CommandText = "SELECT tcx_id, tcx_name FROM tcx_all ORDER BY tcx_name";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
