@@ -54,18 +54,17 @@ namespace GenGenesis
             newSTC.GradientButtonNormalLight = System.Drawing.Color.FromArgb(((int)(((byte)(234)))), ((int)(((byte)(240)))), ((int)(((byte)(207)))));
             newSTC.GradientButtonSelectedDark = System.Drawing.Color.FromArgb(((int)(((byte)(126)))), ((int)(((byte)(166)))), ((int)(((byte)(225)))));
             newSTC.GradientButtonSelectedLight = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(225)))), ((int)(((byte)(252)))));            
-            
             newSTC.Location = new System.Drawing.Point(1,1);
             newSTC.Name = "newSTC";
             newSTC.SelectedButton = null;
-            newSTC.Dock = DockStyle.Fill;            
+            newSTC.Dock = DockStyle.Fill;
             return newSTC;
         }
         /// <summary>
         /// Инициализация списка групп
         /// </summary>
         private void InitializeClassPaneBar()
-        {
+        {            
             BarTender.GroupPane tmpPane = classPaneBar.Add(null, "Признаки", null);
             tmpPane.Click += new EventHandler(ShowTabControl);
             tmpPane.CanExpand = false;
@@ -73,46 +72,19 @@ namespace GenGenesis
             StackBarControl currentSTC = InitializeStackBarControle();
             foreach (directorysDataSet.bolezni_masksRow currentRow in directorysDataSet.bolezni_masks)
                 currentSTC.Buttons.Add(currentRow.name_bol);
-            classPaneBar.Add(currentSTC, "Заболевания", null).ExpandedHeight = currentSTC.Height;
+            currentSTC.Click +=new StackBarControl.ButtonClickEventHandler(IllnessSTC_Click);
+            classPaneBar.Add(currentSTC, "Заболевания", null).ExpandedHeight = (currentSTC.ButtonHeight+8) * directorysDataSet.bolezni_masks.Count;
 
             classPaneBar.Add(null, "ТСХ", null);
 
-            currentSTC = InitializeStackBarControle();
+            currentSTC = InitializeStackBarControle();                        
             foreach (directorysDataSet.analyzes_typesRow currentRow in directorysDataSet.analyzes_types)
                 currentSTC.Buttons.Add(currentRow.type_name);
-
-            classPaneBar.Add(currentSTC, "Анализы", null).ExpandedHeight = currentSTC.Height;
-
+            classPaneBar.Add(currentSTC, "Анализы", null).ExpandedHeight = (currentSTC.ButtonHeight + 5) * directorysDataSet.analyzes_types.Count;
+            
             // Свернём все вкладки
             classPaneBar.CollapseAll();
-        }
-
-        /// <summary>
-        /// Устанавливается как обработчик на нажатие, отображает нужный tabControle
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void ShowTabControl(object sender, EventArgs e)
-        {
-            BarTender.GroupPane pane = sender as BarTender.GroupPane;
-            if (pane != null)
-            {
-                switch (pane.Text)
-                {
-                    case ("Признаки"):
-                        currentTabControl = signsTabControl;                                                
-                        tabControlPanel.Controls.Clear();
-                        tabControlPanel.Controls.Add(currentTabControl);
-                        break;                       
-                }
-                
-
-            }
-            else
-            {
-                MessageBox.Show("Вызов от неизвестного отправителя!");
-            }
-        }
+        }       
 
         /// <summary>
         /// Меняем состояние кнопок управления пациентом
@@ -268,6 +240,52 @@ namespace GenGenesis
             EnablePatientButtons(false);
         }
 
+        #region Обработчики меню выбора типа
+        /// <summary>
+        /// Нажатие на одну из групп болезней
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IllnessSTC_Click(object sender, StackBarControl.ButtonClickEventArgs e)
+        {
+            StackBarControl currentSTC = sender as StackBarControl;
+            if (currentSTC == null)
+                return;
+            int idx = currentSTC.Buttons.IndexOf(e.SelectedButton);
+            currentTabControl = illnessesTabControls[idx];
+            tabControlPanel.Controls.Clear();
+            tabControlPanel.Controls.Add(currentTabControl);
+        }
+
+        /// <summary>
+        /// Устанавливается как обработчик на нажатие, отображает нужный tabControle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void ShowTabControl(object sender, EventArgs e)
+        {
+            BarTender.GroupPane pane = sender as BarTender.GroupPane;
+            if (pane != null)
+            {
+                switch (pane.Text)
+                {
+                    case ("Признаки"):
+                        currentTabControl = signsTabControl;
+                        tabControlPanel.Controls.Clear();
+                        tabControlPanel.Controls.Add(currentTabControl);
+                        break;
+                }
+
+
+            }
+            else
+            {
+                MessageBox.Show("Вызов от неизвестного отправителя!");
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// Выход c программы
         /// </summary>        
@@ -393,6 +411,7 @@ namespace GenGenesis
             About.ShowDialog();
         }
         #endregion
+
         /// <summary>
         /// Реализуем,Чтоб остальные сворачивались
         /// </summary>        
