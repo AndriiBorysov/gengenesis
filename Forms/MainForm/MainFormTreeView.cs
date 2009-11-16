@@ -31,7 +31,7 @@ namespace GenGenesis
 
             TreeViewAddSigns();
             TreeViewAddIllnesses();
-            //TreeViewAddTCXs();
+            TreeViewAddTCXs();
             //TreeViewAddAnalysis();            
             // Конец изменения
             patientTreeView.EndUpdate();
@@ -65,7 +65,7 @@ namespace GenGenesis
                     // Если нашли такую группу
                     newNode.Text = oneTCX.tcx_name + "  " + oneTCX.tcx_value.ToString();
                     newNode.Name = oneTCX.tcx_name;
-                    if (oneTCX.tcx_value < 0)
+                    if (oneTCX.tcx_value <= 0)
                         newNode.ForeColor = Color.Red;
                     if (oneTCX.tcx_value > 0)
                         newNode.ForeColor = Color.Green;
@@ -115,7 +115,10 @@ namespace GenGenesis
                         if (searchedNodes.Length > 0)
                         {
                             // Если нашли такую группу
-                            newNode.Text = oneIllness.illness_name;
+                            if(oneIllness.isOncology)
+                                newNode.Text = oneIllness.illness_name + " (онкология)";
+                            else
+                                newNode.Text = oneIllness.illness_name + " (онкология)";
                             newNode.Name = oneIllness.illness_name;
                             newNode.ForeColor = Color.FromKnownColor(KnownColor.Chocolate);
                             searchedNodes[0].Nodes.Add(newNode);
@@ -127,7 +130,10 @@ namespace GenGenesis
                             groupNode.Name = oneIllness.group_name;
                             groupNode.ForeColor = Color.FromKnownColor(KnownColor.Sienna);
                             illnessNode.Nodes[i].Nodes.Add(groupNode);
-                            newNode.Text = oneIllness.illness_name;
+                            if (oneIllness.isOncology)
+                                newNode.Text = oneIllness.illness_name + " (онк)";
+                            else
+                                newNode.Text = oneIllness.illness_name + " (онк)";                            
                             newNode.Name = oneIllness.illness_name;
                             newNode.ForeColor = Color.FromKnownColor(KnownColor.Chocolate);
                             illnessNode.Nodes[i].Nodes[oneIllness.group_name].Nodes.Add(newNode);

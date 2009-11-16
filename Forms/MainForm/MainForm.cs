@@ -75,7 +75,9 @@ namespace GenGenesis
             currentSTC.Click +=new StackBarControl.ButtonClickEventHandler(IllnessSTC_Click);
             classPaneBar.Add(currentSTC, "Заболевания", null).ExpandedHeight = (currentSTC.ButtonHeight+8) * directorysDataSet.bolezni_masks.Count;
 
-            classPaneBar.Add(null, "ТСХ", null);
+            tmpPane = classPaneBar.Add(null, "ТСХ", null);
+            tmpPane.Click += new EventHandler(ShowTabControl);
+            tmpPane.CanExpand = false;
 
             currentSTC = InitializeStackBarControle();                        
             foreach (directorysDataSet.analyzes_typesRow currentRow in directorysDataSet.analyzes_types)
@@ -271,6 +273,11 @@ namespace GenGenesis
                 {
                     case ("Признаки"):
                         currentTabControl = signsTabControl;
+                        tabControlPanel.Controls.Clear();
+                        tabControlPanel.Controls.Add(currentTabControl);
+                        break;
+                    case("ТСХ"):
+                        currentTabControl = tcxTabControl;
                         tabControlPanel.Controls.Clear();
                         tabControlPanel.Controls.Add(currentTabControl);
                         break;

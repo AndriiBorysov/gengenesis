@@ -217,22 +217,22 @@ namespace GenGenesis
         /// </summary>
         private void AddTCXToCurentPatient()
         {
-            //List<TCX> TCXList = new List<TCX>();
-            //// Для каждой страницы (Типа)
-            //foreach (TabPage TPage in tcxTabControl.TabPages)
-            //{
-            //    // Для каждой таблицы контролов
-            //    foreach (TableLayoutPanel CurTLPanel in TPage.Controls)
-            //    {
-            //        // Для каждого контрола на таблице
-            //        foreach (TCXUserControl CurControl in CurTLPanel.Controls)
-            //        {
-            //            if (CurControl.Checked)
-            //                TCXList.Add((TCX)CurControl.Tag);
-            //        }
-            //    }
-            //}
-            //currentPatient.TCX = TCXList;
+            List<TCX> TCXList = new List<TCX>();
+            // Для каждой страницы (Типа)
+            foreach (TabPage TPage in tcxTabControl.TabPages)
+            {
+                // Для каждой таблицы контролов
+                foreach (TableLayoutPanel CurTLPanel in TPage.Controls)
+                {
+                    // Для каждого контрола на таблице
+                    foreach (TCXUserControl CurControl in CurTLPanel.Controls)
+                    {
+                        if (CurControl.Checked)
+                            TCXList.Add((TCX)CurControl.Tag);
+                    }
+                }
+            }
+            currentPatient.TCX = TCXList;
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace GenGenesis
             // Добавим изменения в класс
             AddPropertyToCurentPatient();
             AddIllnessToCurentPatient();
-            //AddTCXToCurentPatient();
+            AddTCXToCurentPatient();
             //AddAnalysisToCurentPatient();            
             currentPatient.isSaved = false;            
             // Обновим дерево            
