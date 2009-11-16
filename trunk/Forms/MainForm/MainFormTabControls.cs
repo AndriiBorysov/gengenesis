@@ -130,7 +130,7 @@ namespace GenGenesis
             // Запуск потоков
             signThread.Start();
             illnessThread.Start();
-            //tcxThread.Start();
+            tcxThread.Start();
             //analysisThread.Start();
         }
 
@@ -164,18 +164,18 @@ namespace GenGenesis
                     }
                 }
             }
-            //// ТCХ
-            //foreach (TabPage TPage in tcxTabControl.TabPages)
-            //{
-            //    foreach (TableLayoutPanel CurTLPanel in TPage.Controls)
-            //    {
-            //        foreach (TCXUserControl tmpTCXControl in CurTLPanel.Controls)
-            //        {
-            //            tmpTCXControl.Init();
-            //            tmpTCXControl.PrintText();
-            //        }
-            //    }
-            //}
+            // ТCХ
+            foreach (TabPage TPage in tcxTabControl.TabPages)
+            {
+                foreach (TableLayoutPanel CurTLPanel in TPage.Controls)
+                {
+                    foreach (TCXUserControl tmpTCXControl in CurTLPanel.Controls)
+                    {
+                        tmpTCXControl.Init();
+                        tmpTCXControl.PrintText();
+                    }
+                }
+            }
             // Analysis
             //foreach (TabPage TPage in AnalysisTabControl.TabPages)
             //{
@@ -200,7 +200,7 @@ namespace GenGenesis
         {
             FillSignControlByCurentPatient();
             FillIllnessControlByCurentPatient();
-            //FillTCXControlByCurentPatient();
+            FillTCXControlByCurentPatient();
             //FillAnalysisControlByCurentPatient();
             
         }
@@ -254,23 +254,23 @@ namespace GenGenesis
         /// </summary>
         private void FillTCXControlByCurentPatient()
         {
-            //// Заполним ТСХ
-            //foreach (TabPage TPage in tcxTabControl.TabPages)
-            //{
-            //    TableLayoutPanel CurTLPanel = (TableLayoutPanel)TPage.Controls[0];
-            //    foreach (TCXUserControl CurTCXControl in CurTLPanel.Controls)
-            //    {
-            //        // Для каждой пробы у текущего пациента
-            //        foreach (TCX tmpTCX in currentPatient.TCX)
-            //            // Ищем совпадение по имени пробы и имени группы
-            //            if ((CurTCXControl.Name == tmpTCX.tcx_name) && (TPage.Name == tmpTCX.tcx_group_name))
-            //            {
-            //                CurTCXControl.Value = tmpTCX.tcx_value;
-            //                CurTCXControl.Check();
-            //                CurTCXControl.PrintText();
-            //            }
-            //    }
-            //}
+            // Заполним ТСХ
+            foreach (TabPage TPage in tcxTabControl.TabPages)
+            {
+                TableLayoutPanel CurTLPanel = (TableLayoutPanel)TPage.Controls[0];
+                foreach (TCXUserControl CurTCXControl in CurTLPanel.Controls)
+                {
+                    // Для каждой пробы у текущего пациента
+                    foreach (TCX tmpTCX in currentPatient.TCX)
+                        // Ищем совпадение по имени пробы и имени группы
+                        if ((CurTCXControl.Name == tmpTCX.tcx_name) && (TPage.Name == tmpTCX.tcx_group_name))
+                        {
+                            CurTCXControl.Value = tmpTCX.tcx_value;
+                            CurTCXControl.Check();
+                            CurTCXControl.PrintText();
+                        }
+                }
+            }
         }
 
         /// <summary>
@@ -421,45 +421,42 @@ namespace GenGenesis
         /// </summary>
         public void GenerateTCXControls()
         {
-            //TCX tcx = new TCX();
-            //string groupName; // Имя группы ТСХ
-            //int groupId; // ID группы
-            //int groupCount = 0;
-            //// Заполнение контролами с базы данных             
-            //foreach (directorysDataSet.tcx_groupRow CurGroupRow in this.directorysDataSet.tcx_group.Rows)
-            //{
-            //    groupName = CurGroupRow.tcx_group_name;
-            //    groupId = CurGroupRow.tcx_group_id;
-            //    TableLayoutPanel TLPanel = CreatePage(groupName, tCXsGroups, groupCount);
-            //    TLPanel.ColumnCount = 1;
-            //    TLPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.OutsetPartial;
-            //    directorysDataSet.tcxDataTable searchResult = directorysTableAdapterManager.tcxTableAdapter.GetDataByGroupId(groupId);
-            //    foreach (directorysDataSet.tcxRow CurTCXRow in searchResult.Rows)
-            //    {
-            //        // Создадим контрол для проб тсх и определим его значения
-            //        TCXUserControl tmpControl = new TCXUserControl(CurTCXRow.tcx_name);
-            //        tcx.tcx_group_id = groupId;
-            //        tcx.tcx_group_name = groupName;
-            //        tcx.tcx_id = CurTCXRow.tcx_id;
-            //        tcx.tcx_max = CurTCXRow.tcx_max;
-            //        tcx.tcx_min = CurTCXRow.tcx_min;
-            //        tcx.tcx_name = CurTCXRow.tcx_name;
-            //        tmpControl.Maximum = CurTCXRow.tcx_max;
-            //        tmpControl.Minimum = CurTCXRow.tcx_min;
-            //        tmpControl.Tag = tcx;
-            //        TLPanel.Controls.Add(tmpControl);
-            //    }
-            //    groupCount++;
-            //}
-            //PageFilled();
-            //try
-            //{
-            //    owner.Invoke(TCXsCallback, new object[] { tCXsGroups });
-            //}
-            //catch
-            //{
-            //    System.Threading.Thread.CurrentThread.Abort();
-            //}
+            TCX tcx = new TCX();
+            string groupName; // Имя группы ТСХ
+            int groupId; // ID группы
+            int groupCount = 0;
+            // Заполнение контролами с базы данных             
+            foreach (directorysDataSet.tcx_groupsRow CurGroupRow in this.directorysDataSet.tcx_groups.Rows)
+            {
+                groupName = CurGroupRow.tcx_group_name;
+                groupId = CurGroupRow.id_tcx_group;
+                TableLayoutPanel TLPanel = CreatePage(groupName, tCXsGroups, groupCount);
+                TLPanel.ColumnCount = 1;
+                TLPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.OutsetPartial;                
+                foreach (directorysDataSet.tcx_allRow CurTCXRow in directorysDataSet.tcx_all.Rows)
+                {
+                    // Создадим контрол для проб тсх и определим его значения
+                    TCXUserControl tmpControl = new TCXUserControl(CurTCXRow.tcx_name);
+                    tcx.tcx_group_id = groupId;
+                    tcx.tcx_group_name = groupName;
+                    tcx.tcx_id = CurTCXRow.tcx_id;                    
+                    tcx.tcx_name = CurTCXRow.tcx_name;
+                    tmpControl.Maximum = 5;
+                    tmpControl.Minimum = -5;
+                    tmpControl.Tag = tcx;
+                    TLPanel.Controls.Add(tmpControl);
+                }
+                groupCount++;
+            }
+            PageFilled();
+            try
+            {
+                owner.Invoke(TCXsCallback, new object[] { tCXsGroups });
+            }
+            catch
+            {
+                System.Threading.Thread.CurrentThread.Abort();
+            }
         }
         /// <summary>
         /// Извлекает из базы данных информацию про анализы и заполняет TabControl
@@ -474,7 +471,7 @@ namespace GenGenesis
         private void PageFilled()
         {
             fillingProcess++;            
-            if (fillingProcess == 2) // Изменять при добавлении новых
+            if (fillingProcess == 3) // Изменять при добавлении новых
             {
                 try
                 {

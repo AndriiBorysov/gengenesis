@@ -57,32 +57,32 @@ namespace GenGenesis
         /// <param name="patientsTableAdapters"></param>
         private void LoadTCX(GenGenesis.directorysDataSet curDirectorysDB
             , GenGenesis.patientsDataSetTableAdapters.TableAdapterManager patientsTableAdapters)
-        {            
-            //patientsDataSet.tcx_linkDataTable tcx_linkDataTable = patientsTableAdapters.tcx_linkTableAdapter.GetDataByPatient_ID(patient_id);
-            //foreach (GenGenesis.patientsDataSet.tcx_linkRow tmpPatRow in tcx_linkDataTable)
-            //{                
-            //    TCX newTCX;             
-            //    foreach (GenGenesis.directorysDataSet.tcx_allRow tmpDirRow in curDirectorysDB.tcx_all.Rows)
-            //    {
-            //        if (tmpDirRow.tcx_id == tmpPatRow.tcx_id)
-            //        {
-            //            newTCX.tcx_name = tmpDirRow.tcx_name;
-            //            newTCX.tcx_group_id = tmpDirRow.tcx_group_id;
-            //            newTCX.tcx_id = tmpDirRow.tcx_id;
-            //            newTCX.tcx_value = tmpPatRow.tcx_value;                        
-            //            foreach (GenGenesis.directorysDataSet.tcx_groupsRow tmpTCXGroupRow in curDirectorysDB.tcx_groups.Rows)
-            //            {
-            //                if (tmpTCXGroupRow.tcx_group_id == tmpDirRow.tcx_group_id)
-            //                {
-            //                    newTCX.tcx_group_name = tmpTCXGroupRow.tcx_group_name;
-            //                    TCX.Add(newTCX);
-            //                    break;
-            //                }
-            //            }
-            //            break;
-            //        }
-            //    }
-            //}
+        {
+            patientsDataSet.tcx_linkDataTable tcx_linkDataTable = patientsTableAdapters.tcx_linkTableAdapter.GetDataByPatient_ID(patient_id);
+            foreach (GenGenesis.patientsDataSet.tcx_linkRow tmpPatRow in tcx_linkDataTable)
+            {
+                TCX newTCX;
+                foreach (GenGenesis.directorysDataSet.tcx_allRow tmpDirRow in curDirectorysDB.tcx_all.Rows)
+                {
+                    if (tmpDirRow.tcx_id == tmpPatRow.tcx_id)
+                    {
+                        newTCX.tcx_name = tmpDirRow.tcx_name;
+                        newTCX.tcx_id = tmpDirRow.tcx_id;
+                        newTCX.tcx_group_id = tmpPatRow.id_tcx_group;                        
+                        newTCX.tcx_value = tmpPatRow.tcx_value;
+                        foreach (GenGenesis.directorysDataSet.tcx_groupsRow tmpTCXGroupRow in curDirectorysDB.tcx_groups.Rows)
+                        {
+                            if (tmpTCXGroupRow.id_tcx_group == tmpPatRow.id_tcx_group)
+                            {
+                                newTCX.tcx_group_name = tmpTCXGroupRow.tcx_group_name;
+                                TCX.Add(newTCX);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace GenGenesis
             // Добавим заболевания
             LoadIllness(curDirectorysDB, patientsTableAdapters);
             //// Добавим пробы ТСХ
-            //LoadTCX(curDirectorysDB, patientsTableAdapters);
+            LoadTCX(curDirectorysDB, patientsTableAdapters);
             //// Добавим анализы
             //LoadAnalysis(curDirectorysDB, patientsTableAdapters);
             
@@ -206,12 +206,11 @@ namespace GenGenesis
                 foreach (Illness tempIllness in bolezni)
                    // Добавим заболевание
                    patientsTableAdapters.bolezni_linkTableAdapter.Insert(patient_id, tempIllness.illness_id,tempIllness.illness_mask);
-                //// Удаляем все пробы
-                //patientsTableAdapters.tcx_linkTableAdapter.Delete(patient_id);
-                //// Для каждой пробы
-                //foreach (TCX tempTCX in TCX)
-                //   // Добавим пробу
-                //    patientsTableAdapters.tcx_linkTableAdapter.Insert(patient_id, tempTCX.tcx_id, tempTCX.tcx_value);                                
+                // Удаляем все TCX
+                patientsTableAdapters.tcx_linkTableAdapter.Delete(patient_id);
+                //// Для каждой пробы TCX
+                foreach (TCX tempTCX in TCX)                   
+                    patientsTableAdapters.tcx_linkTableAdapter.Insert(patient_id, tempTCX.tcx_id, tempTCX.tcx_value,tempTCX.tcx_group_id);
                 isSaved = true;                
                 return true;
             }            
@@ -243,7 +242,7 @@ namespace GenGenesis
                 //// Удаляем все заболевания связанные с данным пациентом
                 patientsTableAdapters.bolezni_linkTableAdapter.Delete(patient_id);
                 //// Удаляем все пробы
-                //patientsTableAdapters.tcx_linkTableAdapter.Delete(patient_id);                                
+                patientsTableAdapters.tcx_linkTableAdapter.Delete(patient_id);
                 // Удалим данные о пациенте
                 patientsTableAdapters.patientsTableAdapter.DeleteById(patient_id);
                 return true;
