@@ -41,9 +41,11 @@
             this.NoButton = new System.Windows.Forms.Button();
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.nameLabel = new System.Windows.Forms.Label();
-            this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.bDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.sexLabel = new System.Windows.Forms.Label();
             this.sexComboBox = new System.Windows.Forms.ComboBox();
+            this.joinDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // idLabel
@@ -59,7 +61,7 @@
             // idTextBox
             // 
             this.idTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.idTextBox.Location = new System.Drawing.Point(143, 16);
+            this.idTextBox.Location = new System.Drawing.Point(156, 16);
             this.idTextBox.Name = "idTextBox";
             this.idTextBox.Size = new System.Drawing.Size(181, 24);
             this.idTextBox.TabIndex = 0;
@@ -67,7 +69,7 @@
             // surnameTextBox
             // 
             this.surnameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.surnameTextBox.Location = new System.Drawing.Point(143, 58);
+            this.surnameTextBox.Location = new System.Drawing.Point(156, 58);
             this.surnameTextBox.Name = "surnameTextBox";
             this.surnameTextBox.Size = new System.Drawing.Size(181, 24);
             this.surnameTextBox.TabIndex = 1;
@@ -87,7 +89,7 @@
             this.adressTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.adressTextBox.Location = new System.Drawing.Point(72, 270);
             this.adressTextBox.Name = "adressTextBox";
-            this.adressTextBox.Size = new System.Drawing.Size(252, 22);
+            this.adressTextBox.Size = new System.Drawing.Size(265, 22);
             this.adressTextBox.TabIndex = 5;
             // 
             // adressLabel
@@ -103,7 +105,7 @@
             // third_nameTextBox
             // 
             this.third_nameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.third_nameTextBox.Location = new System.Drawing.Point(143, 142);
+            this.third_nameTextBox.Location = new System.Drawing.Point(156, 142);
             this.third_nameTextBox.Name = "third_nameTextBox";
             this.third_nameTextBox.Size = new System.Drawing.Size(181, 24);
             this.third_nameTextBox.TabIndex = 3;
@@ -131,7 +133,7 @@
             // OKButton
             // 
             this.OKButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.OKButton.Location = new System.Drawing.Point(12, 313);
+            this.OKButton.Location = new System.Drawing.Point(17, 351);
             this.OKButton.Name = "OKButton";
             this.OKButton.Size = new System.Drawing.Size(116, 33);
             this.OKButton.TabIndex = 6;
@@ -142,7 +144,7 @@
             // NoButton
             // 
             this.NoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.NoButton.Location = new System.Drawing.Point(208, 313);
+            this.NoButton.Location = new System.Drawing.Point(221, 351);
             this.NoButton.Name = "NoButton";
             this.NoButton.Size = new System.Drawing.Size(116, 33);
             this.NoButton.TabIndex = 7;
@@ -153,7 +155,7 @@
             // nameTextBox
             // 
             this.nameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.nameTextBox.Location = new System.Drawing.Point(143, 100);
+            this.nameTextBox.Location = new System.Drawing.Point(156, 100);
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(181, 24);
             this.nameTextBox.TabIndex = 2;
@@ -168,15 +170,15 @@
             this.nameLabel.TabIndex = 12;
             this.nameLabel.Text = "Имя:";
             // 
-            // dateTimePicker
+            // bDateTimePicker
             // 
-            this.dateTimePicker.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dateTimePicker.Location = new System.Drawing.Point(143, 229);
-            this.dateTimePicker.MaxDate = new System.DateTime(2010, 12, 31, 0, 0, 0, 0);
-            this.dateTimePicker.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
-            this.dateTimePicker.Name = "dateTimePicker";
-            this.dateTimePicker.Size = new System.Drawing.Size(181, 20);
-            this.dateTimePicker.TabIndex = 4;
+            this.bDateTimePicker.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.bDateTimePicker.Location = new System.Drawing.Point(156, 229);
+            this.bDateTimePicker.MaxDate = new System.DateTime(2010, 12, 31, 0, 0, 0, 0);
+            this.bDateTimePicker.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
+            this.bDateTimePicker.Name = "bDateTimePicker";
+            this.bDateTimePicker.Size = new System.Drawing.Size(181, 20);
+            this.bDateTimePicker.TabIndex = 4;
             // 
             // sexLabel
             // 
@@ -195,19 +197,41 @@
             this.sexComboBox.Items.AddRange(new object[] {
             "Мужской",
             "Женский"});
-            this.sexComboBox.Location = new System.Drawing.Point(143, 184);
+            this.sexComboBox.Location = new System.Drawing.Point(156, 184);
             this.sexComboBox.Name = "sexComboBox";
             this.sexComboBox.Size = new System.Drawing.Size(181, 26);
             this.sexComboBox.TabIndex = 14;
+            // 
+            // joinDateTimePicker
+            // 
+            this.joinDateTimePicker.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.joinDateTimePicker.Location = new System.Drawing.Point(156, 311);
+            this.joinDateTimePicker.MaxDate = new System.DateTime(2010, 12, 31, 0, 0, 0, 0);
+            this.joinDateTimePicker.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
+            this.joinDateTimePicker.Name = "joinDateTimePicker";
+            this.joinDateTimePicker.Size = new System.Drawing.Size(181, 20);
+            this.joinDateTimePicker.TabIndex = 15;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(14, 311);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(139, 18);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "Дата поступления:";
             // 
             // NewPatientForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(349, 360);
+            this.ClientSize = new System.Drawing.Size(349, 397);
+            this.Controls.Add(this.joinDateTimePicker);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.sexComboBox);
             this.Controls.Add(this.sexLabel);
-            this.Controls.Add(this.dateTimePicker);
+            this.Controls.Add(this.bDateTimePicker);
             this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.NoButton);
@@ -249,9 +273,11 @@
         private System.Windows.Forms.Button NoButton;
         private System.Windows.Forms.TextBox nameTextBox;
         private System.Windows.Forms.Label nameLabel;
-        private System.Windows.Forms.DateTimePicker dateTimePicker;
+        private System.Windows.Forms.DateTimePicker bDateTimePicker;
         private System.Windows.Forms.Label sexLabel;
         private System.Windows.Forms.ComboBox sexComboBox;
+        private System.Windows.Forms.DateTimePicker joinDateTimePicker;
+        private System.Windows.Forms.Label label1;
 
     }
 }

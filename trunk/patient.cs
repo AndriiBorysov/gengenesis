@@ -13,6 +13,7 @@ namespace GenGenesis
         public string third_name { set; get; } // Отчество                      
         public string sex { set; get; } // Пол        
         public DateTime birthday { get; set; } // Дата рождения  
+        public DateTime JoinDate { get; set; } // Дата поступления 
         public string adress { set; get; } // Адрес      
         public bool isSaved { set; get; } // Сохранён ли пациент
         public bool isExist { set; get; } // Существует ли в базе
@@ -31,6 +32,7 @@ namespace GenGenesis
             this.adress = "";
             this.sex = "";
             this.birthday = DateTime.MinValue;
+            this.JoinDate = DateTime.MinValue;
             this.isSaved = false;
             this.isExist = false;
             priznaki = new List<Sign>();
@@ -166,6 +168,7 @@ namespace GenGenesis
             adress = patientsDataTable[0].adress;
             sex = patientsDataTable[0].sex;
             birthday = patientsDataTable[0].birthday;
+            JoinDate = patientsDataTable[0].JoinDate;
             // Призники
             LoadSigns(curDirectorysDB, patientsTableAdapters);
             // Добавим заболевания
@@ -192,7 +195,7 @@ namespace GenGenesis
             {   
                 // Изменим существующего                
                 // Изменяем поля главной записи                                
-                patientsTableAdapters.patientsTableAdapter.Update(card_number, surname, name, third_name, sex, birthday, adress, patient_id);                                
+                patientsTableAdapters.patientsTableAdapter.Update(card_number, surname, name, third_name, sex, birthday, adress,JoinDate, patient_id);
                 
                 // Сначала очистим все признаки текущего пациета во измбежании повторений
                 patientsTableAdapters. priznaki_linkTableAdapter.Delete(patient_id);
@@ -218,7 +221,7 @@ namespace GenGenesis
             {
                 // Добавляем пациента в базу данных            
                 // Добавим базовые данные
-                patientsTableAdapters.patientsTableAdapter.Insert(card_number, surname, name, third_name, sex, birthday, adress);
+                patientsTableAdapters.patientsTableAdapter.Insert(card_number, surname, name, third_name, sex, birthday, adress,JoinDate);
                 patient_id = (int)patientsTableAdapters.patientsTableAdapter.GetMaxID();
                 // Указываем что сохранили пациента
                 isSaved = true;
