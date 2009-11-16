@@ -118,7 +118,7 @@ namespace GenGenesis
                             if(oneIllness.isOncology)
                                 newNode.Text = oneIllness.illness_name + " (онкология)";
                             else
-                                newNode.Text = oneIllness.illness_name + " (онкология)";
+                                newNode.Text = oneIllness.illness_name;
                             newNode.Name = oneIllness.illness_name;
                             newNode.ForeColor = Color.FromKnownColor(KnownColor.Chocolate);
                             searchedNodes[0].Nodes.Add(newNode);
@@ -131,9 +131,9 @@ namespace GenGenesis
                             groupNode.ForeColor = Color.FromKnownColor(KnownColor.Sienna);
                             illnessNode.Nodes[i].Nodes.Add(groupNode);
                             if (oneIllness.isOncology)
-                                newNode.Text = oneIllness.illness_name + " (онк)";
+                                newNode.Text = oneIllness.illness_name + " (онкология)";
                             else
-                                newNode.Text = oneIllness.illness_name + " (онк)";                            
+                                newNode.Text = oneIllness.illness_name;                            
                             newNode.Name = oneIllness.illness_name;
                             newNode.ForeColor = Color.FromKnownColor(KnownColor.Chocolate);
                             illnessNode.Nodes[i].Nodes[oneIllness.group_name].Nodes.Add(newNode);
