@@ -185,17 +185,30 @@ namespace GenGenesis
         {
             // Для заболеваний
             List<Illness> illnessList = new List<Illness>();
-            foreach (TabPage TPage in IllnessesTabControl.TabPages)
-            {
-                foreach (TableLayoutPanel CurTLPanel in TPage.Controls)
-                {
-                    foreach (CheckBox CurControl in CurTLPanel.Controls)
-                    {
-                        if (CurControl.Checked)
-                            illnessList.Add((Illness)CurControl.Tag);
-                    }
-                }
-            }
+            foreach (TabControl curTControl in illnessesTabControls)
+                foreach (TabPage TPage in curTControl.TabPages)
+                    foreach (TableLayoutPanel CurTLPanel in TPage.Controls)
+                        foreach (CheckBox CurControl in CurTLPanel.Controls)
+                        {
+                            if (CurControl.Checked)
+                            {
+                                bool pr = false;
+                                Illness curIll = (Illness)CurControl.Tag;
+                                for(int i=0;i< illnessList.Count;i++)
+                                {
+                                    if ((illnessList[i].illness_name == curIll.illness_name)
+                                        && (illnessList[i].group_name == curIll.group_name))
+                                    {
+                                        pr = true;
+                                        curIll.illness_mask = illnessList[i].illness_mask | curIll.illness_mask;
+                                        illnessList[i] = curIll;
+                                        break;
+                                    }
+
+                                }
+                                if (!pr) illnessList.Add(curIll);
+                            }
+                        }
             currentPatient.bolezni = illnessList;
         }
 
@@ -204,22 +217,22 @@ namespace GenGenesis
         /// </summary>
         private void AddTCXToCurentPatient()
         {
-            List<TCX> TCXList = new List<TCX>();
-            // Для каждой страницы (Типа)
-            foreach (TabPage TPage in tcxTabControl.TabPages)
-            {
-                // Для каждой таблицы контролов
-                foreach (TableLayoutPanel CurTLPanel in TPage.Controls)
-                {
-                    // Для каждого контрола на таблице
-                    foreach (TCXUserControl CurControl in CurTLPanel.Controls)
-                    {
-                        if (CurControl.Checked)
-                            TCXList.Add((TCX)CurControl.Tag);
-                    }
-                }
-            }
-            currentPatient.TCX = TCXList;
+            //List<TCX> TCXList = new List<TCX>();
+            //// Для каждой страницы (Типа)
+            //foreach (TabPage TPage in tcxTabControl.TabPages)
+            //{
+            //    // Для каждой таблицы контролов
+            //    foreach (TableLayoutPanel CurTLPanel in TPage.Controls)
+            //    {
+            //        // Для каждого контрола на таблице
+            //        foreach (TCXUserControl CurControl in CurTLPanel.Controls)
+            //        {
+            //            if (CurControl.Checked)
+            //                TCXList.Add((TCX)CurControl.Tag);
+            //        }
+            //    }
+            //}
+            //currentPatient.TCX = TCXList;
         }
 
         /// <summary>
@@ -237,7 +250,7 @@ namespace GenGenesis
         {
             // Добавим изменения в класс
             AddPropertyToCurentPatient();
-            //AddIllnessToCurentPatient();
+            AddIllnessToCurentPatient();
             //AddTCXToCurentPatient();
             //AddAnalysisToCurentPatient();            
             currentPatient.isSaved = false;            

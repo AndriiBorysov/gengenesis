@@ -30,7 +30,7 @@ namespace GenGenesis
             #endregion
 
             TreeViewAddSigns();
-            //TreeViewAddIllnesses();
+            TreeViewAddIllnesses();
             //TreeViewAddTCXs();
             //TreeViewAddAnalysis();            
             // Конец изменения
@@ -98,30 +98,42 @@ namespace GenGenesis
             // Добавляем болезни
             TreeNode illnessNode = patientTreeView.Nodes.Add(illnessString);
             illnessNode.ForeColor = Color.FromKnownColor(KnownColor.Sienna);
+            // Добавим типы заболеваний
+            foreach (directorysDataSet.bolezni_masksRow curRow in directorysDataSet.bolezni_masks)
+            {
+                illnessNode.Nodes.Add(curRow.mask_bol.ToString(), curRow.name_bol);
+            }
             foreach (Illness oneIllness in currentPatient.bolezni)
             {
-                TreeNode newNode = new TreeNode();
+                TreeNode newNode = new TreeNode();                
                 // Ищем группу
-                TreeNode[] searchedNodes = illnessNode.Nodes.Find(oneIllness.group_name, false);
-                if (searchedNodes.Length > 0)
+                for(int i =0;i< directorysDataSet.bolezni_masks.Count;i++)
                 {
-                    // Если нашли такую группу
-                    newNode.Text = oneIllness.illness_name;
-                    newNode.Name = oneIllness.illness_name;
-                    newNode.ForeColor = Color.FromKnownColor(KnownColor.Chocolate);
-                    searchedNodes[0].Nodes.Add(newNode);
-                }
-                else
-                {
-                    // Если не нашли такую группу
-                    TreeNode groupNode = new TreeNode(oneIllness.group_name);
-                    groupNode.Name = oneIllness.group_name;
-                    groupNode.ForeColor = Color.FromKnownColor(KnownColor.Sienna);
-                    illnessNode.Nodes.Add(groupNode);
-                    newNode.Text = oneIllness.illness_name;
-                    newNode.Name = oneIllness.illness_name;
-                    newNode.ForeColor = Color.FromKnownColor(KnownColor.Chocolate);
-                    illnessNode.Nodes[oneIllness.group_name].Nodes.Add(newNode);
+                    if ((oneIllness.illness_mask & directorysDataSet.bolezni_masks[i].mask_bol) > 0)
+                    {
+                        TreeNode[] searchedNodes = illnessNode.Nodes[i].Nodes.Find(oneIllness.group_name, false);
+                        if (searchedNodes.Length > 0)
+                        {
+                            // Если нашли такую группу
+                            newNode.Text = oneIllness.illness_name;
+                            newNode.Name = oneIllness.illness_name;
+                            newNode.ForeColor = Color.FromKnownColor(KnownColor.Chocolate);
+                            searchedNodes[0].Nodes.Add(newNode);
+                        }
+                        else
+                        {
+                            // Если не нашли такую группу
+                            TreeNode groupNode = new TreeNode(oneIllness.group_name);
+                            groupNode.Name = oneIllness.group_name;
+                            groupNode.ForeColor = Color.FromKnownColor(KnownColor.Sienna);
+                            illnessNode.Nodes[i].Nodes.Add(groupNode);
+                            newNode.Text = oneIllness.illness_name;
+                            newNode.Name = oneIllness.illness_name;
+                            newNode.ForeColor = Color.FromKnownColor(KnownColor.Chocolate);
+                            illnessNode.Nodes[i].Nodes[oneIllness.group_name].Nodes.Add(newNode);
+                        }
+                        break;
+                    }
                 }
             }
         }

@@ -92,48 +92,29 @@ namespace GenGenesis
         /// <param name="patientsTableAdapters"></param>
         private void LoadIllness(GenGenesis.directorysDataSet curDirectorysDB, 
             GenGenesis.patientsDataSetTableAdapters.TableAdapterManager patientsTableAdapters)
-        {            
-            //patientsDataSet.bolezni_tempDataTable bolezni_tempDataTable = patientsTableAdapters.bolezni_tempTableAdapter.GetDataByPatient_ID(patient_id);
-            //foreach (GenGenesis.patientsDataSet.bolezni_tempRow tmpRow in bolezni_tempDataTable)
-            //{
-            //    // Создадим новый признак
-            //    Illness newIllness;
-            //    // Заполним поля признакапризнак
-            //    foreach (GenGenesis.directorysDataSet.bolezniRow tmpBolezniRow in curDirectorysDB.bolezni.Rows)
-            //    {
-            //        if (tmpBolezniRow["illness_id"].ToString() == tmpRow["illness_id"].ToString())
-            //        {
-            //            newIllness.illness_name = tmpBolezniRow.illness_name;
-            //            newIllness.group_id = tmpBolezniRow.illness_group_id;
-            //            newIllness.illness_id = tmpBolezniRow.illness_id;
-            //            foreach (GenGenesis.directorysDataSet.bolezni_groupRow tmpBolezniGroupRow in curDirectorysDB.bolezni_group.Rows)
-            //            {
-            //                if (tmpBolezniGroupRow.illness_group_id == tmpBolezniRow.illness_group_id)
-            //                {
-            //                    newIllness.group_name = tmpBolezniGroupRow.illness_group_name;
-            //                    bool pr = false;
-            //                    foreach (DataRow curRow in curDirectorysDB.bolezni.Rows)
-            //                        if ((curRow["illness_id"].ToString() == newIllness.illness_id.ToString()))
-            //                        {
-            //                            pr = true;
-            //                            break;
-            //                        }
-            //                    if (pr)
-            //                        newIllness.isOncology = true;
-            //                    else
-            //                        newIllness.isOncology = false;
-            //                    // ДОДЕЛАТЬ типы болезней
-            //                    newIllness.illness_type_id = 0;
-            //                    newIllness.illness_type_name = "Собственное";
-            //                    //
-            //                    bolezni.Add(newIllness);
-            //                    break;
-            //                }
-            //            }
-            //            break;
-            //        }
-            //    }
-            //}
+        {
+            patientsDataSet.bolezni_linkDataTable bolezni_linkDataTable = patientsTableAdapters.bolezni_linkTableAdapter.GetDataByPatient_ID(patient_id);
+            foreach (GenGenesis.patientsDataSet.bolezni_linkRow tmpRow in bolezni_linkDataTable)
+            {                
+                Illness newIllness;             
+                foreach (GenGenesis.directorysDataSet.bolezni_allRow tmpBolezniRow in curDirectorysDB.bolezni_all.Rows)
+                    if (tmpBolezniRow.illness_id == tmpRow.illness_id)
+                    {
+                        newIllness.illness_name = tmpBolezniRow.illness_name;
+                        newIllness.group_id = tmpBolezniRow.illness_group_id;
+                        newIllness.illness_id = tmpBolezniRow.illness_id;
+                        newIllness.illness_mask = tmpRow.mask_bol;
+                        newIllness.isOncology = tmpBolezniRow.illness_oncology;
+                        foreach (GenGenesis.directorysDataSet.bolezni_groupsRow tmpBolezniGroupRow in curDirectorysDB.bolezni_groups.Rows)
+                            if (tmpBolezniGroupRow.illness_group_id == tmpBolezniRow.illness_group_id)
+                            {
+                                newIllness.group_name = tmpBolezniGroupRow.illness_group_name;                                                               
+                                bolezni.Add(newIllness);
+                                break;
+                            }
+                        break;
+                    }
+            }
         }
 
         /// <summary>
@@ -188,7 +169,7 @@ namespace GenGenesis
             // Призники
             LoadSigns(curDirectorysDB, patientsTableAdapters);
             // Добавим заболевания
-            //LoadIllness(curDirectorysDB, patientsTableAdapters);
+            LoadIllness(curDirectorysDB, patientsTableAdapters);
             //// Добавим пробы ТСХ
             //LoadTCX(curDirectorysDB, patientsTableAdapters);
             //// Добавим анализы
@@ -220,11 +201,11 @@ namespace GenGenesis
                    // Добавим признак
                     patientsTableAdapters.priznaki_linkTableAdapter.Insert(tempSign.sign_id, patient_id);
                 //// Удаляем все заболевания связанные с данным пациентом
-                //patientsTableAdapters.bolezni_linkTableAdapter.Delete(patient_id);
+                patientsTableAdapters.bolezni_linkTableAdapter.Delete(patient_id);
                 //// Для каждого заболевания
-                //foreach (Illness tempIllness in bolezni)
-                //   // Добавим заболевание
-                //    patientsTableAdapters.bolezni_linkTableAdapter.Insert(patient_id, tempIllness.illness_id,tempIllness.illness_type_id);                                
+                foreach (Illness tempIllness in bolezni)
+                   // Добавим заболевание
+                   patientsTableAdapters.bolezni_linkTableAdapter.Insert(patient_id, tempIllness.illness_id,tempIllness.illness_mask);
                 //// Удаляем все пробы
                 //patientsTableAdapters.tcx_linkTableAdapter.Delete(patient_id);
                 //// Для каждой пробы
@@ -260,7 +241,7 @@ namespace GenGenesis
                 // Очистим все признаки текущего пациета
                 patientsTableAdapters.priznaki_linkTableAdapter.Delete(patient_id);
                 //// Удаляем все заболевания связанные с данным пациентом
-                //patientsTableAdapters.bolezni_linkTableAdapter.Delete(patient_id);
+                patientsTableAdapters.bolezni_linkTableAdapter.Delete(patient_id);
                 //// Удаляем все пробы
                 //patientsTableAdapters.tcx_linkTableAdapter.Delete(patient_id);                                
                 // Удалим данные о пациенте
@@ -290,9 +271,7 @@ namespace GenGenesis
         public int illness_id;
         public string illness_name;
         public int group_id;
-        public string group_name;
-        public int illness_type_id;
-        public string illness_type_name;
+        public string group_name;        
         public int illness_mask;
         public bool isOncology;        
     }    

@@ -56,9 +56,9 @@
             this.collapseButton = new System.Windows.Forms.Button();
             this.expandButton = new System.Windows.Forms.Button();
             this.patientTreeView = new System.Windows.Forms.TreeView();
+            this.tabControlPanel = new System.Windows.Forms.Panel();
             this.currentTabControl = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.classPaneBar = new BarTender.GroupPaneBar();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.newPatientButton = new System.Windows.Forms.ToolStripButton();
             this.loadPatientButton = new System.Windows.Forms.ToolStripButton();
@@ -71,17 +71,14 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.eventToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
-            this.tabControlPanel = new System.Windows.Forms.Panel();
-            this.classPaneBar = new BarTender.GroupPaneBar();
             this.menuStrip.SuspendLayout();
             this.splitContainerMain.Panel1.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
             this.splitContainerMain.SuspendLayout();
-            this.currentTabControl.SuspendLayout();
-            this.toolStrip.SuspendLayout();
-            this.statusStrip.SuspendLayout();
             this.tabControlPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.classPaneBar)).BeginInit();
+            this.toolStrip.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -318,11 +315,20 @@
             this.patientTreeView.Size = new System.Drawing.Size(307, 484);
             this.patientTreeView.TabIndex = 0;
             // 
+            // tabControlPanel
+            // 
+            this.tabControlPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControlPanel.Controls.Add(this.currentTabControl);
+            this.tabControlPanel.Location = new System.Drawing.Point(204, 0);
+            this.tabControlPanel.Name = "tabControlPanel";
+            this.tabControlPanel.Size = new System.Drawing.Size(451, 518);
+            this.tabControlPanel.TabIndex = 14;
+            // 
             // currentTabControl
             // 
             this.currentTabControl.Appearance = System.Windows.Forms.TabAppearance.Buttons;
-            this.currentTabControl.Controls.Add(this.tabPage1);
-            this.currentTabControl.Controls.Add(this.tabPage2);
             this.currentTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.currentTabControl.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.currentTabControl.HotTrack = true;
@@ -335,23 +341,26 @@
             this.currentTabControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.currentTabControl.TabIndex = 0;
             // 
-            // tabPage1
+            // classPaneBar
             // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 28);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(443, 486);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 28);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(442, 486);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.classPaneBar.AutoScroll = true;
+            this.classPaneBar.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.classPaneBar.BorderWidth = 2;
+            this.classPaneBar.CanResize = false;
+            this.classPaneBar.Dock = System.Windows.Forms.DockStyle.Left;
+            this.classPaneBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.classPaneBar.HeaderColor1 = System.Drawing.Color.SkyBlue;
+            this.classPaneBar.HeaderGradientMode = System.Drawing.Drawing2D.LinearGradientMode.ForwardDiagonal;
+            this.classPaneBar.HeaderHeight = 22;
+            this.classPaneBar.ImagesEnabled = false;
+            this.classPaneBar.Location = new System.Drawing.Point(0, 0);
+            this.classPaneBar.MinimumExpandedHeight = 42;
+            this.classPaneBar.Name = "classPaneBar";
+            this.classPaneBar.Padding = new System.Windows.Forms.Padding(1);
+            this.classPaneBar.ShowExpandCollapseButton = false;
+            this.classPaneBar.Size = new System.Drawing.Size(202, 518);
+            this.classPaneBar.TabIndex = 13;
+            this.classPaneBar.GroupPaneExpanding += new BarTender.GroupPaneCancelEventHandler(this.classPaneBar_GroupPaneExpanding);
             // 
             // toolStrip
             // 
@@ -469,41 +478,9 @@
             // 
             this.toolStripProgressBar.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripProgressBar.MarqueeAnimationSpeed = 10;
-            this.toolStripProgressBar.Maximum = 4;
+            this.toolStripProgressBar.Maximum = 17;
             this.toolStripProgressBar.Name = "toolStripProgressBar";
             this.toolStripProgressBar.Size = new System.Drawing.Size(100, 16);
-            // 
-            // tabControlPanel
-            // 
-            this.tabControlPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControlPanel.Controls.Add(this.currentTabControl);
-            this.tabControlPanel.Location = new System.Drawing.Point(204, 0);
-            this.tabControlPanel.Name = "tabControlPanel";
-            this.tabControlPanel.Size = new System.Drawing.Size(451, 518);
-            this.tabControlPanel.TabIndex = 14;
-            // 
-            // classPaneBar
-            // 
-            this.classPaneBar.AutoScroll = true;
-            this.classPaneBar.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.classPaneBar.BorderWidth = 2;
-            this.classPaneBar.CanResize = false;
-            this.classPaneBar.Dock = System.Windows.Forms.DockStyle.Left;
-            this.classPaneBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.classPaneBar.HeaderColor1 = System.Drawing.Color.SkyBlue;
-            this.classPaneBar.HeaderGradientMode = System.Drawing.Drawing2D.LinearGradientMode.ForwardDiagonal;
-            this.classPaneBar.HeaderHeight = 22;
-            this.classPaneBar.ImagesEnabled = false;
-            this.classPaneBar.Location = new System.Drawing.Point(0, 0);
-            this.classPaneBar.MinimumExpandedHeight = 42;
-            this.classPaneBar.Name = "classPaneBar";
-            this.classPaneBar.Padding = new System.Windows.Forms.Padding(1);
-            this.classPaneBar.ShowExpandCollapseButton = false;
-            this.classPaneBar.Size = new System.Drawing.Size(202, 518);
-            this.classPaneBar.TabIndex = 13;
-            this.classPaneBar.GroupPaneExpanding += new BarTender.GroupPaneCancelEventHandler(this.classPaneBar_GroupPaneExpanding);
             // 
             // MainForm
             // 
@@ -526,13 +503,12 @@
             this.splitContainerMain.Panel2.ResumeLayout(false);
             this.splitContainerMain.Panel2.PerformLayout();
             this.splitContainerMain.ResumeLayout(false);
-            this.currentTabControl.ResumeLayout(false);
+            this.tabControlPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.classPaneBar)).EndInit();
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
-            this.tabControlPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.classPaneBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -579,8 +555,6 @@
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
         private BarTender.GroupPaneBar classPaneBar;
         private System.Windows.Forms.TabControl currentTabControl;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Panel tabControlPanel;        
 
     }
