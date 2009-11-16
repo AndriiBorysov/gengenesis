@@ -25,6 +25,8 @@ namespace GenGenesis
             patientTreeView.Nodes.Add(currentPatient.sex);
             if (currentPatient.birthday != DateTime.MinValue)
                 patientTreeView.Nodes.Add(currentPatient.birthday.ToLongDateString() + "р.");
+            if (currentPatient.JoinDate != DateTime.MinValue)
+                patientTreeView.Nodes.Add("Поступил: "+currentPatient.birthday.ToLongDateString());
             if (currentPatient.adress.Length != 0)
                 patientTreeView.Nodes.Add("Адрес: " + currentPatient.adress);
             #endregion

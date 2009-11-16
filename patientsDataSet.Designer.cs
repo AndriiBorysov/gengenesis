@@ -1203,6 +1203,8 @@ namespace GenGenesis {
             
             private global::System.Data.DataColumn columnadress;
             
+            private global::System.Data.DataColumn columnJoinDate;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public patientsDataTable() {
                 this.TableName = "patients";
@@ -1290,6 +1292,13 @@ namespace GenGenesis {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn JoinDateColumn {
+                get {
+                    return this.columnJoinDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1318,7 +1327,7 @@ namespace GenGenesis {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public patientsRow AddpatientsRow(int card_number, string surname, string name, string third_name, string sex, System.DateTime birthday, string adress) {
+            public patientsRow AddpatientsRow(int card_number, string surname, string name, string third_name, string sex, System.DateTime birthday, string adress, System.DateTime JoinDate) {
                 patientsRow rowpatientsRow = ((patientsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1328,7 +1337,8 @@ namespace GenGenesis {
                         third_name,
                         sex,
                         birthday,
-                        adress};
+                        adress,
+                        JoinDate};
                 rowpatientsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowpatientsRow);
                 return rowpatientsRow;
@@ -1362,6 +1372,7 @@ namespace GenGenesis {
                 this.columnsex = base.Columns["sex"];
                 this.columnbirthday = base.Columns["birthday"];
                 this.columnadress = base.Columns["adress"];
+                this.columnJoinDate = base.Columns["JoinDate"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1382,6 +1393,8 @@ namespace GenGenesis {
                 base.Columns.Add(this.columnbirthday);
                 this.columnadress = new global::System.Data.DataColumn("adress", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnadress);
+                this.columnJoinDate = new global::System.Data.DataColumn("JoinDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnJoinDate);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnpatient_id}, true));
                 this.columnpatient_id.AutoIncrement = true;
@@ -2205,6 +2218,21 @@ namespace GenGenesis {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public System.DateTime JoinDate {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tablepatients.JoinDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'JoinDate\' in table \'patients\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablepatients.JoinDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public bool Iscard_numberNull() {
                 return this.IsNull(this.tablepatients.card_numberColumn);
             }
@@ -2272,6 +2300,16 @@ namespace GenGenesis {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public void SetadressNull() {
                 this[this.tablepatients.adressColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsJoinDateNull() {
+                return this.IsNull(this.tablepatients.JoinDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetJoinDateNull() {
+                this[this.tablepatients.JoinDateColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3382,10 +3420,11 @@ namespace GenGenesis.patientsDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("sex", "sex");
             tableMapping.ColumnMappings.Add("birthday", "birthday");
             tableMapping.ColumnMappings.Add("adress", "adress");
+            tableMapping.ColumnMappings.Add("JoinDate", "JoinDate");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.OleDb.OleDbCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM `patients` WHERE ((`patient_id` = ?) AND ((? = 1 AND `card_number` IS NULL) OR (`card_number` = ?)) AND ((? = 1 AND `surname` IS NULL) OR (`surname` = ?)) AND ((? = 1 AND `name` IS NULL) OR (`name` = ?)) AND ((? = 1 AND `third_name` IS NULL) OR (`third_name` = ?)) AND ((? = 1 AND `sex` IS NULL) OR (`sex` = ?)) AND ((? = 1 AND `birthday` IS NULL) OR (`birthday` = ?)) AND ((? = 1 AND `adress` IS NULL) OR (`adress` = ?)))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM `patients` WHERE ((`patient_id` = ?) AND ((? = 1 AND `card_number` IS NULL) OR (`card_number` = ?)) AND ((? = 1 AND `surname` IS NULL) OR (`surname` = ?)) AND ((? = 1 AND `name` IS NULL) OR (`name` = ?)) AND ((? = 1 AND `third_name` IS NULL) OR (`third_name` = ?)) AND ((? = 1 AND `sex` IS NULL) OR (`sex` = ?)) AND ((? = 1 AND `birthday` IS NULL) OR (`birthday` = ?)) AND ((? = 1 AND `adress` IS NULL) OR (`adress` = ?)) AND ((? = 1 AND `JoinDate` IS NULL) OR (`JoinDate` = ?)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_patient_id", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "patient_id", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_card_number", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "card_number", global::System.Data.DataRowVersion.Original, true, null));
@@ -3402,10 +3441,12 @@ namespace GenGenesis.patientsDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_birthday", global::System.Data.OleDb.OleDbType.Date, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "birthday", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_adress", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "adress", global::System.Data.DataRowVersion.Original, true, null));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_adress", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "adress", global::System.Data.DataRowVersion.Original, false, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_JoinDate", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "JoinDate", global::System.Data.DataRowVersion.Original, true, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_JoinDate", global::System.Data.OleDb.OleDbType.Date, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "JoinDate", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.InsertCommand = new global::System.Data.OleDb.OleDbCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = "INSERT INTO `patients` (`card_number`, `surname`, `name`, `third_name`, `sex`, `b" +
-                "irthday`, `adress`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                "irthday`, `adress`, `JoinDate`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("card_number", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "card_number", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("surname", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "surname", global::System.Data.DataRowVersion.Current, false, null));
@@ -3414,11 +3455,12 @@ namespace GenGenesis.patientsDataSetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("sex", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "sex", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("birthday", global::System.Data.OleDb.OleDbType.Date, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "birthday", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("adress", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "adress", global::System.Data.DataRowVersion.Current, false, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("JoinDate", global::System.Data.OleDb.OleDbType.Date, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "JoinDate", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand = new global::System.Data.OleDb.OleDbCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = "UPDATE       patients\r\nSET                card_number = ?, surname = ?, name = ?," +
-                " third_name = ?, sex = ?, birthday = ?, adress = ?\r\nWHERE        (patient_id = ?" +
-                ")";
+                " third_name = ?, sex = ?, birthday = ?, adress = ?, JoinDate = ?\r\nWHERE        (" +
+                "patient_id = ?)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("card_number", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "card_number", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("surname", global::System.Data.OleDb.OleDbType.WChar, 50, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "surname", global::System.Data.DataRowVersion.Current, false, null));
@@ -3427,6 +3469,7 @@ namespace GenGenesis.patientsDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("sex", global::System.Data.OleDb.OleDbType.WChar, 50, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "sex", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("birthday", global::System.Data.OleDb.OleDbType.Date, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "birthday", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("adress", global::System.Data.OleDb.OleDbType.WChar, 50, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "adress", global::System.Data.DataRowVersion.Current, false, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("JoinDate", global::System.Data.OleDb.OleDbType.Date, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "JoinDate", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_patient_id", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "patient_id", global::System.Data.DataRowVersion.Original, false, null));
         }
         
@@ -3441,8 +3484,8 @@ namespace GenGenesis.patientsDataSetTableAdapters {
             this._commandCollection = new global::System.Data.OleDb.OleDbCommand[5];
             this._commandCollection[0] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT patient_id, card_number, surname, name, third_name, sex, birthday, adress " +
-                "FROM patients WHERE patient_id=?";
+            this._commandCollection[0].CommandText = "SELECT patient_id, card_number, surname, name, third_name, sex, birthday, adress," +
+                " JoinDate FROM patients WHERE (patient_id = ?)";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[0].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("patient_id", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "patient_id", global::System.Data.DataRowVersion.Current, false, null));
             this._commandCollection[1] = new global::System.Data.OleDb.OleDbCommand();
@@ -3452,13 +3495,13 @@ namespace GenGenesis.patientsDataSetTableAdapters {
             this._commandCollection[1].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("patient_id", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "patient_id", global::System.Data.DataRowVersion.Original, false, null));
             this._commandCollection[2] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = "SELECT adress, birthday, card_number, name, patient_id, sex, surname, third_name " +
-                "FROM patients";
+            this._commandCollection[2].CommandText = "SELECT JoinDate, adress, birthday, card_number, name, patient_id, sex, surname, t" +
+                "hird_name FROM patients";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[3] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = "SELECT adress, birthday, card_number, name, patient_id, sex, surname, third_name " +
-                "FROM patients WHERE (patient_id = ?) OR (surname = ?)";
+            this._commandCollection[3].CommandText = "SELECT JoinDate, adress, birthday, card_number, name, patient_id, sex, surname, t" +
+                "hird_name FROM patients WHERE (patient_id = ?) OR (surname = ?)";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("patient_id", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "patient_id", global::System.Data.DataRowVersion.Current, false, null));
             this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("surname", global::System.Data.OleDb.OleDbType.WChar, 50, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "surname", global::System.Data.DataRowVersion.Current, false, null));
@@ -3578,7 +3621,7 @@ namespace GenGenesis.patientsDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_patient_id, int Original_card_number, string Original_surname, string Original_name, string Original_third_name, string Original_sex, global::System.Nullable<global::System.DateTime> Original_birthday, string Original_adress) {
+        public virtual int Delete(int Original_patient_id, int Original_card_number, string Original_surname, string Original_name, string Original_third_name, string Original_sex, global::System.Nullable<global::System.DateTime> Original_birthday, string Original_adress, global::System.Nullable<global::System.DateTime> Original_JoinDate) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_patient_id));
             this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(0));
             this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(Original_card_number));
@@ -3630,6 +3673,14 @@ namespace GenGenesis.patientsDataSetTableAdapters {
                 this.Adapter.DeleteCommand.Parameters[13].Value = ((object)(0));
                 this.Adapter.DeleteCommand.Parameters[14].Value = ((string)(Original_adress));
             }
+            if ((Original_JoinDate.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[15].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[16].Value = ((System.DateTime)(Original_JoinDate.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[15].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[16].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -3649,7 +3700,7 @@ namespace GenGenesis.patientsDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(int card_number, string surname, string name, string third_name, string sex, global::System.Nullable<global::System.DateTime> birthday, string adress) {
+        public virtual int Insert(int card_number, string surname, string name, string third_name, string sex, global::System.Nullable<global::System.DateTime> birthday, string adress, global::System.Nullable<global::System.DateTime> JoinDate) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(card_number));
             if ((surname == null)) {
                 this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
@@ -3687,6 +3738,12 @@ namespace GenGenesis.patientsDataSetTableAdapters {
             else {
                 this.Adapter.InsertCommand.Parameters[6].Value = ((string)(adress));
             }
+            if ((JoinDate.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[7].Value = ((System.DateTime)(JoinDate.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[7].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -3706,7 +3763,7 @@ namespace GenGenesis.patientsDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int card_number, string surname, string name, string third_name, string sex, global::System.Nullable<global::System.DateTime> birthday, string adress, int Original_patient_id) {
+        public virtual int Update(int card_number, string surname, string name, string third_name, string sex, global::System.Nullable<global::System.DateTime> birthday, string adress, global::System.Nullable<global::System.DateTime> JoinDate, int Original_patient_id) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(card_number));
             if ((surname == null)) {
                 this.Adapter.UpdateCommand.Parameters[1].Value = global::System.DBNull.Value;
@@ -3744,7 +3801,13 @@ namespace GenGenesis.patientsDataSetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(adress));
             }
-            this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(Original_patient_id));
+            if ((JoinDate.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((System.DateTime)(JoinDate.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[7].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(Original_patient_id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {

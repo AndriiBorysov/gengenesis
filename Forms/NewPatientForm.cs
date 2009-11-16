@@ -21,14 +21,20 @@ namespace GenGenesis
             this.surnameTextBox.Text = curPatient.surname;
             this.nameTextBox.Text= curPatient.name;
             this.sexComboBox.Text = curPatient.sex;
-            this.third_nameTextBox.Text = curPatient.third_name;
+            this.third_nameTextBox.Text = curPatient.third_name;            
             if(curPatient.birthday == DateTime.MinValue)
             {
-                this.dateTimePicker.Value = DateTime.Now;
+                this.bDateTimePicker.Value = DateTime.Now;
             }
             else
-                this.dateTimePicker.Value = curPatient.birthday;
+                this.bDateTimePicker.Value = curPatient.birthday;
             this.adressTextBox.Text = curPatient.adress;
+            if (curPatient.JoinDate == DateTime.MinValue)
+            {
+                this.joinDateTimePicker.Value = DateTime.Now;
+            }
+            else
+                this.joinDateTimePicker.Value = curPatient.JoinDate;
         }
         // Сохранить результат
         private void OKButton_Click(object sender, System.EventArgs e)
@@ -45,8 +51,9 @@ namespace GenGenesis
             curPatient.name = this.nameTextBox.Text;
             curPatient.third_name = this.third_nameTextBox.Text;
             curPatient.sex = this.sexComboBox.Text;
-            curPatient.birthday = this.dateTimePicker.Value;
+            curPatient.birthday = this.bDateTimePicker.Value;
             curPatient.adress = this.adressTextBox.Text;
+            curPatient.JoinDate = this.joinDateTimePicker.Value;
             curPatient.isSaved = false;
             // Передадим основной форме нового пациента            
             DialogResult = DialogResult.OK;
