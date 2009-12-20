@@ -73,7 +73,7 @@ namespace GenGenesis
             foreach (directorysDataSet.bolezni_masksRow currentRow in directorysDataSet.bolezni_masks)
                 currentSTC.Buttons.Add(currentRow.name_bol);
             currentSTC.Click +=new StackBarControl.ButtonClickEventHandler(IllnessSTC_Click);
-            classPaneBar.Add(currentSTC, "Заболевания", null).ExpandedHeight = (currentSTC.ButtonHeight+8) * directorysDataSet.bolezni_masks.Count;
+            classPaneBar.Add(currentSTC, "Заболевания", null, true);
 
             tmpPane = classPaneBar.Add(null, "ТСХ", null);
             tmpPane.Click += new EventHandler(ShowTabControl);
@@ -81,8 +81,8 @@ namespace GenGenesis
 
             currentSTC = InitializeStackBarControle();                        
             foreach (directorysDataSet.analyzes_typesRow currentRow in directorysDataSet.analyzes_types)
-                currentSTC.Buttons.Add(currentRow.type_name);
-            classPaneBar.Add(currentSTC, "Анализы", null).ExpandedHeight = (currentSTC.ButtonHeight + 5) * directorysDataSet.analyzes_types.Count;
+                currentSTC.Buttons.Add(currentRow.type_name);            
+            classPaneBar.Add(currentSTC, "Анализы", null, true);
             
             // Свернём все вкладки
             classPaneBar.CollapseAll();
