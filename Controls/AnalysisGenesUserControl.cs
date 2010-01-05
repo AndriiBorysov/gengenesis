@@ -4,22 +4,42 @@ using System.Windows.Forms;
 
 namespace GenGenesis
 {
-    public partial class GenesUserControl : UserControl
+    public partial class AnalysisGenesUserControl : UserControl
     {
         // Значение
-        private int _value;
+        private double _value;
+        private bool _checked;
         private int reSizeCount;
-        public int Value
+        public double Value
         {
             set
             {
+                if (Tag != null)
+                {
+                    Analysis T = (Analysis)Tag;
+                    if (value < 0)
+                    {
+                        _value = -1;
+                        T.analizes_value = -1;
+                    }
+                    else
+                    {
+                        _value = 1;
+                        T.analizes_value = 1;
+                    }
+                    if (value == 0)
+                    {
+                        _value = 0;
+                        T.analizes_value = 0;
+                    }
+                    Tag = T;
+                }
                 if (value < 0)
                     _value = -1;
                 else
-                    if (value == 0)
-                        _value = 0;
-                    else
-                        _value = 1;
+                    _value = 1;
+                if (value == 0)
+                    _value = 0;
                 // Установка значения радиобатона
                 SetRadioButton();
             }
@@ -34,20 +54,19 @@ namespace GenGenesis
                 MessageBox.Show("Не выбрано значение!", "Ошибка");
                 return 0;
             }
-        }
-        private bool _checked;
+        }        
         public bool Checked
         {
             set { checkBox.Checked = value; _checked = value; }
             get { return _checked; }
         }
-        public GenesUserControl(string genName)
+        public AnalysisGenesUserControl(string genName)
         {
             InitializeComponent();
             Value = 0;
             reSizeCount = 0;
             Checked = false;
-            genNameLabel.Text = genName;
+            checkBox.Text = genName;
             this.Name = genName;
             DoResize();
         }
@@ -57,22 +76,20 @@ namespace GenGenesis
             zeroRadioButton.Checked = false;
             plusRadioButton.Checked = false;
             _value = 0;
+            if (Tag != null)
+            {
+                Analysis T = (Analysis)Tag;                
+                T.analizes_value = 0;
+                Tag = T;
+            }
             Checked = false;
         }
         public void DoResize()// Утановка новых значений
         {
             this.SuspendLayout();
-            checkBox.Location = new Point(1, checkBox.Location.Y + 1);
-            genNameLabel.Location = new Point(checkBox.Size.Width + 2, genNameLabel.Location.Y + 1);
-            groupBox.Location = new Point(genNameLabel.Location.X + genNameLabel.Size.Width + 1, groupBox.Location.Y);
-            groupBox.Size = new Size(groupBox.Size.Width, groupBox.Size.Height + 1);
-
-            minusRadioButton.Location = new Point(2, minusRadioButton.Location.Y);
-            zeroRadioButton.Location = new Point(minusRadioButton.Size.Width + 2, zeroRadioButton.Location.Y);
-            plusRadioButton.Location = new Point(zeroRadioButton.Location.X + zeroRadioButton.Size.Width, plusRadioButton.Location.Y);
-
-            groupBox.Size = new Size(minusRadioButton.Size.Width + zeroRadioButton.Size.Width + plusRadioButton.Size.Width + 3, this.groupBox.Size.Height - 2);
-            this.Size = new Size(groupBox.Location.X + groupBox.Size.Width + 3, this.Size.Height + 1);
+            checkBox.Location = new Point(1, checkBox.Location.Y);
+            groupBox.Location = new Point(100, groupBox.Location.Y);
+            groupBox.Size = new Size(groupBox.ClientSize.Width, groupBox.ClientSize.Height-2);                        
             this.ResumeLayout(false);
             this.PerformLayout();
         }
@@ -98,16 +115,34 @@ namespace GenGenesis
         #region Обработчики
         private void minusRadioButton_CheckedChanged(object sender, EventArgs e)
         {
+            if (Tag != null)
+            {
+                Analysis T = (Analysis)Tag;
+                T.analizes_value = -1;
+                Tag = T;
+            }
             _value = -1;
             Checked = true;
         }
         private void zeroRadioButton_CheckedChanged(object sender, EventArgs e)
         {
+            if (Tag != null)
+            {
+                Analysis T = (Analysis)Tag;
+                T.analizes_value = 0;
+                Tag = T;
+            }
             _value = 0;
             Checked = true;
         }
         private void plusRadioButton_CheckedChanged(object sender, EventArgs e)
         {
+            if (Tag != null)
+            {
+                Analysis T = (Analysis)Tag;
+                T.analizes_value = 1;
+                Tag = T;
+            }
             _value = 1;
             Checked = true;
         }
@@ -125,5 +160,16 @@ namespace GenGenesis
             base.OnPaint(e);
         }
         #endregion
+
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            this.BackColor = System.Drawing.Color.FromKnownColor(KnownColor.Highlight);
+            base.OnMouseEnter(e);
+        }
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            this.BackColor = System.Drawing.Color.FromKnownColor(KnownColor.Info);
+            base.OnMouseLeave(e);
+        } 
     }
 }
