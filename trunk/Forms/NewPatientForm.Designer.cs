@@ -179,6 +179,7 @@
             this.bDateTimePicker.Name = "bDateTimePicker";
             this.bDateTimePicker.Size = new System.Drawing.Size(181, 20);
             this.bDateTimePicker.TabIndex = 4;
+            this.bDateTimePicker.Value = new System.DateTime(1980, 9, 1, 19, 39, 0, 0);
             // 
             // sexLabel
             // 
@@ -201,6 +202,7 @@
             this.sexComboBox.Name = "sexComboBox";
             this.sexComboBox.Size = new System.Drawing.Size(181, 26);
             this.sexComboBox.TabIndex = 14;
+            this.sexComboBox.Text = "Мужской";
             // 
             // joinDateTimePicker
             // 

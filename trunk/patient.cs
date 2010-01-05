@@ -20,7 +20,7 @@ namespace GenGenesis
         public List<Sign> priznaki { set; get; } // признаки
         public List<Illness> bolezni { set; get; } // болезни
         public List<TCX> TCX { set; get; } // Пробы ТСХ
-        // public List<Gen> analysis { set; get; } // Анализы
+         public List<Analysis> analysis { set; get; } // Анализы
         #endregion
         // Конструктор
         public Patient()
@@ -37,7 +37,8 @@ namespace GenGenesis
             this.isExist = false;
             priznaki = new List<Sign>();
             bolezni = new List<Illness>();
-            TCX = new List<TCX>();            
+            TCX = new List<TCX>();
+            analysis = new List<Analysis>();
         }
 
         #region Методы загрузки с базы данных
@@ -49,7 +50,38 @@ namespace GenGenesis
         private void LoadAnalysis(GenGenesis.directorysDataSet curDirectorysDB,
             GenGenesis.patientsDataSetTableAdapters.TableAdapterManager patientsTableAdapters)
         {
-            throw new NotImplementedException();
+            patientsDataSet.analyses_linkDataTable analyses_linkDataTable = patientsTableAdapters.analyses_linkTableAdapter.GetDataByPatient_ID(patient_id);
+            
+            foreach (GenGenesis.patientsDataSet.analyses_linkRow tmpRow in analyses_linkDataTable)
+            {
+                Analysis newAnal;
+                
+                foreach (GenGenesis.directorysDataSet.analyzes_groupsRow tmpAnalRow in curDirectorysDB.analyzes_groups.Rows)
+                    if (tmpAnalRow.id_analizes == tmpRow.id_analizes)
+                    {
+                        newAnal.analysis_name = tmpAnalRow.analize_name;
+                        newAnal.analizes_id = tmpAnalRow.id_analizes;
+                        newAnal.analazes_type_id = tmpAnalRow.analyse_type_id;
+                        newAnal.analyses_value_type_id = tmpAnalRow.analyse_value_type_id;
+                        newAnal.analizes_value = tmpRow.value;
+                        newAnal.analyses_value_type_name = "";
+                        newAnal.analazes_type_name = "";
+                        foreach (GenGenesis.directorysDataSet.analyses_value_typesRow analyses_value_typesRow in curDirectorysDB.analyses_value_types.Rows)
+                            if (analyses_value_typesRow.id_value_types == newAnal.analyses_value_type_id)
+                            {
+                                newAnal.analyses_value_type_name = analyses_value_typesRow.type_name;
+                                break;
+                            }
+                        foreach (GenGenesis.directorysDataSet.analyzes_typesRow analyzes_typesRow in curDirectorysDB.analyzes_types.Rows)
+                            if (analyzes_typesRow.id_analazes_type == newAnal.analazes_type_id)
+                            {
+                                newAnal.analazes_type_name = analyzes_typesRow.type_name;
+                                analysis.Add(newAnal);
+                                break;
+                            }
+                        break;
+                    }
+            }
         }
 
         /// <summary>
@@ -176,7 +208,7 @@ namespace GenGenesis
             //// Добавим пробы ТСХ
             LoadTCX(curDirectorysDB, patientsTableAdapters);
             //// Добавим анализы
-            //LoadAnalysis(curDirectorysDB, patientsTableAdapters);
+            LoadAnalysis(curDirectorysDB, patientsTableAdapters);
             
             // Укажем что БД сохранена и пациент существует
             isSaved = true;
@@ -214,6 +246,11 @@ namespace GenGenesis
                 //// Для каждой пробы TCX
                 foreach (TCX tempTCX in TCX)                   
                     patientsTableAdapters.tcx_linkTableAdapter.Insert(patient_id, tempTCX.tcx_id, tempTCX.tcx_value,tempTCX.tcx_group_id);
+                // Удаляем анализы
+                patientsTableAdapters.analyses_linkTableAdapter.Delete(patient_id);
+                // Добавляем анализы
+                foreach (Analysis tempAnal in analysis)
+                    patientsTableAdapters.analyses_linkTableAdapter.Insert(patient_id, tempAnal.analizes_id, tempAnal.analizes_value);
                 isSaved = true;                
                 return true;
             }            
@@ -246,6 +283,8 @@ namespace GenGenesis
                 patientsTableAdapters.bolezni_linkTableAdapter.Delete(patient_id);
                 //// Удаляем все пробы
                 patientsTableAdapters.tcx_linkTableAdapter.Delete(patient_id);
+                // Удалим анализы
+                patientsTableAdapters.analyses_linkTableAdapter.Delete(patient_id);
                 // Удалим данные о пациенте
                 patientsTableAdapters.patientsTableAdapter.DeleteById(patient_id);
                 return true;
@@ -289,13 +328,17 @@ namespace GenGenesis
         public string tcx_group_name;
     }    
     /// <summary>
-    /// Cтруктура для обозначения состояния гена
+    /// Cтруктура для обозначения Анализа
     /// </summary>
-    public struct Gen
+    public struct Analysis
     {
-        public string gen_name;
-        public int gen_id;
-        public int gen_stat;
+        public string analysis_name;
+        public int analizes_id;
+        public int analazes_type_id;
+        public string analazes_type_name;        
+        public int analyses_value_type_id;
+        public string analyses_value_type_name;
+        public double analizes_value;
     }
     #endregion
 }

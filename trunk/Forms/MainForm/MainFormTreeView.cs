@@ -34,7 +34,7 @@ namespace GenGenesis
             TreeViewAddSigns();
             TreeViewAddIllnesses();
             TreeViewAddTCXs();
-            //TreeViewAddAnalysis();            
+            TreeViewAddAnalysis();            
             // Конец изменения
             patientTreeView.EndUpdate();
             // Нормальный курсор
@@ -45,7 +45,43 @@ namespace GenGenesis
         /// </summary>
         private void TreeViewAddAnalysis()
         {
-            throw new NotImplementedException();
+
+            string AnalString = "Анализы";
+            // Добавляем анализ
+            TreeNode AnalNode = patientTreeView.Nodes.Add(AnalString, AnalString);
+            AnalNode.ForeColor = Color.FromKnownColor(KnownColor.HotTrack);
+            foreach (Analysis oneAnal in currentPatient.analysis)
+            {
+                TreeNode newNode = new TreeNode();
+                // Ищем группу
+                TreeNode[] searchedNodes = AnalNode.Nodes.Find(oneAnal.analazes_type_name, false);
+                if (searchedNodes.Length > 0)
+                {
+                    // Если нашли такую группу
+                    newNode.Text = oneAnal.analysis_name + "  " + oneAnal.analizes_value.ToString();
+                    newNode.Name = oneAnal.analysis_name;
+                    if (oneAnal.analizes_value <= 0)
+                        newNode.ForeColor = Color.Red;
+                    if (oneAnal.analizes_value > 0)
+                        newNode.ForeColor = Color.Green;
+                    searchedNodes[0].Nodes.Add(newNode);
+                }
+                else
+                {
+                    // Если не нашли такую группу
+                    TreeNode groupNode = new TreeNode(oneAnal.analazes_type_name);
+                    groupNode.Name = oneAnal.analazes_type_name;
+                    groupNode.ForeColor = Color.FromKnownColor(KnownColor.HotTrack);
+                    AnalNode.Nodes.Add(groupNode);
+                    newNode.Text = oneAnal.analysis_name + "  " + oneAnal.analizes_value.ToString();
+                    newNode.Name = oneAnal.analysis_name;
+                    if (oneAnal.analizes_value <= 0)
+                        newNode.ForeColor = Color.Red;
+                    else
+                        newNode.ForeColor = Color.Green;
+                    AnalNode.Nodes[oneAnal.analazes_type_name].Nodes.Add(newNode);
+                }
+            }            
         }
 
         /// <summary>

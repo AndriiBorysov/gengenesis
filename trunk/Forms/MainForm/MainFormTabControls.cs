@@ -7,10 +7,10 @@ namespace GenGenesis
     public partial class MainForm
     {
         // Список делегатов для разных вкладок
-        public delegate void SignsCreateCallback(TabPage[] tabPages);        
+        public delegate void SignsCreateCallback(TabPage[] tabPages);
         public delegate void IllnessesCreateCallback(TabPage[] tabPages, int i);
         public delegate void TCXsCreateCallback(TabPage[] tabPages);
-        public delegate void AnalysisCreateCallback(TabPage[] tabPages);
+        public delegate void AnalysisCreateCallback(TabPage[] tabPages, int i);
         public delegate void EnabledButtonsCallback(bool stat);
         public delegate void ShowMessageCallback(string messege);
         // Список TabControls
@@ -18,7 +18,8 @@ namespace GenGenesis
         TabControl[] illnessesTabControls;
         TabControl IllnessesTabControl;
         TabControl tcxTabControl;
-        TabControl analysisTabControl;
+        TabControl[] analysisTabControls;
+        TabControl AnalysisTabControl;
         /// <summary>
         /// Инициализация TabControls
         /// </summary>
@@ -26,13 +27,18 @@ namespace GenGenesis
         {
             signsTabControl = InitTabControl();
             illnessesTabControls = new TabControl[directorysDataSet.bolezni_masks.Count];
-            for(int i = 0; i< directorysDataSet.bolezni_masks.Count; i++)
+            for (int i = 0; i < directorysDataSet.bolezni_masks.Count; i++)
             {
                 illnessesTabControls[i] = InitTabControl();
             }
             IllnessesTabControl = InitTabControl();
             tcxTabControl = InitTabControl();
-            analysisTabControl = InitTabControl();
+            analysisTabControls = new TabControl[directorysDataSet.analyzes_types.Count];
+            for (int i = 0; i < directorysDataSet.analyzes_types.Count; i++)
+            {
+                analysisTabControls[i] = InitTabControl();
+            }
+            AnalysisTabControl = InitTabControl();
         }
 
         /// <summary>
@@ -42,7 +48,7 @@ namespace GenGenesis
         private TabControl InitTabControl()
         {
             TabControl tmpControl = new TabControl();
-            tmpControl.Appearance = System.Windows.Forms.TabAppearance.Buttons;            
+            tmpControl.Appearance = System.Windows.Forms.TabAppearance.Buttons;
             tmpControl.Dock = System.Windows.Forms.DockStyle.Fill;
             tmpControl.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             tmpControl.HotTrack = true;
@@ -51,18 +57,20 @@ namespace GenGenesis
             tmpControl.Multiline = true;
             tmpControl.SelectedIndex = 0;
             tmpControl.Size = new System.Drawing.Size(449, 515);
-            tmpControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;            
+            tmpControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             return tmpControl;
         }
+
+        #region Заполнение контролов
         /// <summary>
         /// Заполнение признаков
         /// </summary>
         /// <param name="pages">Список вкладок для добавления</param>
-        private void FillSigns(TabPage[] pages)         
-        {            
+        private void FillSigns(TabPage[] pages)
+        {
             signsTabControl.TabPages.Clear();
             toolStripProgressBar.Value += 1;
-            signsTabControl.TabPages.AddRange(pages);                        
+            signsTabControl.TabPages.AddRange(pages);
         }
 
         /// <summary>
@@ -70,7 +78,7 @@ namespace GenGenesis
         /// </summary>
         /// <param name="pages">Список вкладок для добавления</param>        
         private void FillIllnesses(TabPage[] pages, int i)
-        {            
+        {
             toolStripProgressBar.Value += 1;
             illnessesTabControls[i].TabPages.Clear();
             illnessesTabControls[i].TabPages.AddRange(pages);
@@ -84,25 +92,25 @@ namespace GenGenesis
         {
             toolStripProgressBar.Value += 1;
             tcxTabControl.TabPages.Clear();
-            tcxTabControl.TabPages.AddRange(pages);                        
+            tcxTabControl.TabPages.AddRange(pages);
         }
 
         /// <summary>
         /// Заполнение анализов
         /// </summary>
         /// <param name="pages">Список вкладок для добавления</param>
-        private void FillAnalysis(TabPage[] pages)
+        private void FillAnalysis(TabPage[] pages, int i)
         {
             toolStripProgressBar.Value += 1;
-            analysisTabControl.TabPages.Clear();
-            analysisTabControl.TabPages.AddRange(pages);                        
+            analysisTabControls[i].TabPages.Clear();
+            analysisTabControls[i].TabPages.AddRange(pages);
         }
 
         /// <summary>
         /// Создание и заполнение таб контроллов
         /// </summary>
         private void FillTabControls()
-        {               
+        {
             // Запрещаем действия с пациентами
             EnableMainButtons(false);
             ShowToolBoxMassage("Загрузка базы данных...");
@@ -117,7 +125,7 @@ namespace GenGenesis
                 new TCXsCreateCallback(FillTCX),
                 new AnalysisCreateCallback(FillAnalysis),
                 new ShowMessageCallback(ShowToolBoxMassage),
-                this);            
+                this);
             System.Threading.Thread signThread = new System.Threading.Thread(filler.GenerateSignsControls);
             System.Threading.Thread illnessThread = new System.Threading.Thread(filler.GenerateIllnessesControls);
             System.Threading.Thread tcxThread = new System.Threading.Thread(filler.GenerateTCXControls);
@@ -128,11 +136,12 @@ namespace GenGenesis
             tcxThread.Priority = System.Threading.ThreadPriority.Normal;
             analysisThread.Priority = System.Threading.ThreadPriority.Normal;
             // Запуск потоков
-            signThread.Start();
-            illnessThread.Start();
+            //signThread.Start();
+            //illnessThread.Start();
             tcxThread.Start();
-            //analysisThread.Start();
+            analysisThread.Start();
         }
+        #endregion
 
         /// <summary>
         /// Сброс таб контролов на незаполненные
@@ -141,55 +150,49 @@ namespace GenGenesis
         {
             // Признаки
             foreach (TabPage TPage in signsTabControl.TabPages)
-            {
                 foreach (TableLayoutPanel CurTLPanel in TPage.Controls)
-                {
                     foreach (CheckBox CurControl in CurTLPanel.Controls)
                     {
                         CurControl.Checked = false;
                     }
-                }
-            }
             // Заболевания
             foreach (TabControl curTControl in illnessesTabControls)
-            {
                 foreach (TabPage TPage in curTControl.TabPages)
-                {
                     foreach (TableLayoutPanel CurTLPanel in TPage.Controls)
-                    {
                         foreach (CheckBox CurControl in CurTLPanel.Controls)
                         {
                             CurControl.Checked = false;
                         }
-                    }
-                }
-            }
             // ТCХ
             foreach (TabPage TPage in tcxTabControl.TabPages)
-            {
                 foreach (TableLayoutPanel CurTLPanel in TPage.Controls)
-                {
                     foreach (TCXUserControl tmpTCXControl in CurTLPanel.Controls)
                     {
                         tmpTCXControl.Init();
                         tmpTCXControl.PrintText();
                     }
-                }
-            }
             // Analysis
-            //foreach (TabPage TPage in AnalysisTabControl.TabPages)
-            //{
-            //    foreach (TableLayoutPanel CurTLPanel in TPage.Controls)
-            //        foreach (Control curControl in CurTLPanel.Controls)
-            //        {
-            //            if (curControl is GenesUserControl)
-            //            {
-            //                GenesUserControl tmpControl = (GenesUserControl)curControl;
-            //                tmpControl.UncheckAll();
-            //            }
-
-            //        }
-            //}            
+            foreach (TabControl curTControl in analysisTabControls)
+                foreach (TabPage TPage in curTControl.TabPages)
+                    foreach (TableLayoutPanel CurTLPanel in TPage.Controls)
+                        foreach (Control CurControl in CurTLPanel.Controls)
+                        {
+                            CheckBox chkB = CurControl as CheckBox;
+                            if (chkB != null)
+                                chkB.Checked = false;
+                            AnalysisNumericUpDownControl tmpUpDownControl = CurControl as AnalysisNumericUpDownControl;
+                            if (tmpUpDownControl != null)
+                            {
+                                tmpUpDownControl.Init();
+                                tmpUpDownControl.PrintText();
+                            }
+                            AnalysisNumericUserControl tempNumControl = CurControl as AnalysisNumericUserControl;
+                            if (tempNumControl != null)
+                                tempNumControl.Init();
+                            AnalysisGenesUserControl tempGenControl = CurControl as AnalysisGenesUserControl;
+                            if (tempGenControl != null)
+                                tempGenControl.UncheckAll();
+                        }
         }
 
         #region Заполнение контролов с данных текущего пациента
@@ -201,8 +204,8 @@ namespace GenGenesis
             FillSignControlByCurentPatient();
             FillIllnessControlByCurentPatient();
             FillTCXControlByCurentPatient();
-            //FillAnalysisControlByCurentPatient();
-            
+            FillAnalysisControlByCurentPatient();
+
         }
 
         /// <summary>
@@ -241,7 +244,7 @@ namespace GenGenesis
                         // Для каждой болезни у текущего пациента
                         foreach (Illness tmpIllness in currentPatient.bolezni)
                             // Ищем совпадение по имени болезни и имени системы организма
-                            if ((controlIllness.illness_name == tmpIllness.illness_name) 
+                            if ((controlIllness.illness_name == tmpIllness.illness_name)
                                 && (controlIllness.group_name == tmpIllness.group_name)
                                 && ((tmpIllness.illness_mask & controlIllness.illness_mask) > 0))
                                 CurControl.Checked = true;
@@ -263,7 +266,7 @@ namespace GenGenesis
                     // Для каждой пробы у текущего пациента
                     foreach (TCX tmpTCX in currentPatient.TCX)
                         // Ищем совпадение по имени пробы и имени группы
-                        if ((CurTCXControl.Name == tmpTCX.tcx_name) && (TPage.Name == tmpTCX.tcx_group_name))
+                        if ((CurTCXControl.Name == tmpTCX.tcx_name) && (TPage.Name == tmpTCX.tcx_group_name))                        
                         {
                             CurTCXControl.Value = tmpTCX.tcx_value;
                             CurTCXControl.Check();
@@ -278,7 +281,44 @@ namespace GenGenesis
         /// </summary>
         private void FillAnalysisControlByCurentPatient()
         {
-            throw new NotImplementedException();
+            // Заполним анализи
+            foreach (TabControl curTControl in analysisTabControls)
+                foreach (TabPage TPage in curTControl.TabPages)
+                {
+                    TableLayoutPanel CurTLPanel = (TableLayoutPanel)TPage.Controls[0];
+                    foreach (Control CurControl in CurTLPanel.Controls)
+                    {
+                        Analysis analiz = (Analysis)CurControl.Tag;
+                        foreach (Analysis tmpAnal in currentPatient.analysis)
+                            if (analiz.analizes_id == tmpAnal.analizes_id)
+                            {
+                                CheckBox chkB = CurControl as CheckBox;
+                                if (chkB != null)
+                                {
+                                    chkB.Checked = Convert.ToBoolean(tmpAnal.analizes_value);
+                                }
+                                AnalysisNumericUpDownControl tmpUpDownControl = CurControl as AnalysisNumericUpDownControl;
+                                if (tmpUpDownControl != null)
+                                {
+                                    tmpUpDownControl.Value = tmpAnal.analizes_value;
+                                    tmpUpDownControl.Check();
+                                    tmpUpDownControl.PrintText();                                    
+                                }
+                                AnalysisNumericUserControl tempNumControl = CurControl as AnalysisNumericUserControl;
+                                if (tempNumControl != null)
+                                {
+                                    tempNumControl.Value = tmpAnal.analizes_value;
+                                    tempNumControl.Check();
+                                }
+                                AnalysisGenesUserControl tempGenControl = CurControl as AnalysisGenesUserControl;
+                                if (tempGenControl != null)
+                                {
+                                    tempGenControl.Value = tmpAnal.analizes_value;
+                                    tempGenControl.Checked = true;
+                                }
+                            }
+                    }
+                }
         }
         #endregion
 
@@ -307,7 +347,8 @@ namespace GenGenesis
         #endregion
 
         #region Конструктор
-        public GenGenesisTabControlFiller(directorysDataSet aDataSet,
+        public GenGenesisTabControlFiller(
+            directorysDataSet aDataSet,
             directorysDataSetTableAdapters.TableAdapterManager aManager,
             GenGenesis.MainForm.EnabledButtonsCallback enabledButtonsCallback,
             GenGenesis.MainForm.SignsCreateCallback signCallBack,
@@ -321,8 +362,8 @@ namespace GenGenesis
             directorysDataSet = aDataSet;
             directorysTableAdapterManager = aManager;
             signsGroups = new TabPage[directorysDataSet.priznaki_groups.Count];
-            illnessesGroups = new TabPage[directorysDataSet.bolezni_groups.Count];           
-            tCXsGroups = new TabPage[directorysDataSet.tcx_groups.Count];
+            illnessesGroups = new TabPage[directorysDataSet.bolezni_groups.Count];
+            tCXsGroups = new TabPage[directorysDataSet.tcx_groups.Count];            
             analysisGroups = new TabPage[1];
             EnabledButtonsCallback = enabledButtonsCallback;
             SignsCallBack = signCallBack;
@@ -373,7 +414,7 @@ namespace GenGenesis
                 System.Threading.Thread.CurrentThread.Abort();
             }
         }
-        
+
         /// <summary>
         /// Извлекает из базы данных информацию про заболевания и заполняет TabControl
         /// </summary>
@@ -405,7 +446,7 @@ namespace GenGenesis
                     groupCount++;
                 }
                 try
-                {                                        
+                {
                     owner.Invoke(IllnessCallBack, new object[] { illnessesGroups, i });
                 }
                 catch
@@ -415,7 +456,7 @@ namespace GenGenesis
             }
             PageFilled();
         }
-   
+
         /// <summary>
         /// Извлекает из базы данных информацию про ТСХ и заполняет TabControl
         /// </summary>
@@ -432,19 +473,20 @@ namespace GenGenesis
                 groupId = CurGroupRow.id_tcx_group;
                 TableLayoutPanel TLPanel = CreatePage(groupName, tCXsGroups, groupCount);
                 TLPanel.ColumnCount = 1;
-                TLPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.OutsetPartial;                
+                TLPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.OutsetPartial;
                 foreach (directorysDataSet.tcx_allRow CurTCXRow in directorysDataSet.tcx_all.Rows)
                 {
                     // Создадим контрол для проб тсх и определим его значения
                     TCXUserControl tmpControl = new TCXUserControl(CurTCXRow.tcx_name);
                     tcx.tcx_group_id = groupId;
                     tcx.tcx_group_name = groupName;
-                    tcx.tcx_id = CurTCXRow.tcx_id;                    
+                    tcx.tcx_id = CurTCXRow.tcx_id;
                     tcx.tcx_name = CurTCXRow.tcx_name;
                     tmpControl.Maximum = 5;
                     tmpControl.Minimum = -5;
                     tmpControl.Tag = tcx;
-                    TLPanel.Controls.Add(tmpControl);
+                    tmpControl.Dock = DockStyle.Fill;
+                    TLPanel.Controls.Add(tmpControl);                                
                 }
                 groupCount++;
             }
@@ -457,26 +499,96 @@ namespace GenGenesis
             {
                 System.Threading.Thread.CurrentThread.Abort();
             }
-        }
+        }       
+
         /// <summary>
         /// Извлекает из базы данных информацию про анализы и заполняет TabControl
         /// </summary>
-        public void GenerateAnalysisControls() 
+        public void GenerateAnalysisControls()
         {
-            throw new NotImplementedException();
+            Analysis anal = new Analysis();            
+            string groupName; // Имя группы
+            int groupId; // ID группы      
+            // Для типа анализа
+            for (int i = 0; i < directorysDataSet.analyzes_types.Count; i++)
+            {                
+                groupName = directorysDataSet.analyzes_types[i].type_name;
+                groupId = (int)directorysDataSet.analyzes_types[i].id_analazes_type;
+                TableLayoutPanel TLPanel = CreatePage("Анализы", analysisGroups, 0);
+                TLPanel.ColumnCount = 1;
+                TLPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.OutsetPartial;
+                // Для анализа
+                foreach (directorysDataSet.analyzes_groupsRow CurrentGroupRow in this.directorysDataSet.analyzes_groups.Rows)
+                {
+                    if ((int)CurrentGroupRow.analyse_type_id == groupId)
+                    {
+                        anal.analazes_type_name = groupName;
+                        anal.analazes_type_id = groupId;
+                        anal.analizes_id = (int)CurrentGroupRow.id_analizes;
+                        anal.analysis_name = CurrentGroupRow.analize_name;
+                        anal.analyses_value_type_id = (int)CurrentGroupRow.analyse_value_type_id;
+                        foreach(directorysDataSet.analyses_value_typesRow vRow in directorysDataSet.analyses_value_types)
+                        {
+                            if(anal.analyses_value_type_id == vRow.id_value_types)
+                            {
+                                anal.analyses_value_type_name = vRow.type_name;
+                                break;
+                            }
+                        }                        
+                        // Для ген иследований
+                        if (anal.analazes_type_id == 10)
+                        {
+                            AnalysisGenesUserControl GenUserControl = new AnalysisGenesUserControl(anal.analysis_name);
+                            GenUserControl.Tag = anal;
+                            TLPanel.Controls.Add(GenUserControl);                            
+                        }
+                        else
+                        switch (anal.analyses_value_type_id)
+                        {
+                            case(1):
+                                TLPanel.Controls.Add(CreateCheckBox(anal.analysis_name, anal));
+                                break;
+                            case(2):
+                                AnalysisNumericUpDownControl NumUpDownControl = new AnalysisNumericUpDownControl(anal.analysis_name);
+                                NumUpDownControl.Tag = anal;
+                                NumUpDownControl.Maximum = 5;
+                                NumUpDownControl.Minimum = -5;
+                                TLPanel.Controls.Add(NumUpDownControl);
+                                NumUpDownControl.Dock = DockStyle.Fill;
+                                break;
+                            case(3):
+                                AnalysisNumericUserControl NumControl = new AnalysisNumericUserControl(anal.analysis_name);
+                                NumControl.Tag = anal;
+                                TLPanel.Controls.Add(NumControl);
+                                NumControl.Dock = DockStyle.Fill;
+                                break;
+                        }
+                    }            
+                }
+                try
+                {
+                    owner.Invoke(AnalysisCallBack, new object[] { analysisGroups, i });
+                }
+                catch
+                {
+                    System.Threading.Thread.CurrentThread.Abort();
+                }
+            }
+            PageFilled();            
         }
+
         /// <summary>
         /// Заполнение произведено
         /// </summary>
         private void PageFilled()
         {
-            fillingProcess++;            
-            if (fillingProcess == 3) // Изменять при добавлении новых
+            fillingProcess++;
+            if (fillingProcess == 2) // Изменять при добавлении новых
             {
                 try
                 {
                     owner.Invoke(EnabledButtonsCallback, new object[] { true });
-                    owner.Invoke(ShowMessageCallback, new object[] { "Готово" });                    
+                    owner.Invoke(ShowMessageCallback, new object[] { "Готово" });
                 }
                 catch
                 {
@@ -498,13 +610,13 @@ namespace GenGenesis
         {
             TableLayoutPanel TLPanel; // Переменная для текущей таблицы
             int TLPanelColumnCount = 2; // Количество колонок в таблице елементов            
-            TLPanel = new TableLayoutPanel(); // Создадим таблицу контролов для вкладки            
+            TLPanel = new TableLayoutPanel(); // Создадим таблицу контролов для вкладки
             TLPanel.Dock = System.Windows.Forms.DockStyle.Fill; // Укажем что таблица контролов занимает всю полость родителя
-            TLPanel.ColumnCount = TLPanelColumnCount; // макс колличество колонок
+            TLPanel.ColumnCount = TLPanelColumnCount; // макс колличество колонок            
             TLPanel.AutoScroll = true;
             TLPanel.Name = groupNameString; // Укажем имя таблицы контролов
             TabPage tabPageTemp; // Переменная для текущей вкладки            
-            tabPageTemp = new TabPage(groupNameString); // Создадим новую вкладку            
+            tabPageTemp = new TabPage(groupNameString); // Создадим новую вкладку
             tabPageTemp.Name = groupNameString; // Укажем имя вкладки
             tabPageTemp.BackColor = System.Drawing.Color.FromKnownColor(System.Drawing.KnownColor.Info);
             tabPageTemp.Controls.Add(TLPanel); // Добавим таблицу контролов в коллекцию вкладки         
@@ -528,7 +640,7 @@ namespace GenGenesis
             tmpCheckBox.Name = controlText;
             tmpCheckBox.Text = controlText;
             tmpCheckBox.Font = checkBoxFont;
-            tmpCheckBox.UseVisualStyleBackColor = true;
+            tmpCheckBox.UseVisualStyleBackColor = true;            
             tmpCheckBox.Tag = structure;
             return tmpCheckBox;
         }

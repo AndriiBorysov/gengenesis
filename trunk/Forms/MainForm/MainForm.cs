@@ -23,7 +23,8 @@ namespace GenGenesis
             Show(); // Отображение формы 
             FillTabControls(); // Заполняем табконтролы            
         }
-        
+
+        #region Инициализации
         /// <summary>
         /// Инициализация картинок для формы
         /// </summary>
@@ -37,7 +38,6 @@ namespace GenGenesis
             addPropertyButton.Image = buttonsImageList.Images["Add"];
             cancelButton.Image = buttonsImageList.Images["Cancel"];
         }
-
         /// <summary>
         /// Инициализация одного SBControle
         /// </summary>
@@ -57,7 +57,7 @@ namespace GenGenesis
             newSTC.Location = new System.Drawing.Point(1,1);
             newSTC.Name = "newSTC";
             newSTC.SelectedButton = null;
-            newSTC.Dock = DockStyle.Fill;
+            newSTC.Dock = DockStyle.Fill;                        
             return newSTC;
         }
         /// <summary>
@@ -72,21 +72,26 @@ namespace GenGenesis
             StackBarControl currentSTC = InitializeStackBarControle();
             foreach (directorysDataSet.bolezni_masksRow currentRow in directorysDataSet.bolezni_masks)
                 currentSTC.Buttons.Add(currentRow.name_bol);
+            currentSTC.Size = currentSTC.MaximumSize;
+            currentSTC.Invalidate();
             currentSTC.Click +=new StackBarControl.ButtonClickEventHandler(IllnessSTC_Click);
             classPaneBar.Add(currentSTC, "Заболевания", null, true);
-
             tmpPane = classPaneBar.Add(null, "ТСХ", null);
             tmpPane.Click += new EventHandler(ShowTabControl);
             tmpPane.CanExpand = false;
 
             currentSTC = InitializeStackBarControle();                        
             foreach (directorysDataSet.analyzes_typesRow currentRow in directorysDataSet.analyzes_types)
-                currentSTC.Buttons.Add(currentRow.type_name);            
+                currentSTC.Buttons.Add(currentRow.type_name);
+            currentSTC.Size = currentSTC.MaximumSize;
+            currentSTC.Invalidate();
+            currentSTC.Click +=new StackBarControl.ButtonClickEventHandler(AnalSTC_Click);
             classPaneBar.Add(currentSTC, "Анализы", null, true);
             
             // Свернём все вкладки
             classPaneBar.CollapseAll();
-        }       
+        }
+        #endregion
 
         /// <summary>
         /// Меняем состояние кнопок управления пациентом
@@ -239,7 +244,7 @@ namespace GenGenesis
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            EnablePatientButtons(false);
+            EnablePatientButtons(false);            
         }
 
         #region Обработчики меню выбора типа
@@ -258,6 +263,22 @@ namespace GenGenesis
             tabControlPanel.Controls.Clear();
             tabControlPanel.Controls.Add(currentTabControl);
         }
+
+        /// <summary>
+        /// Нажатие на одну из групп Анализов
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AnalSTC_Click(object sender, StackBarControl.ButtonClickEventArgs e)
+        {
+            StackBarControl currentSTC = sender as StackBarControl;
+            if (currentSTC == null)
+                return;
+            int idx = currentSTC.Buttons.IndexOf(e.SelectedButton);
+            currentTabControl = analysisTabControls[idx];            
+            tabControlPanel.Controls.Clear();
+            tabControlPanel.Controls.Add(currentTabControl);
+        }        
 
         /// <summary>
         /// Устанавливается как обработчик на нажатие, отображает нужный tabControle
@@ -420,7 +441,7 @@ namespace GenGenesis
         #endregion
 
         /// <summary>
-        /// Реализуем,Чтоб остальные сворачивались
+        /// При нажитии на GroupPane сворачиваются уже открытые
         /// </summary>        
         private void classPaneBar_GroupPaneExpanding(object sender, BarTender.GroupPaneCancelEventArgs eventArgs)
         {
