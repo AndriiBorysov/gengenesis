@@ -240,7 +240,43 @@ namespace GenGenesis
         /// </summary>
         private void AddAnalysisToCurentPatient()
         {
-            throw new NotImplementedException();
+            List<Analysis> AnalList = new List<Analysis>();
+            // Для каждой страницы (Типа анализа)
+            for (int i = 0; i < analysisTabControls.Length; i++)
+                foreach (TabPage tPage in analysisTabControls[i].TabPages)
+                    foreach (TableLayoutPanel CurTLPanel in tPage.Controls)
+                        foreach (Control CurControl in CurTLPanel.Controls)
+                        {
+                            CheckBox chkB = CurControl as CheckBox;
+                            if (chkB != null)
+                            {
+                                if (chkB.Checked)
+                                {
+                                    Analysis T = (Analysis)chkB.Tag;
+                                    T.analizes_value = 1;
+                                    AnalList.Add(T);
+                                }
+                            }
+                            AnalysisNumericUpDownControl tmpUpDownControl = CurControl as AnalysisNumericUpDownControl;
+                            if (tmpUpDownControl != null)
+                            {
+                                if(tmpUpDownControl.Checked)
+                                    AnalList.Add((Analysis)tmpUpDownControl.Tag);
+                            }
+                            AnalysisNumericUserControl tempNumControl = CurControl as AnalysisNumericUserControl;
+                            if (tempNumControl != null)
+                            {
+                                if(tempNumControl.Checked)
+                                    AnalList.Add((Analysis)tempNumControl.Tag);
+                            }
+                            AnalysisGenesUserControl tempGenControl = CurControl as AnalysisGenesUserControl;
+                            if (tempGenControl != null)
+                            {
+                                if(tempGenControl.Checked)
+                                    AnalList.Add((Analysis)tempGenControl.Tag);
+                            }
+                        }
+            currentPatient.analysis = AnalList;
         }
 
         /// <summary>
@@ -252,7 +288,7 @@ namespace GenGenesis
             AddPropertyToCurentPatient();
             AddIllnessToCurentPatient();
             AddTCXToCurentPatient();
-            //AddAnalysisToCurentPatient();            
+            AddAnalysisToCurentPatient();            
             currentPatient.isSaved = false;            
             // Обновим дерево            
             FillTreeView();

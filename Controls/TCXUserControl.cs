@@ -5,9 +5,8 @@ using System.Windows.Forms;
 namespace GenGenesis
 {
     public partial class TCXUserControl : UserControl
-    {
+    {        
         // Свойства
-        private int reSizeCount;
         private int _value;
         public int Value 
         { 
@@ -29,17 +28,33 @@ namespace GenGenesis
         }
         public int Maximum { get; set; }
         public int Minimum { get; set; }
-        public bool Checked { get; set; }       
-        // Конструктор
-        public TCXUserControl(string testName)
+        public bool Checked { get; set; }
+        public TCXUserControl(string testName) // Конструктор 
         {
-            InitializeComponent();            
-            testNameLabel.Text = testName;
+            InitializeComponent();
+            enableCheckBox.MouseEnter += new EventHandler(enableCheckBox_MouseEnter);
+            enableCheckBox.MouseLeave += new EventHandler(enableCheckBox_MouseLeave);
+            outTextBox.MouseEnter += new EventHandler(enableCheckBox_MouseEnter);
+            outTextBox.MouseLeave += new EventHandler(enableCheckBox_MouseLeave);
+            minusButton.MouseEnter += new EventHandler(enableCheckBox_MouseEnter);
+            minusButton.MouseLeave += new EventHandler(enableCheckBox_MouseLeave);
+            plusButton.MouseEnter += new EventHandler(enableCheckBox_MouseEnter);
+            plusButton.MouseLeave += new EventHandler(enableCheckBox_MouseLeave);
+            enableCheckBox.Text= testName;            
             this.Name = testName;
-            reSizeCount = 0;
             Init();
             DoResize();
             PrintText();
+        }
+
+        void enableCheckBox_MouseLeave(object sender, EventArgs e)
+        {
+            this.BackColor = System.Drawing.Color.FromKnownColor(KnownColor.Info);
+        }
+
+        void enableCheckBox_MouseEnter(object sender, EventArgs e)
+        {
+            this.BackColor = System.Drawing.Color.FromKnownColor(KnownColor.Highlight);
         }
         public void Init()// Инициализация
         {            
@@ -54,18 +69,12 @@ namespace GenGenesis
         public void DoResize()// Изменение размера
         {
             this.SuspendLayout();            
-            enableCheckBox.Location = new Point(1, enableCheckBox.Location.Y);
-            testNameLabel.Location = new Point(enableCheckBox.ClientSize.Width + 1, testNameLabel.Location.Y);
-            outTextBox.Location = new Point(testNameLabel.ClientSize.Width + testNameLabel.Location.X + 5, outTextBox.Location.Y);
-            outTextBox.Size = new Size(75,outTextBox.Size.Height);            
-            plusButton.Location = new Point(outTextBox.Location.X + outTextBox.ClientSize.Width + 5, plusButton.Location.Y);
-            plusButton.Size = new Size(outTextBox.Size.Height+2, outTextBox.Size.Height+2);
-            
-            minusButton.Location = new Point(plusButton.Location.X + plusButton.ClientSize.Width + 3, minusButton.Location.Y);
-            minusButton.Size = new Size(outTextBox.Size.Height+2, outTextBox.Size.Height+2);
-
-            this.Size = new Size(minusButton.Location.X + minusButton.ClientSize.Width + 3, this.Size.Height);
-            
+            enableCheckBox.Location = new Point(1, enableCheckBox.Location.Y);            
+            outTextBox.Location = new Point(100, outTextBox.Location.Y);            
+            outTextBox.Size = new Size(60,outTextBox.Size.Height);
+            plusButton.Size = new Size(outTextBox.Size.Height - 1, outTextBox.Size.Height - 1);
+            minusButton.Location = new Point(minusButton.Location.X - 10, minusButton.Location.Y);
+            minusButton.Size = new Size(outTextBox.Size.Height - 1, outTextBox.Size.Height - 1);
             this.ResumeLayout(false);
             this.PerformLayout();
         }
@@ -75,8 +84,10 @@ namespace GenGenesis
             char outChar;
             if (Value < 0)
             {
-                outChar = '\u2193';
-                //outChar = '-';
+                if(Environment.OSVersion.Version.Build >= 6000)
+                    outChar = '\u2193';
+                else
+                    outChar = '-';
                 for (int i = Math.Abs(Value); i > 0; i--)
                     outString += outChar;
             }
@@ -87,8 +98,10 @@ namespace GenGenesis
                     outTextBox.Text = "0";
                     return;
                 }
-                outChar = '\u2191';
-                //outChar = '+';
+                if (Environment.OSVersion.Version.Build >= 6000)
+                    outChar = '\u2191';
+                else    
+                    outChar = '+';
                 for (int i = Math.Abs(Value); i > 0; i--)
                     outString += outChar;
             }
@@ -123,7 +136,7 @@ namespace GenGenesis
         private void plusButton_Click(object sender, EventArgs e)
         {
             plusOne();
-            Check();
+            Check();            
         }
         private void minusButton_Click(object sender, EventArgs e)
         {
@@ -134,16 +147,17 @@ namespace GenGenesis
         {
             Checked = !Checked;
         }
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            if (reSizeCount < 3)
-            {
-                DoResize();
-                reSizeCount++;
-            }
-            base.OnPaint(e);
-        }
         #endregion
 
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            this.BackColor = System.Drawing.Color.FromKnownColor(KnownColor.Highlight);
+            base.OnMouseEnter(e);
+        }
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            this.BackColor = System.Drawing.Color.FromKnownColor(KnownColor.Info);
+            base.OnMouseLeave(e);
+        }        
     }
 }

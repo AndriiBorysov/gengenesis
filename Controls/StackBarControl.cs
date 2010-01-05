@@ -48,7 +48,7 @@ namespace OutlookStyleControls
             public void Add(OutlookBarButton item)
             {
                 if (List.Count == 0) Parent.SelectedButton = item;
-                List.Add(item);
+                List.Add(item);                
                 item.Parent = this.Parent;
                 Parent.ButtonlistChanged();
             }

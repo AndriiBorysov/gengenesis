@@ -41,6 +41,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -67,17 +68,29 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\GenesUserControl.cs">
+    <Compile Include="Controls\AnalysisGenesUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\GenesUserControl.designer.cs">
-      <DependentUpon>GenesUserControl.cs</DependentUpon>
+    <Compile Include="Controls\AnalysisGenesUserControl.designer.cs">
+      <DependentUpon>AnalysisGenesUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\StackBarControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\StackBarControl.designer.cs">
       <DependentUpon>StackBarControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AnalysisNumericUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AnalysisNumericUserControl.Designer.cs">
+      <DependentUpon>AnalysisNumericUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AnalysisNumericUpDownControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AnalysisNumericUpDownControl.Designer.cs">
+      <DependentUpon>AnalysisNumericUpDownControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\MainForm\DataBaseInit.cs">
       <SubType>Form</SubType>
@@ -141,12 +154,20 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Controls\GenesUserControl.resx">
-      <DependentUpon>GenesUserControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\AnalysisGenesUserControl.resx">
+      <DependentUpon>AnalysisGenesUserControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\StackBarControl.resx">
       <DependentUpon>StackBarControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\AnalysisNumericUserControl.resx">
+      <DependentUpon>AnalysisNumericUserControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\AnalysisNumericUpDownControl.resx">
+      <DependentUpon>AnalysisNumericUpDownControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutBox.resx">

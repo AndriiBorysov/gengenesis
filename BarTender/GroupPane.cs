@@ -63,10 +63,10 @@ namespace BarTender
 
 		#region Fields
 
-		private const string MENU_COLLAPSE_TEXT = "Collapse";
-		private const string MENU_EXPAND_TEXT = "Expand";
-		private const string MENU_COLLAPSE_ALL_TEXT = "Collapse All";
-		private const string MENU_EXPAND_ALL_TEXT = "Expand All";
+        private const string MENU_COLLAPSE_TEXT = "Згорнути";
+        private const string MENU_EXPAND_TEXT = "Розгорнути";
+		private const string MENU_COLLAPSE_ALL_TEXT = "Згорнути усе";
+        private const string MENU_EXPAND_ALL_TEXT = "Розгорнути все";
 
 		private const string DEFAULT_TEXT = "";
 		private string _text = DEFAULT_TEXT;
